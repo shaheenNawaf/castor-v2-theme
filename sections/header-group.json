@@ -175,11 +175,11 @@
       "type": "castor-hero",
       "name": "Castor Hero",
       "settings": {
-        "badge_text": "NEW FORMULA",
+        "badge_text": "",
         "heading": "Elevate Your Ritual With <em>Organic Castor</em> Oil",
         "rating_text": "4.9 · 12,000+ verified reviews",
         "subtext": "90-day money-back guarantee · Free shipping over $100 · Cancel anytime",
-        "cta_text": "Claim Your Bottle Now",
+        "cta_text": "Are you ready to be soothed?",
         "cta_url": ""
       }
     },
@@ -755,7 +755,7 @@
         "enable_subscription_toggle": true,
         "sub_heading": "Subscribe & Save an Extra 15%",
         "sub_subtext": "Free shipping, modify options or cancel anytime effortlessly.",
-        "cta_label": "CLAIM YOUR BOTTLE NOW",
+        "cta_label": "ADD TO CART",
         "show_guarantee": false,
         "guarantee_icon": "🛡️",
         "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>"
