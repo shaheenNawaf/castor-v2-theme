@@ -10,10 +10,19 @@
     {% for block in section.blocks %}
       {% if block.type == 'ingredient' %}
         <div class="ing-card" {{ block.shopify_attributes }}>
+          {% if block.settings.ingredient_image != blank %}
+            <div class="ing-img-wrap">
+              {{ block.settings.ingredient_image | image_url: width: 300 | image_tag:
+                  class: 'ing-img',
+                  alt: block.settings.name,
+                  loading: 'lazy' }}
+            </div>
+          {% endif %}
+
           {% if block.settings.icon != blank %}
             <div class="ing-icon">{{ block.settings.icon | escape }}</div>
           {% endif %}
-          
+
           <div class="ing-name">{{ block.settings.name | escape }}</div>
           <div class="ing-func">{{ block.settings.function | escape }}</div>
         </div>
@@ -44,6 +53,11 @@
       "type": "ingredient",
       "name": "Ingredient Card",
       "settings": [
+        {
+          "type": "image_picker",
+          "id": "ingredient_image",
+          "label": "Ingredient Photo"
+        },
         {
           "type": "text",
           "id": "icon",

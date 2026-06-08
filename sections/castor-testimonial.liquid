@@ -1,0 +1,103 @@
+<section class="testimonial-section" style="background-color: {{ section.settings.bg_color }};">
+  <div class="testimonial-inner">
+
+    <div class="test-left reveal">
+      {% assign badge_label = 'VERIFIED BUYER' %}
+      {% if section.settings.type == 'doctor' %}
+        {% assign badge_label = 'DERMATOLOGIST APPROVED' %}
+      {% endif %}
+      <span class="test-type-badge">{{ badge_label }}</span>
+
+      {% if section.settings.eyebrow != blank %}
+        <p class="section-eyebrow" style="margin-bottom: 12px;">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+
+      <blockquote class="test-quote">
+        {{ section.settings.quote | default: 'This product transformed my hair care routine in ways I never expected.' | escape }}
+      </blockquote>
+
+      <div class="test-attribution">
+        {% if section.settings.name != blank %}
+          <p class="test-name">{{ section.settings.name | escape }}</p>
+        {% endif %}
+        {% if section.settings.title != blank %}
+          <p class="test-title">{{ section.settings.title | escape }}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="test-right reveal" style="transition-delay: 0.12s;">
+      <div class="test-img-wrap">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 600 | image_tag:
+              class: 'test-img',
+              alt: section.settings.name,
+              loading: 'lazy' }}
+        {% else %}
+          <div class="test-img-placeholder"></div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Castor Testimonial",
+  "settings": [
+    {
+      "type": "select",
+      "id": "type",
+      "label": "Testimonial Type",
+      "options": [
+        { "value": "customer", "label": "Customer" },
+        { "value": "doctor", "label": "Doctor / Professional" }
+      ],
+      "default": "customer"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Label"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote Text",
+      "default": "This product transformed my hair care routine in ways I never expected. Within two weeks I noticed significant improvement in thickness and shine."
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name",
+      "default": "Dr. Sarah Okonkwo"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title / Credential",
+      "default": "MD, Board-Certified Dermatologist"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f7f4ee"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Testimonial",
+      "settings": {
+        "type": "doctor"
+      }
+    }
+  ]
+}
+{% endschema %}

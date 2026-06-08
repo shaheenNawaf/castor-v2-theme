@@ -1,46 +1,61 @@
 <section class="compare-section">
-  <div class="compare-inner">
-    {% if section.settings.eyebrow != blank %}
-      <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+  <div class="compare-bg-wrap">
+
+    {% if section.settings.left_image != blank %}
+      <div class="compare-bg-img compare-bg-left">
+        {{ section.settings.left_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
+      </div>
     {% endif %}
-    {% if section.settings.section_title != blank %}
-      <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+    {% if section.settings.right_image != blank %}
+      <div class="compare-bg-img compare-bg-right">
+        {{ section.settings.right_image | image_url: width: 400 | image_tag: loading: 'lazy', alt: '' }}
+      </div>
     {% endif %}
 
-  <div class="reveal" style="transition-delay:0.14s">
-  <table class="compare-table">
-    <thead>
-      <tr>
-        <th>{{ section.settings.col_1_title | default: 'Feature' }}</th>
-        <th><span class="col-header-c">{{ section.settings.col_2_title | default: 'Castor' }}</span></th>
-        <th><span class="col-header-p">{{ section.settings.col_3_title | default: 'Others' }}</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for block in section.blocks %}
-        {% if block.type == 'comparison_row' %}
-          <tr {{ block.shopify_attributes }}>
-            <td>{{ block.settings.feature_name | escape }}</td>
-            <td>
-              {% if block.settings.castor_status %}
-                <span class="col-pill">{{ block.settings.castor_text | default: 'Yes' | escape }}</span>
-              {% else %}
-                <span class="col-pill-no">{{ block.settings.castor_text | default: 'No' | escape }}</span>
+    <div class="compare-inner">
+      {% if section.settings.eyebrow != blank %}
+        <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.section_title != blank %}
+        <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+      {% endif %}
+
+      <div class="reveal" style="transition-delay:0.14s">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>{{ section.settings.col_1_title | default: 'Feature' }}</th>
+              <th><span class="col-header-c">{{ section.settings.col_2_title | default: 'Castor' }}</span></th>
+              <th><span class="col-header-p">{{ section.settings.col_3_title | default: 'Others' }}</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for block in section.blocks %}
+              {% if block.type == 'comparison_row' %}
+                <tr {{ block.shopify_attributes }}>
+                  <td>{{ block.settings.feature_name | escape }}</td>
+                  <td>
+                    {% if block.settings.castor_status %}
+                      <span class="col-pill">{{ block.settings.castor_text | default: 'Yes' | escape }}</span>
+                    {% else %}
+                      <span class="col-pill-no">{{ block.settings.castor_text | default: 'No' | escape }}</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if block.settings.competitor_status %}
+                      <span class="col-pill">{{ block.settings.competitor_text | default: 'Yes' | escape }}</span>
+                    {% else %}
+                      <span class="col-pill-no">{{ block.settings.competitor_text | default: 'No' | escape }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
               {% endif %}
-            </td>
-            <td>
-              {% if block.settings.competitor_status %}
-                <span class="col-pill">{{ block.settings.competitor_text | default: 'Yes' | escape }}</span>
-              {% else %}
-                <span class="col-pill-no">{{ block.settings.competitor_text | default: 'No' | escape }}</span>
-              {% endif %}
-            </td>
-          </tr>
-        {% endif %}
-      {% endfor %}
-    </tbody>
-  </table>
-  </div>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -48,6 +63,26 @@
 {
   "name": "Castor Comparison Matrix",
   "settings": [
+    {
+      "type": "header",
+      "content": "Background Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left Background Image",
+      "info": "Appears faded behind the left side of the table."
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Background Image",
+      "info": "Appears faded behind the right side of the table."
+    },
+    {
+      "type": "header",
+      "content": "Section Copy"
+    },
     {
       "type": "text",
       "id": "eyebrow",

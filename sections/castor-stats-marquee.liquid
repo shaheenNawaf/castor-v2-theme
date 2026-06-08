@@ -1,0 +1,82 @@
+<div class="stats-marquee-wrap" style="background-color: {{ section.settings.background_color }};">
+  <div class="stats-marquee-track" style="animation-duration: {{ section.settings.speed }}s;">
+    {% for block in section.blocks %}
+      {% if block.type == 'stat_item' %}
+        <div class="sm-item" style="color: {{ section.settings.text_color }};" {{ block.shopify_attributes }}>
+          <span class="sm-icon">{{ block.settings.icon | escape }}</span>
+          <span class="sm-text">{{ block.settings.text | escape }}</span>
+        </div>
+      {% endif %}
+    {% endfor %}
+    {% for block in section.blocks %}
+      {% if block.type == 'stat_item' %}
+        <div class="sm-item" style="color: {{ section.settings.text_color }};" aria-hidden="true">
+          <span class="sm-icon">{{ block.settings.icon | escape }}</span>
+          <span class="sm-text">{{ block.settings.text | escape }}</span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Castor Stats Marquee",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#1e3a1e"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "s",
+      "label": "Scroll Speed",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat_item",
+      "name": "Stat Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (Emoji)",
+          "default": "⭐"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Stat Text",
+          "default": "Enjoyed by 12,000+ customers"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Stats Marquee",
+      "blocks": [
+        { "type": "stat_item", "settings": { "icon": "⭐", "text": "Enjoyed by 12,000+ customers" } },
+        { "type": "stat_item", "settings": { "icon": "🚚", "text": "Free shipping on orders above $50" } },
+        { "type": "stat_item", "settings": { "icon": "🌿", "text": "Sourced from organic Jamaican farms" } },
+        { "type": "stat_item", "settings": { "icon": "🔬", "text": "3rd-party lab tested" } },
+        { "type": "stat_item", "settings": { "icon": "🛡️", "text": "90-day money-back guarantee" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
