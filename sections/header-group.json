@@ -107,7 +107,7 @@
       "type": "castor-sale-banner",
       "name": "Castor Sale Banner",
       "settings": {
-        "show_announcement": true,
+        "show_announcement": false,
         "announcement_text": "Free worldwide shipping on orders over $50 · 100% Satisfaction Guaranteed",
         "announcement_bg": "#2d5a2d",
         "announcement_text_color": "#ffffffe6",
@@ -115,19 +115,71 @@
         "countdown_hours": 4,
         "countdown_minutes": 32,
         "sale_bar_bg": "#ffffff",
-        "sale_bar_text_color": "#1e3a1e",
-        "label_color": "#a32d2d"
+        "sale_bar_text_color": "#1e3a1e"
+      }
+    },
+    "castor_stats_marquee_PKhNhP": {
+      "type": "castor-stats-marquee",
+      "blocks": {
+        "stat_item_q7wYCA": {
+          "type": "stat_item",
+          "settings": {
+            "icon": "⭐",
+            "text": "Enjoyed by 12,000+ customers"
+          }
+        },
+        "stat_item_PTm7bM": {
+          "type": "stat_item",
+          "settings": {
+            "icon": "🚚",
+            "text": "Free shipping on orders above $50"
+          }
+        },
+        "stat_item_aiXgtf": {
+          "type": "stat_item",
+          "settings": {
+            "icon": "🌿",
+            "text": "Sourced from organic Jamaican farms"
+          }
+        },
+        "stat_item_AgRPi7": {
+          "type": "stat_item",
+          "settings": {
+            "icon": "🔬",
+            "text": "3rd-party lab tested"
+          }
+        },
+        "stat_item_UQXqnc": {
+          "type": "stat_item",
+          "settings": {
+            "icon": "🛡️",
+            "text": "90-day money-back guarantee"
+          }
+        }
+      },
+      "block_order": [
+        "stat_item_q7wYCA",
+        "stat_item_PTm7bM",
+        "stat_item_aiXgtf",
+        "stat_item_AgRPi7",
+        "stat_item_UQXqnc"
+      ],
+      "name": "Castor Stats Marquee",
+      "settings": {
+        "background_color": "#1e3a1e",
+        "text_color": "#ffffff",
+        "speed": 44
       }
     },
     "castor_hero_GMH3gN": {
       "type": "castor-hero",
       "name": "Castor Hero",
       "settings": {
-        "badge_text": "NEW FORMULA",
+        "badge_text": "",
         "heading": "Elevate Your Ritual With <em>Organic Castor</em> Oil",
         "rating_text": "4.9 · 12,000+ verified reviews",
         "subtext": "90-day money-back guarantee · Free shipping over $100 · Cancel anytime",
-        "cta_text": "Claim Your Bottle Now",
+        "cta_text": "Are you ready to be soothed?",
         "cta_url": ""
       }
     },
@@ -237,6 +289,74 @@
         "cta_label": "Copy & Apply",
         "dismiss_label": "No thanks, I'll pay full price",
         "inactivity_delay": 35
+      }
+    },
+    "castor_social_proof_deYQFh": {
+      "type": "castor-social-proof",
+      "blocks": {
+        "purchase_event_kGfVkJ": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "Sarah from Phoenix",
+            "product_label": "a 3-bottle bundle",
+            "time_ago": "2 minutes ago"
+          }
+        },
+        "purchase_event_TW3mpn": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "James from London",
+            "product_label": "a single bottle",
+            "time_ago": "4 minutes ago"
+          }
+        },
+        "purchase_event_YPjhLQ": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "Linda from Sydney",
+            "product_label": "the 5-bottle bundle",
+            "time_ago": "just now"
+          }
+        },
+        "purchase_event_DDXBme": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "Mike from Toronto",
+            "product_label": "a 3-bottle bundle",
+            "time_ago": "6 minutes ago"
+          }
+        },
+        "purchase_event_9jQCJC": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "Anna from Berlin",
+            "product_label": "a single bottle",
+            "time_ago": "8 minutes ago"
+          }
+        },
+        "purchase_event_CfdPgN": {
+          "type": "purchase_event",
+          "settings": {
+            "customer_name": "Rosa from Miami",
+            "product_label": "the 5-bottle bundle",
+            "time_ago": "just now"
+          }
+        }
+      },
+      "block_order": [
+        "purchase_event_kGfVkJ",
+        "purchase_event_TW3mpn",
+        "purchase_event_YPjhLQ",
+        "purchase_event_DDXBme",
+        "purchase_event_9jQCJC",
+        "purchase_event_CfdPgN"
+      ],
+      "name": "Castor Social Proof",
+      "settings": {
+        "enabled": true,
+        "show_delay": 3,
+        "display_duration": 5,
+        "pause_between": 8
       }
     },
     "castor_marquee_8Gh4T7": {
@@ -369,7 +489,9 @@
       ],
       "name": "Castor Comparison Matrix",
       "settings": {
-        "eyebrow": "Why it works differently",
+        "left_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+        "right_image": "shopify://shop_images/a-hand-removes-a-sweater-from-a-clothing-rack.jpg",
+        "eyebrow": "",
         "section_title": "How Castor Compares",
         "col_1_title": "CRITERIA",
         "col_2_title": "CASTOR",
@@ -382,6 +504,7 @@
         "ingredient_7LypDR": {
           "type": "ingredient",
           "settings": {
+            "ingredient_image": "shopify://shop_images/rack-of-womens-clothing.jpg",
             "icon": "🌱",
             "name": "Pure Castor Oil",
             "function": "Deep Moisture"
@@ -390,6 +513,7 @@
         "ingredient_U8CEkT": {
           "type": "ingredient",
           "settings": {
+            "ingredient_image": "shopify://shop_images/a-bridge-sitting-in-thick-pink-and-purple-fog.jpg",
             "icon": "🧪",
             "name": "Vitamin E",
             "function": "Dermal Guard"
@@ -398,6 +522,7 @@
         "ingredient_b8pVJn": {
           "type": "ingredient",
           "settings": {
+            "ingredient_image": "shopify://shop_images/autumn-photographer-taking-picture.jpg",
             "icon": "🌸",
             "name": "Rosemary Extract",
             "function": "Circulation"
@@ -406,6 +531,7 @@
         "ingredient_C9ifNq": {
           "type": "ingredient",
           "settings": {
+            "ingredient_image": "shopify://shop_images/for-you-shelf.jpg",
             "icon": "🥑",
             "name": "Oleic Acid",
             "function": "Shaft Shine"
@@ -420,7 +546,7 @@
       ],
       "name": "Castor Ingredients Grid",
       "settings": {
-        "eyebrow": "Formulated for absorption",
+        "eyebrow": "",
         "section_title": "What's inside"
       }
     },
@@ -503,7 +629,8 @@
         "step_AbpyRP": {
           "type": "step",
           "settings": {
-            "icon": "💧",
+            "step_image": "shopify://shop_images/woman-holding-coffee-mug.jpg",
+            "icon": "",
             "title": "Apply Root Drops",
             "description": "Gently massage 2-3 drops into clean target hair roots.",
             "time": "Phase 1"
@@ -512,7 +639,8 @@
         "step_KarkFK": {
           "type": "step",
           "settings": {
-            "icon": "🌿",
+            "step_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+            "icon": "",
             "title": "Deep Penetration",
             "description": "Leave on to naturally optimize dermal micro-circulation.",
             "time": "30 Mins"
@@ -521,7 +649,8 @@
         "step_QjtUCg": {
           "type": "step",
           "settings": {
-            "icon": "🚿",
+            "step_image": "shopify://shop_images/green-and-white-marbled-coloring.jpg",
+            "icon": "",
             "title": "Clean Rinsing",
             "description": "Wash clean with lukewarm clear water to complete the sequence.",
             "time": "Morning"
@@ -535,7 +664,7 @@
       ],
       "name": "Castor Steps Sequence",
       "settings": {
-        "eyebrow": "Application to results",
+        "eyebrow": "",
         "section_title": "How It Rejuvenates Your Routine"
       }
     },
@@ -594,6 +723,19 @@
             "icon": "🔒",
             "text": "Secure Checkout"
           }
+        },
+        "trust_item_4VP6UA": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🔒",
+            "text": "30-Day Money-back guarantee"
+          }
+        },
+        "payment_method_7wtQUn": {
+          "type": "payment_method",
+          "settings": {
+            "name": "Visa"
+          }
         }
       },
       "block_order": [
@@ -601,89 +743,47 @@
         "bundle_option_Ht7Xca",
         "bundle_option_aqfgnG",
         "trust_item_EAYyb9",
-        "trust_item_UQcUec"
+        "trust_item_UQcUec",
+        "trust_item_4VP6UA",
+        "payment_method_7wtQUn"
       ],
       "custom_css": [],
       "name": "Castor Buy Box",
       "settings": {
-        "eyebrow": "Ready when you are",
+        "eyebrow": "",
         "section_title": "Choose your supply",
         "enable_subscription_toggle": true,
         "sub_heading": "Subscribe & Save an Extra 15%",
         "sub_subtext": "Free shipping, modify options or cancel anytime effortlessly.",
-        "cta_label": "CLAIM YOUR BOTTLE NOW",
-        "payment_tags": "Visa, Mastercard, Amex, Apple Pay, PayPal",
-        "show_guarantee": true,
+        "cta_label": "ADD TO CART",
+        "show_guarantee": false,
         "guarantee_icon": "🛡️",
         "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>"
       }
     },
-    "castor_social_proof_deYQFh": {
-      "type": "castor-social-proof",
-      "blocks": {
-        "purchase_event_kGfVkJ": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "Sarah from Phoenix",
-            "product_label": "a 3-bottle bundle",
-            "time_ago": "2 minutes ago"
-          }
-        },
-        "purchase_event_TW3mpn": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "James from London",
-            "product_label": "a single bottle",
-            "time_ago": "4 minutes ago"
-          }
-        },
-        "purchase_event_YPjhLQ": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "Linda from Sydney",
-            "product_label": "the 5-bottle bundle",
-            "time_ago": "just now"
-          }
-        },
-        "purchase_event_DDXBme": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "Mike from Toronto",
-            "product_label": "a 3-bottle bundle",
-            "time_ago": "6 minutes ago"
-          }
-        },
-        "purchase_event_9jQCJC": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "Anna from Berlin",
-            "product_label": "a single bottle",
-            "time_ago": "8 minutes ago"
-          }
-        },
-        "purchase_event_CfdPgN": {
-          "type": "purchase_event",
-          "settings": {
-            "customer_name": "Rosa from Miami",
-            "product_label": "the 5-bottle bundle",
-            "time_ago": "just now"
-          }
-        }
-      },
-      "block_order": [
-        "purchase_event_kGfVkJ",
-        "purchase_event_TW3mpn",
-        "purchase_event_YPjhLQ",
-        "purchase_event_DDXBme",
-        "purchase_event_9jQCJC",
-        "purchase_event_CfdPgN"
-      ],
-      "name": "Castor Social Proof",
+    "castor_testimonial_tb66Yq": {
+      "type": "castor-testimonial",
+      "name": "Castor Testimonial",
       "settings": {
-        "enabled": true,
-        "show_delay": 3,
-        "display_duration": 5,
-        "pause_between": 8
+        "type": "doctor",
+        "eyebrow": "",
+        "quote": "This product transformed my hair care routine in ways I never expected. Within two weeks I noticed significant improvement in thickness and shine.",
+        "name": "Dr. Sarah Okonkwo",
+        "title": "MD, Board-Certified Dermatologist",
+        "bg_color": "#f7f4ee"
+      }
+    },
+    "castor_mini_buy_gzY47t": {
+      "type": "castor-mini-buy",
+      "name": "Castor Mini Buy",
+      "settings": {
+        "eyebrow": "Limited time offer",
+        "heading": "Still thinking about it?",
+        "price_text": "From $19.95 · Free shipping",
+        "cta_label": "Claim Your Bottle",
+        "cta_url": "",
+        "trust_line": "90-day guarantee · Ships within 24 hrs · Cancel anytime",
+        "bg_color": "#1e3a1e"
       }
     }
   },
@@ -691,16 +791,19 @@
     "header_section",
     "castor_nav_EADiQh",
     "castor_sale_banner_Ggbghc",
+    "castor_stats_marquee_PKhNhP",
     "castor_hero_GMH3gN",
     "castor_live_chat_LCwyVy",
     "castor_offer_tab_PNynDB",
     "castor_exit_intent_3hC7cD",
+    "castor_social_proof_deYQFh",
     "castor_marquee_8Gh4T7",
     "castor_comparison_gmqfnE",
     "castor_ingred_bq9MQc",
     "castor_review_drawer_6YXwrQ",
     "castor_steps_fJwGBV",
     "castor_buy_box_LGCGnR",
-    "castor_social_proof_deYQFh"
+    "castor_testimonial_tb66Yq",
+    "castor_mini_buy_gzY47t"
   ]
 }
