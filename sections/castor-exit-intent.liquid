@@ -1,0 +1,276 @@
+{% if section.settings.enabled %}
+<div class="castor-exit-overlay" id="castorExitOverlay" role="dialog" aria-modal="true" aria-labelledby="castorExitHeading">
+  <div class="castor-exit-card">
+
+    {% comment %} Left column: offer {% endcomment %}
+    <div class="cei-left">
+      <p class="castor-exit-eyebrow">{{ section.settings.eyebrow | default: 'Limited Time Offer' | escape }}</p>
+      <p class="cei-product-name" id="castorExitHeading">{{ section.settings.product_name | default: 'Organic Castor Oil' | escape }}</p>
+      <p class="castor-exit-heading">{{ section.settings.modal_heading | default: 'Pick your discount before you go.' | escape }}</p>
+
+      <div class="cei-tiers" id="castorExitTiers">
+        {% for block in section.blocks %}
+          {% if block.type == 'discount_tier' %}
+            <button class="cei-tier-btn"
+              data-code="{{ block.settings.code | escape }}"
+              onclick="castorSelectTier(this)"
+              {{ block.shopify_attributes }}>
+              <span class="cei-tier-badge">{{ block.settings.badge | escape }}</span>
+              <span class="cei-tier-label">{{ block.settings.label | escape }}</span>
+              <span class="cei-tier-check">✓</span>
+            </button>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% comment %} Email capture — slides in after tier selection {% endcomment %}
+      <div class="cei-email-wrap" id="castorExitEmailWrap">
+        <form class="cei-email-form" id="castorExitEmailForm" onsubmit="castorExitEmailSubmit(event)">
+          <input type="email" class="cei-email-input" id="castorExitEmailInput"
+            placeholder="{{ section.settings.email_placeholder | default: 'Enter your email address' | escape }}"
+            required autocomplete="email" />
+          <button type="submit" class="castor-exit-cta">
+            {{ section.settings.email_cta_label | default: 'Send me my code' | escape }}
+          </button>
+        </form>
+      </div>
+
+      {% comment %} Code reveal — shown after email submitted {% endcomment %}
+      <div class="cei-code-reveal" id="castorExitCodeReveal">
+        <p class="cei-code-label">Your discount code:</p>
+        <div class="cei-code-box" id="castorExitCodeBox"></div>
+        <button class="castor-exit-cta" onclick="castorExitCopyCode()">
+          {{ section.settings.cta_label | default: 'Copy & Apply' | escape }}
+        </button>
+      </div>
+
+      <button class="castor-exit-dismiss" onclick="castorCloseExit()">
+        {{ section.settings.dismiss_label | default: "No thanks, I'll pay full price" | escape }}
+      </button>
+    </div>
+
+    {% comment %} Right column: product image {% endcomment %}
+    <div class="cei-right">
+      {% if section.settings.modal_image != blank %}
+        {{ section.settings.modal_image | image_url: width: 480 | image_tag:
+            class: 'cei-product-img',
+            alt: section.settings.product_name,
+            loading: 'lazy' }}
+      {% else %}
+        <div class="cei-product-img-placeholder"></div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<div class="castor-toast" id="castorExitToast" role="status" aria-live="polite" style="z-index:1000">
+  Code copied ✓
+</div>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'castorExitSeen';
+  var delayMs = {{ section.settings.inactivity_delay | default: 35 }} * 1000;
+  var selectedCode = null;
+  var shown = false;
+
+  function showModal() {
+    if (shown || sessionStorage.getItem(STORAGE_KEY)) return;
+    shown = true;
+    sessionStorage.setItem(STORAGE_KEY, '1');
+    clearIdleTimer();
+    document.getElementById('castorExitOverlay').classList.add('show');
+  }
+
+  window.castorCloseExit = function() {
+    document.getElementById('castorExitOverlay').classList.remove('show');
+  };
+
+  window.castorSelectTier = function(btn) {
+    document.querySelectorAll('.cei-tier-btn').forEach(function(b) { b.classList.remove('selected'); });
+    btn.classList.add('selected');
+    selectedCode = btn.getAttribute('data-code');
+    var wrap = document.getElementById('castorExitEmailWrap');
+    wrap.classList.add('open');
+    setTimeout(function() {
+      var input = document.getElementById('castorExitEmailInput');
+      if (input) input.focus();
+    }, 420);
+  };
+
+  window.castorExitEmailSubmit = function(e) {
+    e.preventDefault();
+    var email = document.getElementById('castorExitEmailInput').value.trim();
+    if (!email || !selectedCode) return;
+    document.getElementById('castorExitEmailWrap').classList.remove('open');
+    document.getElementById('castorExitCodeBox').textContent = selectedCode;
+    document.getElementById('castorExitCodeReveal').classList.add('show');
+  };
+
+  window.castorExitCopyCode = function() {
+    if (!selectedCode) return;
+    if (navigator.clipboard) navigator.clipboard.writeText(selectedCode).catch(function(){});
+    var toast = document.getElementById('castorExitToast');
+    if (toast) {
+      toast.textContent = selectedCode + ' copied ✓';
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2600);
+    }
+    setTimeout(castorCloseExit, 1800);
+  };
+
+  /* Exit intent: cursor leaves toward browser chrome */
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY <= 0) showModal();
+  });
+
+  /* Inactivity timer */
+  var idleTimer = null;
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(showModal, delayMs);
+  }
+  function clearIdleTimer() {
+    clearTimeout(idleTimer);
+    ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach(function(ev) {
+      document.removeEventListener(ev, resetIdleTimer);
+    });
+  }
+  ['mousemove', 'scroll', 'keydown', 'touchstart'].forEach(function(ev) {
+    document.addEventListener(ev, resetIdleTimer, { passive: true });
+  });
+  resetIdleTimer();
+
+  /* Close on overlay backdrop click */
+  document.getElementById('castorExitOverlay').addEventListener('click', function(e) {
+    if (e.target === this) castorCloseExit();
+  });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Castor Exit Intent",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable Exit Intent Modal",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Badge Text",
+      "default": "Limited Time Offer"
+    },
+    {
+      "type": "text",
+      "id": "product_name",
+      "label": "Product Name",
+      "default": "Organic Castor Oil"
+    },
+    {
+      "type": "text",
+      "id": "modal_heading",
+      "label": "Subheading",
+      "default": "Pick your discount before you go."
+    },
+    {
+      "type": "image_picker",
+      "id": "modal_image",
+      "label": "Right Column Product Image"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Input Placeholder",
+      "default": "Enter your email address"
+    },
+    {
+      "type": "text",
+      "id": "email_cta_label",
+      "label": "Email Submit Button Label",
+      "default": "Send me my code"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Copy Code Button Label",
+      "default": "Copy & Apply"
+    },
+    {
+      "type": "text",
+      "id": "dismiss_label",
+      "label": "Dismiss Link Text",
+      "default": "No thanks, I'll pay full price"
+    },
+    {
+      "type": "number",
+      "id": "inactivity_delay",
+      "label": "Inactivity Trigger Delay (seconds)",
+      "default": 35,
+      "info": "Modal fires if the user is idle for this many seconds. Also fires on exit intent (cursor toward browser chrome)."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "discount_tier",
+      "name": "Discount Tier",
+      "settings": [
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge Text",
+          "default": "SAVE 10%"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tier Label",
+          "default": "10% off your first order"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Promo Code",
+          "default": "SAVE10"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Exit Intent",
+      "blocks": [
+        {
+          "type": "discount_tier",
+          "settings": {
+            "badge": "SAVE 10%",
+            "label": "10% off your first order",
+            "code": "SAVE10"
+          }
+        },
+        {
+          "type": "discount_tier",
+          "settings": {
+            "badge": "SAVE 15%",
+            "label": "15% off — most popular",
+            "code": "SAVE15"
+          }
+        },
+        {
+          "type": "discount_tier",
+          "settings": {
+            "badge": "SAVE 20%",
+            "label": "20% off — best value",
+            "code": "SAVE20"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

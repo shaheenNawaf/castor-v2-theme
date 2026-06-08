@@ -1,0 +1,135 @@
+<section class="hero">
+
+  <!-- Left column: copy -->
+  <div class="hero-content">
+
+    <div class="trust-pills stagger">
+      {% for block in section.blocks %}
+        {% if block.type == 'trust_pill' %}
+          <span class="trust-pill" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <h1 class="reveal" style="transition-delay:0.08s">{{ section.settings.heading }}</h1>
+
+    <div class="stars-row reveal" style="transition-delay:0.16s">
+      <span class="stars">★★★★★</span>
+      <span>{{ section.settings.rating_text | default: '4.9 · 12,000+ verified reviews' | escape }}</span>
+    </div>
+
+    {% if section.settings.cta_text != blank %}
+      <a href="{{ section.settings.cta_url | default: '#buy' }}" class="hero-cta reveal" style="transition-delay:0.24s">
+        <span class="shine"></span>
+        {{ section.settings.cta_text | escape }}
+      </a>
+    {% endif %}
+
+    {% if section.settings.subtext != blank %}
+      <p class="hero-sub reveal" style="transition-delay:0.3s">{{ section.settings.subtext }}</p>
+    {% endif %}
+
+  </div>
+
+  <!-- Right column: photo -->
+  <div class="hero-img-wrap">
+    {% if section.settings.hero_image != blank %}
+      {{ section.settings.hero_image | image_url: width: 900 | image_tag:
+          class: 'hero-img-main',
+          alt: '',
+          loading: 'eager',
+          fetchpriority: 'high' }}
+    {% else %}
+      <div class="hero-img-placeholder"></div>
+    {% endif %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Castor Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media Elements"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image",
+      "info": "Leave blank to display the native branding placeholder."
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Floating Product Badge",
+      "default": "NEW FORMULA"
+    },
+    {
+      "type": "header",
+      "content": "Copy Content"
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading Title",
+      "default": "Elevate Your Ritual With <em>Organic Castor</em> Oil"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating / Review Count Text",
+      "default": "4.9 · 12,000+ verified reviews",
+      "info": "Displayed next to the 5-star row."
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Bottom Subtext / Guarantee Line",
+      "default": "90-day money-back guarantee · Free shipping over $100 · Cancel anytime"
+    },
+    {
+      "type": "header",
+      "content": "Call to Action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button Text",
+      "default": "Claim Your Bottle Now"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button Destination",
+      "info": "Leave blank to scroll to the buy box."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_pill",
+      "name": "Trust Pill Tag",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Pill Label",
+          "default": "100% Organic"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Hero",
+      "blocks": [
+        { "type": "trust_pill", "settings": { "text": "3rd party tested" } },
+        { "type": "trust_pill", "settings": { "text": "Made in USA" } },
+        { "type": "trust_pill", "settings": { "text": "Drug-free" } },
+        { "type": "trust_pill", "settings": { "text": "90-day guarantee" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,113 @@
+<section class="steps-section">
+  {% if section.settings.eyebrow != blank %}
+    <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+  {% endif %}
+  {% if section.settings.section_title != blank %}
+    <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+  {% endif %}
+
+  <div class="steps-row stagger">
+    {% for block in section.blocks %}
+      {% if block.type == 'step' %}
+        <div class="step-card" {{ block.shopify_attributes }}>
+          <div class="step-img-wrap">
+            {% if block.settings.step_image != blank %}
+              {{ block.settings.step_image | image_url: width: 400 | image_tag:
+                  class: 'step-img',
+                  alt: block.settings.title,
+                  loading: 'lazy' }}
+            {% else %}
+              <div class="step-img-placeholder">
+                <span>{{ block.settings.icon | default: '🌿' | escape }}</span>
+              </div>
+            {% endif %}
+          </div>
+          <div class="step-num">{{ forloop.index }}</div>
+          <div class="step-title">{{ block.settings.title | escape }}</div>
+          <div class="step-desc">{{ block.settings.description | escape }}</div>
+          
+          {% if block.settings.time != blank %}
+            <div class="step-time">{{ block.settings.time | escape }}</div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Castor Steps Sequence",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Label",
+      "default": "Application to results"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Heading",
+      "default": "How It Rejuvenates Your Routine"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Sequence Step Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "step_image",
+          "label": "Step Photo"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon Character (Emoji or Character Code)",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step Header Text",
+          "default": "Apply Evenly"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Detailed Instruction Set",
+          "default": "Gently smooth 2-3 pure concentrated drops across hair shafts or target surface roots."
+        },
+        {
+          "type": "text",
+          "id": "time",
+          "label": "Execution Timestamp Tag",
+          "default": "Step 01 · Nightly"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Steps Sequence",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": { "icon": "💧", "title": "Apply Root Drops", "description": "Gently massage 2-3 drops into clean target hair roots.", "time": "Phase 1" }
+        },
+        {
+          "type": "step",
+          "settings": { "icon": "🌿", "title": "Deep Penetration", "description": "Leave on to naturally optimize dermal micro-circulation.", "time": "30 Mins" }
+        },
+        {
+          "type": "step",
+          "settings": { "icon": "🚿", "title": "Clean Rinsing", "description": "Wash clean with lukewarm clear water to complete the sequence.", "time": "Morning" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,244 @@
+{% if section.settings.enabled %}
+{% assign agent_name = section.settings.agent_name | default: 'Support' %}
+{% assign contact_email = section.settings.contact_email | default: '' %}
+
+<div class="castor-chat-wrap" id="castorChatWrap">
+
+  {% comment %} Proactive tooltip {% endcomment %}
+  <div class="castor-chat-tooltip" id="castorChatTooltip">
+    {{ section.settings.proactive_message | default: 'Hi 👋 Have a question?' | escape }}
+  </div>
+
+  {% comment %} Chat panel {% endcomment %}
+  <div class="castor-chat-panel" id="castorChatPanel" aria-label="Live chat" role="complementary">
+    <div class="castor-chat-panel-header">
+      <div class="castor-chat-agent-avatar" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <div>
+        <div class="castor-chat-agent-name">{{ agent_name | escape }}</div>
+        <div class="castor-chat-agent-status">{{ section.settings.reply_time_label | default: 'Typically replies in minutes' | escape }}</div>
+      </div>
+      <button class="castor-chat-panel-close" onclick="castorCloseChat()" aria-label="Close chat">×</button>
+    </div>
+
+    <div class="castor-chat-messages" id="castorChatMessages">
+      {% comment %} Typing indicator shown briefly, then first message appears via JS {% endcomment %}
+      <div class="castor-chat-msg agent" id="castorTyping" style="display:none">
+        <div class="castor-chat-typing">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="castor-chat-chips" id="castorChatChips">
+      {% for block in section.blocks %}
+        {% if block.type == 'quick_reply' %}
+          <button class="castor-chat-chip" data-response="{{ block.settings.response | escape }}" {{ block.shopify_attributes }}>
+            {{ block.settings.label | escape }}
+          </button>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <form class="castor-chat-input-row" id="castorChatForm">
+      <input class="castor-chat-input" id="castorChatInput" type="text" placeholder="Type a message…" autocomplete="off" maxlength="300" />
+      <button class="castor-chat-send" type="submit" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </form>
+  </div>
+
+  {% comment %} Chat bubble button {% endcomment %}
+  <button class="castor-chat-bubble" id="castorChatBubble" onclick="castorToggleChat()" aria-label="Open chat" aria-expanded="false">
+    <svg id="castorChatIconOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    <svg id="castorChatIconClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <div class="castor-chat-badge" aria-hidden="true"></div>
+  </button>
+</div>
+
+<script>
+(function() {
+  var agentName   = {{ agent_name | json }};
+  var contactEmail = {{ contact_email | json }};
+  var proactiveMs = {{ section.settings.proactive_delay | default: 8 }} * 1000;
+  var chatOpen    = false;
+  var firstOpen   = true;
+
+  var panel       = document.getElementById('castorChatPanel');
+  var messages    = document.getElementById('castorChatMessages');
+  var chips       = document.getElementById('castorChatChips');
+  var form        = document.getElementById('castorChatForm');
+  var input       = document.getElementById('castorChatInput');
+  var tooltip     = document.getElementById('castorChatTooltip');
+  var bubble      = document.getElementById('castorChatBubble');
+  var iconOpen    = document.getElementById('castorChatIconOpen');
+  var iconClose   = document.getElementById('castorChatIconClose');
+  var typing      = document.getElementById('castorTyping');
+
+  /* Proactive tooltip */
+  setTimeout(function() {
+    if (!chatOpen) tooltip.classList.add('show');
+    setTimeout(function() { tooltip.classList.remove('show'); }, 5000);
+  }, proactiveMs);
+
+  window.castorToggleChat = function() {
+    chatOpen = !chatOpen;
+    if (chatOpen) {
+      panel.classList.add('open');
+      tooltip.classList.remove('show');
+      bubble.setAttribute('aria-expanded', 'true');
+      iconOpen.style.display  = 'none';
+      iconClose.style.display = 'block';
+      if (firstOpen) { firstOpen = false; castorShowWelcome(); }
+    } else {
+      castorCloseChat();
+    }
+  };
+
+  window.castorCloseChat = function() {
+    chatOpen = false;
+    panel.classList.remove('open');
+    bubble.setAttribute('aria-expanded', 'false');
+    iconOpen.style.display  = 'block';
+    iconClose.style.display = 'none';
+  };
+
+  function appendMsg(text, who) {
+    var div = document.createElement('div');
+    div.className = 'castor-chat-msg ' + who;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function castorShowWelcome() {
+    typing.style.display = 'block';
+    messages.scrollTop = messages.scrollHeight;
+    setTimeout(function() {
+      typing.style.display = 'none';
+      appendMsg('Hey! What can I help you with today? 😊', 'agent');
+    }, 700);
+  }
+
+  /* Quick-reply chips */
+  if (chips) {
+    chips.querySelectorAll('.castor-chat-chip').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var userText = btn.textContent.trim();
+        var response = btn.getAttribute('data-response');
+        appendMsg(userText, 'user');
+        btn.remove();
+        setTimeout(function() {
+          typing.style.display = 'block';
+          messages.scrollTop = messages.scrollHeight;
+          setTimeout(function() {
+            typing.style.display = 'none';
+            appendMsg(response || "Thanks! Let me help you with that.", 'agent');
+          }, 800);
+        }, 300);
+      });
+    });
+  }
+
+  /* Free-text input */
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var text = input.value.trim();
+    if (!text) return;
+    appendMsg(text, 'user');
+    input.value = '';
+    setTimeout(function() {
+      typing.style.display = 'block';
+      messages.scrollTop = messages.scrollHeight;
+      setTimeout(function() {
+        typing.style.display = 'none';
+        if (contactEmail) {
+          appendMsg("Thanks! I'll make sure someone gets back to you shortly. You can also reach us directly at " + contactEmail, 'agent');
+          setTimeout(function() {
+            window.location.href = 'mailto:' + contactEmail + '?subject=Chat%20inquiry&body=' + encodeURIComponent(text);
+          }, 1200);
+        } else {
+          appendMsg("Thanks for reaching out! Our team will get back to you as soon as possible.", 'agent');
+        }
+      }, 900);
+    }, 300);
+  });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Castor Live Chat",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable Live Chat Widget",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "agent_name",
+      "label": "Agent / Team Name",
+      "default": "Castor Support"
+    },
+    {
+      "type": "text",
+      "id": "reply_time_label",
+      "label": "Reply Time Label",
+      "default": "Typically replies in minutes"
+    },
+    {
+      "type": "text",
+      "id": "proactive_message",
+      "label": "Proactive Tooltip Message",
+      "default": "Hi 👋 Have a question about our castor oil?"
+    },
+    {
+      "type": "number",
+      "id": "proactive_delay",
+      "label": "Proactive Message Delay (seconds)",
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email (for form fallback)",
+      "info": "Messages typed in the chat will open a mailto: link to this address."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "quick_reply",
+      "name": "Quick Reply Chip",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Chip Label (user sees this)",
+          "default": "How does it work?"
+        },
+        {
+          "type": "textarea",
+          "id": "response",
+          "label": "Bot Response",
+          "default": "Our castor oil is cold-pressed and applied topically — check out the How It Works section on this page for full details!"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Live Chat",
+      "blocks": [
+        { "type": "quick_reply", "settings": { "label": "Track my order", "response": "You can track your order at the link in your confirmation email, or reply to that email and we'll locate it for you!" } },
+        { "type": "quick_reply", "settings": { "label": "How does it work?", "response": "Our castor oil is cold-pressed for maximum purity. Apply a few drops to hair roots, skin, or lashes nightly and rinse in the morning. Results typically show in 3–4 weeks!" } },
+        { "type": "quick_reply", "settings": { "label": "Return policy", "response": "We offer a 30-day satisfaction guarantee. If you're not happy, just email us with your order number and we'll sort it out — no questions asked." } },
+        { "type": "quick_reply", "settings": { "label": "Talk to a human", "response": "Of course! Drop us an email and a real person will respond within a few hours. We'll connect you now…" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

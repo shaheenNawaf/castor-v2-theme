@@ -1,0 +1,143 @@
+<div class="castor-sale-banner-container" data-section-id="{{ section.id }}">
+  {% if section.settings.show_announcement %}
+    <div class="announcement" style="background-color: {{ section.settings.announcement_bg }}; color: {{ section.settings.announcement_text_color }};">
+      {{ section.settings.announcement_text }}
+    </div>
+  {% endif %}
+
+  <div class="sale-bar" style="background-color: {{ section.settings.sale_bar_bg }}; color: {{ section.settings.sale_bar_text_color }};">
+    <span class="sale-label" style="color: {{ section.settings.label_color }};">
+      {{ section.settings.sale_label_text }}
+    </span>
+    
+    <div class="timer" aria-label="Countdown timer">
+      <div class="timer-unit" id="timer-hours-{{ section.id }}">04</div>
+      <span class="timer-sep">:</span>
+      <div class="timer-unit" id="timer-minutes-{{ section.id }}">32</div>
+      <span class="timer-sep">:</span>
+      <div class="timer-unit" id="timer-seconds-{{ section.id }}">59</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var totalSeconds = parseInt({{ section.settings.countdown_hours | default: 4 }}) * 3600 
+                     + parseInt({{ section.settings.countdown_minutes | default: 32 }}) * 60;
+                     
+    var hoursEl = document.getElementById('timer-hours-{{ section.id }}');
+    var minutesEl = document.getElementById('timer-minutes-{{ section.id }}');
+    var secondsEl = document.getElementById('timer-seconds-{{ section.id }}');
+
+    function bumpEl(el) {
+      el.classList.remove('bump');
+      void el.offsetWidth;
+      el.classList.add('bump');
+      el.addEventListener('animationend', function() { el.classList.remove('bump'); }, { once: true });
+    }
+
+    function updateTimer() {
+      if (totalSeconds <= 0) {
+        clearInterval(timerInterval);
+        return;
+      }
+      totalSeconds--;
+
+      var h = Math.floor(totalSeconds / 3600);
+      var m = Math.floor((totalSeconds % 3600) / 60);
+      var s = totalSeconds % 60;
+
+      var nh = h < 10 ? '0' + h : String(h);
+      var nm = m < 10 ? '0' + m : String(m);
+      var ns = s < 10 ? '0' + s : String(s);
+
+      if (hoursEl && hoursEl.textContent !== nh) { hoursEl.textContent = nh; bumpEl(hoursEl); }
+      if (minutesEl && minutesEl.textContent !== nm) { minutesEl.textContent = nm; bumpEl(minutesEl); }
+      if (secondsEl && secondsEl.textContent !== ns) { secondsEl.textContent = ns; bumpEl(secondsEl); }
+    }
+
+    var timerInterval = setInterval(updateTimer, 1000);
+    updateTimer(); // Initial call to avoid layout shift
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Castor Sale Banner",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Top Announcement Bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show Announcement Bar",
+      "default": true
+    },
+    {
+      "type": "html",
+      "id": "announcement_text",
+      "label": "Announcement Text",
+      "default": "Free worldwide shipping on orders over $50 · 100% Satisfaction Guaranteed"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bg",
+      "label": "Announcement Background",
+      "default": "#2d5a2d"
+    },
+    {
+      "type": "color",
+      "id": "announcement_text_color",
+      "label": "Announcement Text Color",
+      "default": "rgba(255,255,255,0.9)"
+    },
+    {
+      "type": "header",
+      "content": "Urgency Sale Bar"
+    },
+    {
+      "type": "text",
+      "id": "sale_label_text",
+      "label": "Sale Label Text",
+      "default": "FLASH SALE: Save 10% off today only! Sale ends in:"
+    },
+    {
+      "type": "number",
+      "id": "countdown_hours",
+      "label": "Countdown Hours Duration",
+      "default": 4
+    },
+    {
+      "type": "number",
+      "id": "countdown_minutes",
+      "label": "Countdown Minutes Duration",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "sale_bar_bg",
+      "label": "Sale Bar Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "sale_bar_text_color",
+      "label": "Sale Bar Text Color",
+      "default": "#1e3a1e"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Sale Highlight Tag Color",
+      "default": "#a32d2d"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Sale Banner"
+    }
+  ]
+}
+{% endschema %}

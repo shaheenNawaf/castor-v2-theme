@@ -1,0 +1,121 @@
+{% if section.settings.enabled %}
+<div class="castor-offer-wrap" id="castorOfferWrap" role="complementary" aria-label="Discount offer">
+  <div class="castor-offer-ticket" id="castorOfferTicket">
+    <div class="castor-offer-ticket-inner">
+      <div class="pt-eyebrow">{{ section.settings.eyebrow | default: 'Mystery discount' | escape }}</div>
+      <div class="pt-code">{{ section.settings.promo_code | default: 'SAVE15' | escape }}</div>
+      <div class="pt-copy">{{ section.settings.body_copy | default: 'Tap to copy — expires when you leave.' | escape }}</div>
+      <button class="pt-cta" id="castorOfferCta" data-code="{{ section.settings.promo_code | default: 'SAVE15' | escape }}">
+        {{ section.settings.cta_label | default: 'Copy code' | escape }} — {{ section.settings.discount_percent | default: '15%' | escape }} off
+      </button>
+    </div>
+  </div>
+  <button class="castor-offer-tab-btn" id="castorOfferTabBtn" onclick="castorToggleOffer()" aria-label="Toggle discount offer" aria-expanded="false" style="background-color: {{ section.settings.tab_bg_color | default: '#2d5a2d' }};">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/>
+      <path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/>
+      <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/>
+    </svg>
+    <span>{{ section.settings.tab_label | default: 'Offer' | escape }}</span>
+  </button>
+</div>
+
+<div class="castor-toast" id="castorToast" role="status" aria-live="polite">
+  Code {{ section.settings.promo_code | default: 'SAVE15' | escape }} copied ✓
+</div>
+
+<script>
+var castorOfferOpen = false;
+
+function castorToggleOffer() {
+  castorOfferOpen = !castorOfferOpen;
+  var wrap = document.getElementById('castorOfferWrap');
+  var btn  = document.getElementById('castorOfferTabBtn');
+  if (castorOfferOpen) {
+    wrap.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  } else {
+    wrap.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+}
+
+document.getElementById('castorOfferCta').addEventListener('click', function() {
+  var code = this.getAttribute('data-code');
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(code).catch(function(){});
+  }
+  this.textContent = code + ' applied ✓';
+  this.classList.add('applied');
+  castorShowToast('castorToast');
+});
+
+function castorShowToast(id) {
+  var t = document.getElementById(id);
+  if (!t) return;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2600);
+}
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Castor Offer Tab",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Show Offer Tab",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "tab_label",
+      "label": "Tab Button Label",
+      "default": "Offer"
+    },
+    {
+      "type": "color",
+      "id": "tab_bg_color",
+      "label": "Tab Background Color",
+      "default": "#2d5a2d"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Ticket Eyebrow",
+      "default": "Mystery discount"
+    },
+    {
+      "type": "text",
+      "id": "promo_code",
+      "label": "Discount Code",
+      "default": "SAVE15"
+    },
+    {
+      "type": "text",
+      "id": "discount_percent",
+      "label": "Discount Label (e.g. 15%)",
+      "default": "15%"
+    },
+    {
+      "type": "textarea",
+      "id": "body_copy",
+      "label": "Ticket Body Copy",
+      "default": "Tap to copy — expires when you leave."
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA Button Label",
+      "default": "Copy code"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Offer Tab"
+    }
+  ]
+}
+{% endschema %}

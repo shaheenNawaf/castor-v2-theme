@@ -1,0 +1,80 @@
+<section class="ingredients-section">
+  {% if section.settings.eyebrow != blank %}
+    <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+  {% endif %}
+  {% if section.settings.section_title != blank %}
+    <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+  {% endif %}
+
+  <div class="ing-grid stagger">
+    {% for block in section.blocks %}
+      {% if block.type == 'ingredient' %}
+        <div class="ing-card" {{ block.shopify_attributes }}>
+          {% if block.settings.icon != blank %}
+            <div class="ing-icon">{{ block.settings.icon | escape }}</div>
+          {% endif %}
+          
+          <div class="ing-name">{{ block.settings.name | escape }}</div>
+          <div class="ing-func">{{ block.settings.function | escape }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Castor Ingredients Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Label",
+      "default": "Formulated for absorption"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Heading",
+      "default": "What's inside"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Ingredient Icon (Emoji / Symbol)",
+          "default": "🌿"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient Name",
+          "default": "Ricinoleic Acid"
+        },
+        {
+          "type": "text",
+          "id": "function",
+          "label": "Primary Function Tag",
+          "default": "Root Fortification"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Ingredients Grid",
+      "blocks": [
+        { "type": "ingredient", "settings": { "icon": "🌱", "name": "Pure Castor Oil", "function": "Deep Moisture" } },
+        { "type": "ingredient", "settings": { "icon": "🧪", "name": "Vitamin E", "function": "Dermal Guard" } },
+        { "type": "ingredient", "settings": { "icon": "🌸", "name": "Rosemary Extract", "function": "Circulation" } },
+        { "type": "ingredient", "settings": { "icon": "🥑", "name": "Oleic Acid", "function": "Shaft Shine" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

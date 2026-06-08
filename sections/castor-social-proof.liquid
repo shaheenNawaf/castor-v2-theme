@@ -1,0 +1,140 @@
+{% if section.settings.enabled %}
+<div class="sp-bubble" id="spBubble" role="status" aria-live="polite">
+  <div class="sp-img-wrap" id="spImgWrap">
+    <img class="sp-product-img" id="spProductImg" src="" alt="" aria-hidden="true">
+    <div class="sp-img-placeholder" id="spImgPlaceholder">🌿</div>
+  </div>
+  <div>
+    <div class="sp-text" id="spText"></div>
+    <div class="sp-time" id="spTime"></div>
+  </div>
+  <div class="sp-dot"></div>
+</div>
+
+<script>
+(function() {
+  var events = [
+    {% for block in section.blocks %}
+      {% if block.type == 'purchase_event' %}
+        {
+          imgUrl: {{ block.settings.product_image | image_url: width: 80 | default: '' | json }},
+          name: {{ block.settings.customer_name | default: 'Someone' | json }},
+          product: {{ block.settings.product_label | default: '1 bottle' | json }},
+          time: {{ block.settings.time_ago | default: 'just now' | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endif %}
+    {% endfor %}
+  ];
+
+  if (!events.length) return;
+
+  var bubble      = document.getElementById('spBubble');
+  var imgEl       = document.getElementById('spProductImg');
+  var placeholder = document.getElementById('spImgPlaceholder');
+  var textEl      = document.getElementById('spText');
+  var timeEl      = document.getElementById('spTime');
+  var idx         = 0;
+  var showMs      = {{ section.settings.display_duration | default: 5 }} * 1000;
+  var pauseMs     = {{ section.settings.pause_between | default: 8 }} * 1000;
+
+  function showNext() {
+    var d = events[idx % events.length];
+    idx++;
+    if (d.imgUrl) {
+      imgEl.src = d.imgUrl;
+      imgEl.style.display = 'block';
+      placeholder.style.display = 'none';
+    } else {
+      imgEl.src = '';
+      imgEl.style.display = 'none';
+      placeholder.style.display = 'flex';
+    }
+    textEl.innerHTML = '<strong>' + d.name + '</strong> just ordered ' + d.product;
+    timeEl.textContent = d.time;
+    bubble.classList.add('show');
+    setTimeout(function() {
+      bubble.classList.remove('show');
+      setTimeout(showNext, pauseMs + Math.random() * pauseMs);
+    }, showMs);
+  }
+
+  setTimeout(showNext, {{ section.settings.show_delay | default: 3 }} * 1000);
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Castor Social Proof",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable Social Proof Bubble",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "show_delay",
+      "label": "Initial Delay (seconds)",
+      "default": 3
+    },
+    {
+      "type": "number",
+      "id": "display_duration",
+      "label": "Show Duration (seconds)",
+      "default": 5
+    },
+    {
+      "type": "number",
+      "id": "pause_between",
+      "label": "Pause Between Notifications (seconds)",
+      "default": 8
+    }
+  ],
+  "blocks": [
+    {
+      "type": "purchase_event",
+      "name": "Purchase Notification",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name + Location",
+          "default": "Sarah from Phoenix"
+        },
+        {
+          "type": "text",
+          "id": "product_label",
+          "label": "What They Ordered",
+          "default": "a 3-bottle bundle"
+        },
+        {
+          "type": "text",
+          "id": "time_ago",
+          "label": "Time Label",
+          "default": "2 minutes ago"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Social Proof",
+      "blocks": [
+        { "type": "purchase_event", "settings": { "customer_name": "Sarah from Phoenix", "product_label": "a 3-bottle bundle", "time_ago": "2 minutes ago" } },
+        { "type": "purchase_event", "settings": { "customer_name": "James from London", "product_label": "a single bottle", "time_ago": "4 minutes ago" } },
+        { "type": "purchase_event", "settings": { "customer_name": "Linda from Sydney", "product_label": "the 5-bottle bundle", "time_ago": "just now" } },
+        { "type": "purchase_event", "settings": { "customer_name": "Mike from Toronto", "product_label": "a 3-bottle bundle", "time_ago": "6 minutes ago" } },
+        { "type": "purchase_event", "settings": { "customer_name": "Anna from Berlin", "product_label": "a single bottle", "time_ago": "8 minutes ago" } },
+        { "type": "purchase_event", "settings": { "customer_name": "Rosa from Miami", "product_label": "the 5-bottle bundle", "time_ago": "just now" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

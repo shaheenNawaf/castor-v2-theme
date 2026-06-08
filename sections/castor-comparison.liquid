@@ -1,0 +1,131 @@
+<section class="compare-section">
+  <div class="compare-inner">
+    {% if section.settings.eyebrow != blank %}
+      <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+    {% endif %}
+    {% if section.settings.section_title != blank %}
+      <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+    {% endif %}
+
+  <div class="reveal" style="transition-delay:0.14s">
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>{{ section.settings.col_1_title | default: 'Feature' }}</th>
+        <th><span class="col-header-c">{{ section.settings.col_2_title | default: 'Castor' }}</span></th>
+        <th><span class="col-header-p">{{ section.settings.col_3_title | default: 'Others' }}</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for block in section.blocks %}
+        {% if block.type == 'comparison_row' %}
+          <tr {{ block.shopify_attributes }}>
+            <td>{{ block.settings.feature_name | escape }}</td>
+            <td>
+              {% if block.settings.castor_status %}
+                <span class="col-pill">{{ block.settings.castor_text | default: 'Yes' | escape }}</span>
+              {% else %}
+                <span class="col-pill-no">{{ block.settings.castor_text | default: 'No' | escape }}</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if block.settings.competitor_status %}
+                <span class="col-pill">{{ block.settings.competitor_text | default: 'Yes' | escape }}</span>
+              {% else %}
+                <span class="col-pill-no">{{ block.settings.competitor_text | default: 'No' | escape }}</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Castor Comparison Matrix",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Label",
+      "default": "Why it works differently"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Heading",
+      "default": "How Castor Compares"
+    },
+    {
+      "type": "text",
+      "id": "col_1_title",
+      "label": "Column 1 Label",
+      "default": "CRITERIA"
+    },
+    {
+      "type": "text",
+      "id": "col_2_title",
+      "label": "Column 2 Label (Castor)",
+      "default": "CASTOR"
+    },
+    {
+      "type": "text",
+      "id": "col_3_title",
+      "label": "Column 3 Label (Competitors)",
+      "default": "OTHERS"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison_row",
+      "name": "Comparison Matrix Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "feature_name",
+          "label": "Feature/Criteria Name",
+          "default": "100% Hexane-Free Extraction"
+        },
+        {
+          "type": "checkbox",
+          "id": "castor_status",
+          "label": "Castor Has Feature",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "castor_text",
+          "label": "Castor Custom Text Override",
+          "default": "Yes"
+        },
+        {
+          "type": "checkbox",
+          "id": "competitor_status",
+          "label": "Competitor Has Feature",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "competitor_text",
+          "label": "Competitor Custom Text Override",
+          "default": "No"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Comparison Matrix",
+      "blocks": [
+        { "type": "comparison_row", "settings": { "feature_name": "Cold-Pressed Processing", "castor_status": true, "competitor_status": false } },
+        { "type": "comparison_row", "settings": { "feature_name": "Amber Glass Shielding", "castor_status": true, "competitor_status": false } },
+        { "type": "comparison_row", "settings": { "feature_name": "Zero Added Toxins/Fillers", "castor_status": true, "competitor_status": true, "competitor_text": "Rarely" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

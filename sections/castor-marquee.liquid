@@ -1,0 +1,133 @@
+<div class="marquee-wrap">
+  {% if section.settings.label_text != blank %}
+    <div class="marquee-label">{{ section.settings.label_text | escape }}</div>
+  {% endif %}
+
+  <div class="marquee-track">
+    {% comment %} First pass {% endcomment %}
+    {% for block in section.blocks %}
+      {% if block.type == 'review' %}
+        {% assign star_count = block.settings.star_count | default: 5 %}
+        <div class="marquee-card" {{ block.shopify_attributes }}>
+          <div class="mc-top">
+            <div class="mc-avatar" style="background-color: {{ block.settings.avatar_bg_color }}; color: {{ block.settings.avatar_text_color }};">
+              {{ block.settings.avatar_initials | escape }}
+            </div>
+            <div>
+              <div class="mc-name">{{ block.settings.name | escape }}</div>
+              <div class="mc-loc">{{ block.settings.location | escape }}</div>
+            </div>
+          </div>
+          <div class="mc-stars">
+            {% for i in (1..star_count) %}★{% endfor %}
+          </div>
+          <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    {% comment %} Duplicate pass for seamless loop {% endcomment %}
+    {% for block in section.blocks %}
+      {% if block.type == 'review' %}
+        {% assign star_count = block.settings.star_count | default: 5 %}
+        <div class="marquee-card" aria-hidden="true">
+          <div class="mc-top">
+            <div class="mc-avatar" style="background-color: {{ block.settings.avatar_bg_color }}; color: {{ block.settings.avatar_text_color }};">
+              {{ block.settings.avatar_initials | escape }}
+            </div>
+            <div>
+              <div class="mc-name">{{ block.settings.name | escape }}</div>
+              <div class="mc-loc">{{ block.settings.location | escape }}</div>
+            </div>
+          </div>
+          <div class="mc-stars">
+            {% for i in (1..star_count) %}★{% endfor %}
+          </div>
+          <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Castor Review Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "label_text",
+      "label": "Marquee Eyebrow Label",
+      "default": "What customers are saying"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "avatar_initials",
+          "label": "Initials (2 chars max)",
+          "default": "AM"
+        },
+        {
+          "type": "color",
+          "id": "avatar_bg_color",
+          "label": "Avatar Background",
+          "default": "#eaf3de"
+        },
+        {
+          "type": "color",
+          "id": "avatar_text_color",
+          "label": "Avatar Text",
+          "default": "#2d5a2d"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Customer Name",
+          "default": "Amanda M."
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "Austin, TX"
+        },
+        {
+          "type": "select",
+          "id": "star_count",
+          "label": "Star Rating",
+          "default": "5",
+          "options": [
+            { "value": "3", "label": "3 stars" },
+            { "value": "4", "label": "4 stars" },
+            { "value": "5", "label": "5 stars" }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Review Quote",
+          "default": "My results completely transformed in just three short weeks."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Review Marquee",
+      "blocks": [
+        { "type": "review", "settings": { "avatar_initials": "SM", "avatar_bg_color": "#eaf3de", "avatar_text_color": "#2d5a2d", "name": "Sarah M.", "location": "Phoenix, AZ", "star_count": "5", "quote": "Room settled in under a minute." } },
+        { "type": "review", "settings": { "avatar_initials": "JR", "avatar_bg_color": "#e1f5ee", "avatar_text_color": "#0f6e56", "name": "James R.", "location": "Austin, TX", "star_count": "5", "quote": "Nothing else worked. This did." } },
+        { "type": "review", "settings": { "avatar_initials": "LC", "avatar_bg_color": "#faeeda", "avatar_text_color": "#854f0b", "name": "Linda C.", "location": "Denver, CO", "star_count": "5", "quote": "Finally flew without the spins." } },
+        { "type": "review", "settings": { "avatar_initials": "TK", "avatar_bg_color": "#faece7", "avatar_text_color": "#993c1d", "name": "Tanya K.", "location": "Seattle, WA", "star_count": "5", "quote": "No more Dramamine grogginess." } },
+        { "type": "review", "settings": { "avatar_initials": "MO", "avatar_bg_color": "#eeedfe", "avatar_text_color": "#534ab7", "name": "Mike O.", "location": "Chicago, IL", "star_count": "5", "quote": "Used it mid-episode. Instant calm." } },
+        { "type": "review", "settings": { "avatar_initials": "RN", "avatar_bg_color": "#fbeaf0", "avatar_text_color": "#993556", "name": "Rosa N.", "location": "Miami, FL", "star_count": "5", "quote": "I keep one in every bag I own." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

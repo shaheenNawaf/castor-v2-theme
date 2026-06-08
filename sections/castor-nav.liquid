@@ -1,0 +1,149 @@
+<header class="nav" style="background-color: {{ section.settings.bg_color }};">
+
+  <!-- Left: menu links -->
+  <nav class="nav-links">
+    {% if section.settings.menu != blank %}
+      {% for link in linklists[section.settings.menu].links %}
+        <a href="{{ link.url }}" style="color: {{ section.settings.link_color }};" {% if link.active %}class="active"{% endif %}>
+          {{ link.title | escape }}
+        </a>
+      {% endfor %}
+    {% else %}
+      <a href="#features"    style="color: {{ section.settings.link_color }};">Features</a>
+      <a href="#ingredients" style="color: {{ section.settings.link_color }};">Ingredients</a>
+      <a href="#reviews"     style="color: {{ section.settings.link_color }};">Reviews</a>
+    {% endif %}
+  </nav>
+
+  <!-- Center: logo -->
+  <a href="{{ routes.root_url }}" class="nav-logo" style="color: {{ section.settings.text_color }};">
+    {% if section.settings.logo_image != blank %}
+      {% assign logo_alt = section.settings.logo_image.alt | default: shop.name | escape %}
+      {{ section.settings.logo_image | image_url: width: 300 | image_tag: class: 'nav-logo-img', alt: logo_alt, loading: 'eager' }}
+    {% else %}
+      {{ section.settings.logo_text | default: shop.name }}
+    {% endif %}
+  </a>
+
+  <!-- Right: cart CTA -->
+  <div class="nav-right">
+    <a href="{{ section.settings.cart_url | default: routes.cart_url }}" class="nav-cart" style="background-color: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">
+      {% if section.settings.show_cart_icon %}
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;display:inline-block;vertical-align:middle;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      {% endif %}
+      <span>{{ section.settings.cart_btn_text | escape }}</span>
+    </a>
+  </div>
+
+</header>
+
+<style>
+  .nav-logo-img {
+    max-height: {{ section.settings.logo_max_height }}px;
+    width: auto;
+    display: block;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Castor Navigation",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo Branding"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo Text Fallback",
+      "default": "CASTOR"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "min": 10,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Logo Max Height",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Navigation Menu"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Header Menu"
+    },
+    {
+      "type": "header",
+      "content": "Call To Action Button"
+    },
+    {
+      "type": "text",
+      "id": "cart_btn_text",
+      "label": "Button Label",
+      "default": "Order Now"
+    },
+    {
+      "type": "url",
+      "id": "cart_url",
+      "label": "Button Link (Defaults to Cart Page)",
+      "info": "Leave blank to default to your standard checkout path."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_icon",
+      "label": "Show Shopping Cart Icon",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Color Overrides (Synced to CSS)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Navigation Background",
+      "default": "#1e3a1e"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Logo Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Menu Links",
+      "default": "#99aa99"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#4a7c4a"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Navigation"
+    }
+  ]
+}
+{% endschema %}

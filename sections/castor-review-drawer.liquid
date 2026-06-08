@@ -1,0 +1,142 @@
+<button class="castor-drawer-tab" id="drawerTab" onclick="openDrawerTab()" aria-label="Open reviews drawer" aria-expanded="false">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="writing-mode:horizontal-tb" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  <span>Reviews</span>
+</button>
+
+<div class="castor-drawer-overlay" id="overlayTrack" onclick="closeDrawerTab()"></div>
+
+<aside class="castor-drawer" id="reviewsDrawerElement" aria-label="Customer reviews" role="complementary">
+  <div class="castor-drawer-header">
+    <span class="castor-drawer-title">Customer reviews</span>
+    <button class="castor-drawer-close" onclick="closeDrawerTab()" aria-label="Close reviews">×</button>
+  </div>
+
+  <div class="castor-drawer-summary">
+    <div>
+      <div class="dr-rating">{{ section.settings.overall_rating | default: '4.8' }}</div>
+      <div class="dr-stars">★★★★★</div>
+    </div>
+    <div class="dr-count">Based on {{ section.settings.review_count | default: '1,247' }}<br>verified reviews</div>
+  </div>
+
+  <div class="review-list">
+    {% for block in section.blocks %}
+      {% if block.type == 'drawer_review' %}
+        {% assign star_rating = block.settings.star_rating | default: '5' | plus: 0 %}
+        <div class="review-item" {{ block.shopify_attributes }}>
+          <div class="ri-top">
+            <div class="ri-avatar" style="background-color: {{ block.settings.avatar_bg_color | default: '#eaf3de' }}; color: {{ block.settings.avatar_text_color | default: '#2d5a2d' }};">
+              {{ block.settings.reviewer_name | slice: 0, 2 | upcase }}
+            </div>
+            <div>
+              <div class="ri-name">{{ block.settings.reviewer_name | escape }}</div>
+              <div class="ri-loc">{{ block.settings.reviewer_location | escape }} · Verified</div>
+            </div>
+          </div>
+          <div class="ri-stars">
+            {% for i in (1..star_rating) %}★{% endfor %}
+          </div>
+          <div class="ri-quote">"{{ block.settings.reviewer_quote | escape }}"</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <button class="castor-drawer-cta" onclick="closeDrawerTab(); document.querySelector('#buy, .buy-section') && document.querySelector('#buy, .buy-section').scrollIntoView({behavior:'smooth'})">
+    Order Now →
+  </button>
+</aside>
+
+<script>
+function openDrawerTab() {
+  document.getElementById('reviewsDrawerElement').classList.add('is-open');
+  document.getElementById('overlayTrack').classList.add('is-open');
+  document.getElementById('drawerTab').setAttribute('aria-expanded', 'true');
+}
+function closeDrawerTab() {
+  document.getElementById('reviewsDrawerElement').classList.remove('is-open');
+  document.getElementById('overlayTrack').classList.remove('is-open');
+  document.getElementById('drawerTab').setAttribute('aria-expanded', 'false');
+}
+</script>
+
+{% schema %}
+{
+  "name": "Castor Review Drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overall_rating",
+      "label": "Overall Rating (e.g. 4.8)",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review Count Label",
+      "default": "1,247"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "drawer_review",
+      "name": "Review Entry",
+      "settings": [
+        {
+          "type": "text",
+          "id": "reviewer_name",
+          "label": "Reviewer Name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "reviewer_location",
+          "label": "Location",
+          "default": "Phoenix, AZ"
+        },
+        {
+          "type": "color",
+          "id": "avatar_bg_color",
+          "label": "Avatar Background",
+          "default": "#eaf3de"
+        },
+        {
+          "type": "color",
+          "id": "avatar_text_color",
+          "label": "Avatar Text Color",
+          "default": "#2d5a2d"
+        },
+        {
+          "type": "select",
+          "id": "star_rating",
+          "label": "Star Rating",
+          "default": "5",
+          "options": [
+            { "value": "3", "label": "3 stars" },
+            { "value": "4", "label": "4 stars" },
+            { "value": "5", "label": "5 stars" }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "reviewer_quote",
+          "label": "Review Quote",
+          "default": "Room actually settled in under a minute."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Review Drawer",
+      "blocks": [
+        { "type": "drawer_review", "settings": { "reviewer_name": "Sarah M.", "reviewer_location": "Phoenix, AZ", "avatar_bg_color": "#eaf3de", "avatar_text_color": "#2d5a2d", "star_rating": "5", "reviewer_quote": "Room actually settled in under a minute. I've had vertigo for three years and nothing worked this fast." } },
+        { "type": "drawer_review", "settings": { "reviewer_name": "James R.", "reviewer_location": "Austin, TX", "avatar_bg_color": "#e1f5ee", "avatar_text_color": "#0f6e56", "star_rating": "5", "reviewer_quote": "Dramamine put me to sleep. This just works." } },
+        { "type": "drawer_review", "settings": { "reviewer_name": "Linda C.", "reviewer_location": "Denver, CO", "avatar_bg_color": "#faeeda", "avatar_text_color": "#854f0b", "star_rating": "5", "reviewer_quote": "Finally flew coast-to-coast without gripping the seat." } },
+        { "type": "drawer_review", "settings": { "reviewer_name": "Mike O.", "reviewer_location": "Chicago, IL", "avatar_bg_color": "#eeedfe", "avatar_text_color": "#534ab7", "star_rating": "5", "reviewer_quote": "Used it mid-episode. Instant calm, no fog." } },
+        { "type": "drawer_review", "settings": { "reviewer_name": "Rosa N.", "reviewer_location": "Miami, FL", "avatar_bg_color": "#fbeaf0", "avatar_text_color": "#993556", "star_rating": "5", "reviewer_quote": "I keep one in every bag I own. My ENT even asked about it." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
