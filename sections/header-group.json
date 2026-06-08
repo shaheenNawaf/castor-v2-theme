@@ -110,7 +110,7 @@
         "show_announcement": true,
         "announcement_text": "Free worldwide shipping on orders over $50 · 100% Satisfaction Guaranteed",
         "announcement_bg": "#2d5a2d",
-        "announcement_text_color": "rgba(255,255,255,0.9)",
+        "announcement_text_color": "#ffffffe6",
         "sale_label_text": "FLASH SALE: Save 10% off today only! Sale ends in:",
         "countdown_hours": 4,
         "countdown_minutes": 32,
@@ -497,6 +497,48 @@
         "review_count": "1,247"
       }
     },
+    "castor_steps_fJwGBV": {
+      "type": "castor-steps",
+      "blocks": {
+        "step_AbpyRP": {
+          "type": "step",
+          "settings": {
+            "icon": "💧",
+            "title": "Apply Root Drops",
+            "description": "Gently massage 2-3 drops into clean target hair roots.",
+            "time": "Phase 1"
+          }
+        },
+        "step_KarkFK": {
+          "type": "step",
+          "settings": {
+            "icon": "🌿",
+            "title": "Deep Penetration",
+            "description": "Leave on to naturally optimize dermal micro-circulation.",
+            "time": "30 Mins"
+          }
+        },
+        "step_QjtUCg": {
+          "type": "step",
+          "settings": {
+            "icon": "🚿",
+            "title": "Clean Rinsing",
+            "description": "Wash clean with lukewarm clear water to complete the sequence.",
+            "time": "Morning"
+          }
+        }
+      },
+      "block_order": [
+        "step_AbpyRP",
+        "step_KarkFK",
+        "step_QjtUCg"
+      ],
+      "name": "Castor Steps Sequence",
+      "settings": {
+        "eyebrow": "Application to results",
+        "section_title": "How It Rejuvenates Your Routine"
+      }
+    },
     "castor_buy_box_LGCGnR": {
       "type": "castor-buy-box",
       "blocks": {
@@ -643,48 +685,6 @@
         "display_duration": 5,
         "pause_between": 8
       }
-    },
-    "castor_steps_fJwGBV": {
-      "type": "castor-steps",
-      "blocks": {
-        "step_AbpyRP": {
-          "type": "step",
-          "settings": {
-            "icon": "💧",
-            "title": "Apply Root Drops",
-            "description": "Gently massage 2-3 drops into clean target hair roots.",
-            "time": "Phase 1"
-          }
-        },
-        "step_KarkFK": {
-          "type": "step",
-          "settings": {
-            "icon": "🌿",
-            "title": "Deep Penetration",
-            "description": "Leave on to naturally optimize dermal micro-circulation.",
-            "time": "30 Mins"
-          }
-        },
-        "step_QjtUCg": {
-          "type": "step",
-          "settings": {
-            "icon": "🚿",
-            "title": "Clean Rinsing",
-            "description": "Wash clean with lukewarm clear water to complete the sequence.",
-            "time": "Morning"
-          }
-        }
-      },
-      "block_order": [
-        "step_AbpyRP",
-        "step_KarkFK",
-        "step_QjtUCg"
-      ],
-      "name": "Castor Steps Sequence",
-      "settings": {
-        "eyebrow": "Application to results",
-        "section_title": "How It Rejuvenates Your Routine"
-      }
     }
   },
   "order": [
@@ -699,8 +699,8 @@
     "castor_comparison_gmqfnE",
     "castor_ingred_bq9MQc",
     "castor_review_drawer_6YXwrQ",
+    "castor_steps_fJwGBV",
     "castor_buy_box_LGCGnR",
-    "castor_social_proof_deYQFh",
-    "castor_steps_fJwGBV"
+    "castor_social_proof_deYQFh"
   ]
 }
