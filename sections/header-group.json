@@ -115,8 +115,7 @@
         "countdown_hours": 4,
         "countdown_minutes": 32,
         "sale_bar_bg": "#ffffff",
-        "sale_bar_text_color": "#1e3a1e",
-        "label_color": "#a32d2d"
+        "sale_bar_text_color": "#1e3a1e"
       }
     },
     "castor_hero_GMH3gN": {
@@ -369,7 +368,7 @@
       ],
       "name": "Castor Comparison Matrix",
       "settings": {
-        "eyebrow": "Why it works differently",
+        "eyebrow": "",
         "section_title": "How Castor Compares",
         "col_1_title": "CRITERIA",
         "col_2_title": "CASTOR",
@@ -420,7 +419,7 @@
       ],
       "name": "Castor Ingredients Grid",
       "settings": {
-        "eyebrow": "Formulated for absorption",
+        "eyebrow": "",
         "section_title": "What's inside"
       }
     },
@@ -503,7 +502,8 @@
         "step_AbpyRP": {
           "type": "step",
           "settings": {
-            "icon": "💧",
+            "step_image": "shopify://shop_images/woman-holding-coffee-mug.jpg",
+            "icon": "",
             "title": "Apply Root Drops",
             "description": "Gently massage 2-3 drops into clean target hair roots.",
             "time": "Phase 1"
@@ -512,7 +512,8 @@
         "step_KarkFK": {
           "type": "step",
           "settings": {
-            "icon": "🌿",
+            "step_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
+            "icon": "",
             "title": "Deep Penetration",
             "description": "Leave on to naturally optimize dermal micro-circulation.",
             "time": "30 Mins"
@@ -521,7 +522,8 @@
         "step_QjtUCg": {
           "type": "step",
           "settings": {
-            "icon": "🚿",
+            "step_image": "shopify://shop_images/green-and-white-marbled-coloring.jpg",
+            "icon": "",
             "title": "Clean Rinsing",
             "description": "Wash clean with lukewarm clear water to complete the sequence.",
             "time": "Morning"
@@ -535,7 +537,7 @@
       ],
       "name": "Castor Steps Sequence",
       "settings": {
-        "eyebrow": "Application to results",
+        "eyebrow": "",
         "section_title": "How It Rejuvenates Your Routine"
       }
     },
@@ -606,13 +608,12 @@
       "custom_css": [],
       "name": "Castor Buy Box",
       "settings": {
-        "eyebrow": "Ready when you are",
+        "eyebrow": "",
         "section_title": "Choose your supply",
         "enable_subscription_toggle": true,
         "sub_heading": "Subscribe & Save an Extra 15%",
         "sub_subtext": "Free shipping, modify options or cancel anytime effortlessly.",
         "cta_label": "CLAIM YOUR BOTTLE NOW",
-        "payment_tags": "Visa, Mastercard, Amex, Apple Pay, PayPal",
         "show_guarantee": true,
         "guarantee_icon": "🛡️",
         "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>"
