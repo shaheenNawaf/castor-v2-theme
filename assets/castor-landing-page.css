@@ -233,14 +233,15 @@ h1, h2, h3,
 }
 .timer-sep { color: var(--green-soft); font-weight: 500; }
 
-/* ── Hero: 2-column split ────────────────────────────────────────── */
+/* ── Hero: full-bleed with overlay ──────────────────────────────── */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 88vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
   background: var(--green-dark);
   overflow: hidden;
-  position: relative;
 }
 /* Scroll-transition: bottom edge fades to cream */
 .hero::before {
@@ -254,24 +255,33 @@ h1, h2, h3,
   z-index: 3;
   pointer-events: none;
 }
-.hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5rem 3rem 5rem 5%;
-  position: relative;
-  z-index: 2;
-}
-.hero-img-wrap {
-  position: relative;
-  overflow: hidden;
+/* Dark overlay for text contrast */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10,20,10,0.60) 0%,
+    rgba(10,20,10,0.45) 60%,
+    rgba(10,20,10,0.55) 100%
+  );
   z-index: 1;
+  pointer-events: none;
 }
-.hero-img-main {
+/* Full-bleed media layer */
+.hero-img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.hero-img-main,
+.hero-video-bg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center;
   display: block;
 }
 .hero-img-placeholder {
@@ -279,9 +289,22 @@ h1, h2, h3,
   height: 100%;
   background: linear-gradient(160deg, var(--green-mid) 0%, var(--green-soft) 100%);
 }
+/* Content sits above overlay */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8rem 5% 10rem;
+  max-width: 780px;
+  width: 100%;
+}
 .trust-pills {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0.5rem;
   margin-bottom: 1.6rem;
 }
@@ -301,26 +324,27 @@ h1, h2, h3,
 .trust-pill:hover { background: rgba(255,255,255,0.2); }
 .badge-new { display: none; }
 .hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.2rem, 3.5vw, 3.6rem);
+  font-size: clamp(2.6rem, 5vw, 4.4rem);
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.1;
   color: #fff;
   margin: 0 0 1.2rem;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 .hero h1 em {
   font-style: italic;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255,255,255,0.9);
   font-weight: 500;
 }
 .stars-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   margin-bottom: 2rem;
   font-size: 13px;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.8);
 }
 .stars { color: var(--amber); font-size: 15px; letter-spacing: 2px; }
 .hero-cta {
@@ -328,13 +352,12 @@ h1, h2, h3,
   color: var(--green-dark);
   border: none;
   border-radius: 100px;
-  padding: 14px 32px;
+  padding: 16px 40px;
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.02em;
   cursor: pointer;
   display: inline-block;
-  align-self: flex-start;
   margin-bottom: 16px;
   position: relative;
   overflow: hidden;
@@ -343,30 +366,20 @@ h1, h2, h3,
 }
 .hero-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(10,22,10,0.28);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
   background: var(--cream);
 }
 .hero-cta:active { transform: scale(0.98); }
 .hero-sub {
   font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.55);
   margin: 0;
   line-height: 1.6;
 }
-@media (max-width: 768px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: unset;
-  }
-  .hero-img-wrap {
-    height: 52vw;
-    order: -1;
-  }
-  .hero-content {
-    padding: 2.5rem 1.5rem 3rem;
-  }
-  .hero h1 { font-size: clamp(1.9rem, 7vw, 2.8rem); }
-  .hero-cta { align-self: stretch; text-align: center; }
+@media (max-width: 640px) {
+  .hero-content { padding: 6rem 5% 8rem; }
+  .hero h1 { font-size: clamp(2rem, 8vw, 3rem); }
+  .hero-cta { padding: 14px 32px; }
 }
 
 /* ── Marquee ─────────────────────────────────────────────────────── */

@@ -1,6 +1,30 @@
 <section class="hero">
 
-  <!-- Left column: copy -->
+  <!-- Full-bleed media layer (behind overlay) -->
+  <div class="hero-img-wrap">
+    {% if section.settings.hero_video != blank %}
+      {{
+        section.settings.hero_video
+        | video_tag:
+          image_size: '1400x',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          controls: false,
+          class: 'hero-video-bg'
+      }}
+    {% elsif section.settings.hero_image != blank %}
+      {{ section.settings.hero_image | image_url: width: 1400 | image_tag:
+          class: 'hero-img-main',
+          alt: '',
+          loading: 'eager',
+          fetchpriority: 'high' }}
+    {% else %}
+      <div class="hero-img-placeholder"></div>
+    {% endif %}
+  </div>
+
+  <!-- Centered content (above overlay) -->
   <div class="hero-content">
 
     <div class="trust-pills stagger">
@@ -31,19 +55,6 @@
 
   </div>
 
-  <!-- Right column: photo -->
-  <div class="hero-img-wrap">
-    {% if section.settings.hero_image != blank %}
-      {{ section.settings.hero_image | image_url: width: 900 | image_tag:
-          class: 'hero-img-main',
-          alt: '',
-          loading: 'eager',
-          fetchpriority: 'high' }}
-    {% else %}
-      <div class="hero-img-placeholder"></div>
-    {% endif %}
-  </div>
-
 </section>
 
 {% schema %}
@@ -55,10 +66,16 @@
       "content": "Media Elements"
     },
     {
+      "type": "video",
+      "id": "hero_video",
+      "label": "Background Video",
+      "info": "Upload an MP4. Plays automatically on mute and loops. Takes priority over the image below."
+    },
+    {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero Image",
-      "info": "Leave blank to display the native branding placeholder."
+      "label": "Background Image (fallback)",
+      "info": "Used when no video is set."
     },
     {
       "type": "text",
