@@ -14,16 +14,19 @@
 <script>
 (function() {
   var events = [
-    {% for block in section.blocks %}
-      {% if block.type == 'purchase_event' %}
+    {%- assign sp_first = true -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'purchase_event' -%}
+        {%- unless sp_first -%},{%- endunless -%}
+        {%- assign sp_first = false -%}
         {
-          imgUrl: {{ block.settings.product_image | image_url: width: 80 | default: '' | json }},
+          imgUrl: {% if block.settings.product_image != blank %}{{ block.settings.product_image | image_url: width: 80 | json }}{% else %}null{% endif %},
           name: {{ block.settings.customer_name | default: 'Someone' | json }},
           product: {{ block.settings.product_label | default: '1 bottle' | json }},
           time: {{ block.settings.time_ago | default: 'just now' | json }}
-        }{% unless forloop.last %},{% endunless %}
-      {% endif %}
-    {% endfor %}
+        }
+      {%- endif -%}
+    {%- endfor -%}
   ];
 
   if (!events.length) return;
@@ -58,7 +61,12 @@
     }, showMs);
   }
 
-  setTimeout(showNext, {{ section.settings.show_delay | default: 3 }} * 1000);
+  var delay = {{ section.settings.show_delay | default: 3 }} * 1000;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(showNext, delay); });
+  } else {
+    setTimeout(showNext, delay);
+  }
 })();
 </script>
 {% endif %}

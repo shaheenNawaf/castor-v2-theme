@@ -1,167 +1,274 @@
-<section id="buy" class="buy-section" data-section-id="{{ section.id }}">
+<section id="buy" class="buy-section" data-section-id="{{ section.id }}" style="padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
   <div class="buy-inner">
-  {% if section.settings.eyebrow != blank %}
-    <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
-  {% endif %}
-  {% if section.settings.section_title != blank %}
-    <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
-  {% endif %}
 
-  {% comment %} Direct Ajax Cart Form Interface {% endcomment %}
-  <form method="post" action="/cart/add" id="castor-buybox-form-{{ section.id }}" enctype="multipart/form-data">
-    <input type="hidden" name="id" id="selected-variant-{{ section.id }}" value="">
-    <input type="hidden" name="quantity" value="1">
+    <!-- Full-width heading row -->
+    <div class="buy-heading-row">
+      {% if section.settings.eyebrow != blank %}
+        <p class="section-eyebrow reveal">{{ section.settings.eyebrow | escape }}</p>
+      {% endif %}
+      {% if section.settings.section_title != blank %}
+        <h2 class="section-heading reveal" style="transition-delay:0.08s">{{ section.settings.section_title | escape }}</h2>
+      {% endif %}
+    </div>
 
-    {% comment %} Quantity / Option Bundle Matrix {% endcomment %}
-    <div class="qty-grid">
-      {% for block in section.blocks %}
-        {% if block.type == 'bundle_option' %}
-          {% assign variant_id = block.settings.target_variant_id | strip %}
-          {% if variant_id == blank and block.settings.target_product != blank %}
-            {% assign variant_id = block.settings.target_product.first_available_variant.id %}
-          {% endif %}
-          {% if variant_id == blank %}
-            {% assign variant_id = block.settings.fallback_id %}
-          {% endif %}
-
-          <div class="qty-card {% if forloop.first %}active{% endif %}"
-               data-variant-id="{{ variant_id }}"
-               data-one-time-price="{{ block.settings.price_one_time | escape }}"
-               data-sub-price="{{ block.settings.price_subscription | escape }}"
-               {{ block.shopify_attributes }}>
-
-            <div class="qty-img-wrap">
-              {% if block.settings.tier_image != blank %}
-                {{ block.settings.tier_image | image_url: width: 300 | image_tag:
-                    class: 'qty-img',
-                    alt: block.settings.title_text,
+    <!-- Left col: product image gallery -->
+    <div class="buy-gallery reveal">
+      <div class="buy-main-img-wrap">
+        {% if section.settings.product_image != blank %}
+          {{ section.settings.product_image | image_url: width: 600 | image_tag:
+              class: 'buy-main-img',
+              alt: section.settings.section_title,
+              loading: 'eager',
+              id: 'buyMainImg' }}
+        {% else %}
+          <div class="buy-main-img-placeholder" id="buyMainImg"></div>
+        {% endif %}
+      </div>
+      <div class="buy-thumbs">
+        {% assign gallery_idx = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'gallery_image' %}
+            <div class="buy-thumb {% if gallery_idx == 0 %}active{% endif %}"
+                 data-full-src="{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 600 }}{% endif %}"
+                 {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 120 | image_tag:
+                    alt: block.settings.alt | default: '',
                     loading: 'lazy' }}
               {% else %}
-                <div class="qty-img-placeholder"></div>
+                <div class="buy-thumb-placeholder"></div>
               {% endif %}
             </div>
+            {% assign gallery_idx = gallery_idx | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
 
-            {% if block.settings.badge_text != blank %}
-              <span class="qty-badge">{{ block.settings.badge_text | escape }}</span>
+    <!-- Right col: bundle controls -->
+    <div class="buy-controls">
+      <form method="post" action="/cart/add" id="castor-buybox-form-{{ section.id }}" enctype="multipart/form-data">
+        <input type="hidden" name="id" id="selected-variant-{{ section.id }}" value="">
+        <input type="hidden" name="quantity" id="selected-quantity-{{ section.id }}" value="1">
+
+        <!-- Bundle tier rows -->
+        <div class="qty-list">
+          {% assign bundle_idx = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'bundle_option' %}
+              {% assign variant_id = block.settings.target_variant_id | strip %}
+              {% if variant_id == blank and block.settings.target_product != blank %}
+                {% assign variant_id = block.settings.target_product.first_available_variant.id %}
+              {% endif %}
+              {% if variant_id == blank %}
+                {% assign variant_id = block.settings.fallback_id %}
+              {% endif %}
+
+              <div class="qty-card {% if bundle_idx == 0 %}active{% endif %}"
+                   data-variant-id="{{ variant_id }}"
+                   data-one-time-price="{{ block.settings.price_one_time | escape }}"
+                   data-sub-price="{{ block.settings.price_subscription | escape }}"
+                   data-block-id="{{ block.id }}"
+                   {{ block.shopify_attributes }}>
+                <div class="qty-card-left">
+                  <span class="qty-title">{{ block.settings.title_text | escape }}</span>
+                  <span class="qty-desc">
+                    {{ block.settings.qty_label | default: block.settings.label_text | escape }}
+                    {% if block.settings.save_badge != blank %}
+                      <span class="qty-save-badge">{{ block.settings.save_badge | escape }}</span>
+                    {% endif %}
+                  </span>
+                </div>
+                <span class="qty-price" id="price-display-{{ block.id }}">{{ block.settings.price_one_time | escape }}</span>
+              </div>
+              {% assign bundle_idx = bundle_idx | plus: 1 %}
             {% endif %}
-            <div class="qty-label">{{ block.settings.label_text | escape }}</div>
-            <div class="qty-title">{{ block.settings.title_text | escape }}</div>
-            <div class="qty-price" id="price-display-{{ block.id }}">
-              {{ block.settings.price_one_time | escape }}
+          {% endfor %}
+        </div>
+
+        <!-- Custom order amount accordion -->
+        {% if section.settings.show_custom_order %}
+          <div class="buy-custom-order" id="buyCustomOrder-{{ section.id }}">
+            <button class="buy-custom-trigger" type="button" aria-expanded="false">
+              {{ section.settings.custom_order_label | default: 'Custom Order Amount' | escape }}
+              <span class="buy-custom-chevron">▾</span>
+            </button>
+            <div class="buy-custom-body" hidden>
+              <div class="buy-custom-stepper">
+                <button type="button" class="buy-stepper-btn" data-action="dec">−</button>
+                <input type="number" class="buy-custom-qty" min="1" value="1" id="buyCustomQty-{{ section.id }}">
+                <button type="button" class="buy-stepper-btn" data-action="inc">+</button>
+              </div>
             </div>
           </div>
         {% endif %}
-      {% endfor %}
-    </div>
 
-    {% comment %} Subscription Toggle Widget {% endcomment %}
-    {% if section.settings.enable_subscription_toggle %}
-      <div class="sub-toggle" id="sub-toggle-trigger-{{ section.id }}">
-        <div class="toggle-track" id="toggle-track-{{ section.id }}">
-          <div class="toggle-thumb"></div>
-        </div>
-        <div>
-          <div class="sub-text">{{ section.settings.sub_heading | escape }}</div>
-          <div class="sub-sub">{{ section.settings.sub_subtext | escape }}</div>
-        </div>
-      </div>
-    {% endif %}
-
-    {% comment %} Micro-Trust Output Row {% endcomment %}
-    <div class="micro-trust">
-      {% for block in section.blocks %}
-        {% if block.type == 'trust_item' %}
-          <div class="mt-item" {{ block.shopify_attributes }}>
-            <span>{{ block.settings.icon | escape }}</span>
-            <span>{{ block.settings.text | escape }}</span>
+        <!-- Global Subscribe & Save toggle -->
+        {% if section.settings.enable_subscription_toggle %}
+          <div class="buy-sub-row">
+            <div class="buy-sub-toggle-wrap">
+              <div class="toggle-track" id="globalSubTrack-{{ section.id }}">
+                <div class="toggle-thumb"></div>
+              </div>
+            </div>
+            <div class="buy-sub-text">
+              <strong>{{ section.settings.sub_heading | escape }}</strong>
+              <span>{{ section.settings.sub_subtext | escape }}</span>
+            </div>
+            <select class="buy-interval-select" aria-label="Subscription interval">
+              <option value="30" {% if section.settings.sub_interval_default == '30' %}selected{% endif %}>Every 30 days</option>
+              <option value="14" {% if section.settings.sub_interval_default == '14' %}selected{% endif %}>Every 14 days</option>
+              <option value="60" {% if section.settings.sub_interval_default == '60' %}selected{% endif %}>Every 60 days</option>
+              <option value="90" {% if section.settings.sub_interval_default == '90' %}selected{% endif %}>Every 90 days</option>
+            </select>
           </div>
         {% endif %}
-      {% endfor %}
-    </div>
 
-    {% comment %} Checkout Master CTA Button {% endcomment %}
-    <button type="submit" class="cta-btn reveal" style="transition-delay:0.1s">
-      <span class="shine"></span>
-      {{ section.settings.cta_label | escape }}
-    </button>
+        <!-- Micro-trust row -->
+        <div class="micro-trust">
+          {% for block in section.blocks %}
+            {% if block.type == 'trust_item' %}
+              <div class="mt-item" {{ block.shopify_attributes }}>
+                <span>{{ block.settings.icon | escape }}</span>
+                <span>{{ block.settings.text | escape }}</span>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
 
-    {% comment %} Payment Processing Network Icons {% endcomment %}
-    <div class="payment-icons">
-      {% for block in section.blocks %}
-        {% if block.type == 'payment_method' %}
-          {% if block.settings.logo != blank %}
-            {{ block.settings.logo | image_url: width: 80 | image_tag:
-                class: 'pay-logo-img', alt: block.settings.name, loading: 'lazy' }}
-          {% else %}
-            <span class="pay-icon">{{ block.settings.name | escape | upcase }}</span>
-          {% endif %}
+        <!-- Primary CTA -->
+        <button type="submit" class="cta-btn reveal" style="transition-delay:0.1s">
+          <span class="shine"></span>
+          {{ section.settings.cta_label | escape }}
+        </button>
+
+        <!-- Payment icons -->
+        <div class="payment-icons">
+          {% for block in section.blocks %}
+            {% if block.type == 'payment_method' %}
+              {% if block.settings.logo != blank %}
+                {{ block.settings.logo | image_url: width: 80 | image_tag:
+                    class: 'pay-logo-img', alt: block.settings.name, loading: 'lazy' }}
+              {% else %}
+                <span class="pay-icon">{{ block.settings.name | escape | upcase }}</span>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <!-- Guarantee -->
+        {% if section.settings.show_guarantee %}
+          <div class="guarantee reveal" style="transition-delay:0.2s">
+            <span style="font-size: 22px; line-height: 1;">{{ section.settings.guarantee_icon | escape }}</span>
+            <div class="guarantee-text">{{ section.settings.guarantee_html }}</div>
+          </div>
         {% endif %}
-      {% endfor %}
+      </form>
     </div>
 
-    {% comment %} Moneyback Guarantee Disclaimer {% endcomment %}
-    {% if section.settings.show_guarantee %}
-      <div class="guarantee reveal" style="transition-delay:0.2s">
-        <span style="font-size: 22px; line-height: 1;">{{ section.settings.guarantee_icon | escape }}</span>
-        <div class="guarantee-text">{{ section.settings.guarantee_html }}</div>
-      </div>
-    {% endif %}
-  </form>
   </div>
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var sectionContainer = document.querySelector('[data-section-id="{{ section.id }}"]');
-    if (!sectionContainer) return;
+  (function() {
+    function initBuyBox(sectionEl) {
+      var qtyCards      = sectionEl.querySelectorAll('.qty-card');
+      var variantInput  = sectionEl.querySelector('[id^="selected-variant-"]');
+      var qtyInput      = sectionEl.querySelector('[id^="selected-quantity-"]');
+      var mainImg       = sectionEl.querySelector('#buyMainImg');
+      var thumbs        = sectionEl.querySelectorAll('.buy-thumb');
+      var subTrack      = sectionEl.querySelector('[id^="globalSubTrack-"]');
+      var customOrder   = sectionEl.querySelector('[id^="buyCustomOrder-"]');
+      var customBody    = customOrder ? customOrder.querySelector('.buy-custom-body') : null;
+      var customTrigger = customOrder ? customOrder.querySelector('.buy-custom-trigger') : null;
+      var customQtyEl   = sectionEl.querySelector('[id^="buyCustomQty-"]');
+      var isSubscribed  = false;
 
-    var qtyCards = sectionContainer.querySelectorAll('.qty-card');
-    var variantInput = sectionContainer.querySelector('#selected-variant-{{ section.id }}');
-    var subToggle = sectionContainer.querySelector('#sub-toggle-trigger-{{ section.id }}');
-    var toggleTrack = sectionContainer.querySelector('#toggle-track-{{ section.id }}');
-    
-    var isSubscription = false;
+      // ── Gallery thumbnails ────────────────────────────────────
+      thumbs.forEach(function(thumb) {
+        thumb.addEventListener('click', function() {
+          var src = thumb.getAttribute('data-full-src');
+          if (src && mainImg && mainImg.tagName === 'IMG') {
+            mainImg.src = src;
+          }
+          thumbs.forEach(function(t) { t.classList.remove('active'); });
+          thumb.classList.add('active');
+        });
+      });
 
-    function syncState() {
+      // ── Card selection ────────────────────────────────────────
+      function syncPrices() {
+        qtyCards.forEach(function(card) {
+          var priceEl = card.querySelector('.qty-price');
+          if (!priceEl) return;
+          var sub  = card.getAttribute('data-sub-price');
+          var oneT = card.getAttribute('data-one-time-price');
+          priceEl.textContent = (isSubscribed && sub) ? sub : oneT;
+        });
+      }
+
+      function syncVariant() {
+        qtyCards.forEach(function(card) {
+          if (card.classList.contains('active') && variantInput) {
+            variantInput.value = card.getAttribute('data-variant-id') || '';
+          }
+        });
+      }
+
       qtyCards.forEach(function(card) {
-        var priceDisplay = card.querySelector('.qty-price');
-        if (isSubscription) {
-          priceDisplay.textContent = card.getAttribute('data-sub-price');
-        } else {
-          priceDisplay.textContent = card.getAttribute('data-one-time-price');
-        }
-
-        if (card.classList.contains('active')) {
-          variantInput.value = card.getAttribute('data-variant-id');
-        }
+        card.addEventListener('click', function() {
+          qtyCards.forEach(function(c) { c.classList.remove('active'); });
+          card.classList.add('active');
+          syncVariant();
+        });
       });
+
+      syncVariant();
+
+      // ── Global Subscribe & Save toggle ────────────────────────
+      if (subTrack) {
+        subTrack.parentElement.addEventListener('click', function() {
+          isSubscribed = !isSubscribed;
+          subTrack.classList.toggle('on', isSubscribed);
+          syncPrices();
+        });
+      }
+
+      // ── Custom order accordion ────────────────────────────────
+      if (customTrigger && customBody) {
+        customTrigger.addEventListener('click', function() {
+          var isOpen = !customBody.hidden;
+          customBody.hidden = isOpen;
+          customTrigger.setAttribute('aria-expanded', String(!isOpen));
+          if (customOrder) customOrder.classList.toggle('open', !isOpen);
+        });
+      }
+
+      // ── Custom quantity stepper ───────────────────────────────
+      sectionEl.querySelectorAll('.buy-stepper-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          if (!customQtyEl) return;
+          var val = parseInt(customQtyEl.value) || 1;
+          customQtyEl.value = btn.getAttribute('data-action') === 'inc' ? val + 1 : Math.max(1, val - 1);
+          if (qtyInput) qtyInput.value = customQtyEl.value;
+        });
+      });
+
+      if (customQtyEl && qtyInput) {
+        customQtyEl.addEventListener('input', function() {
+          qtyInput.value = Math.max(1, parseInt(customQtyEl.value) || 1);
+        });
+      }
     }
 
-    qtyCards.forEach(function(card) {
-      card.addEventListener('click', function() {
-        qtyCards.forEach(function(c) { c.classList.remove('active'); });
-        card.classList.add('active');
-        syncState();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.buy-section').forEach(initBuyBox);
       });
-    });
-
-    if (subToggle && toggleTrack) {
-      subToggle.addEventListener('click', function() {
-        isSubscription = !isSubscription;
-        if (isSubscription) {
-          toggleTrack.classList.add('on');
-        } else {
-          toggleTrack.classList.remove('on');
-        }
-        syncState();
-      });
+    } else {
+      document.querySelectorAll('.buy-section').forEach(initBuyBox);
     }
-
-    // Run baseline input calibration
-    if (qtyCards.length > 0) {
-      syncState();
-    }
-  });
+  })();
 </script>
 
 {% schema %}
@@ -182,29 +289,66 @@
       "type": "text",
       "id": "section_title",
       "label": "Section Heading",
-      "default": "Start your ritual."
+      "default": "Choose Your Supply"
     },
     {
       "type": "header",
-      "content": "Subscription Configurations"
+      "content": "Product Gallery"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Main Product Image"
+    },
+    {
+      "type": "header",
+      "content": "Subscription"
     },
     {
       "type": "checkbox",
       "id": "enable_subscription_toggle",
-      "label": "Enable Auto-Replenish Switch",
+      "label": "Show Subscribe & Save",
       "default": true
     },
     {
       "type": "text",
       "id": "sub_heading",
-      "label": "Subscription Pitch Title",
-      "default": "Subscribe & Never Run Out — 15% off, always"
+      "label": "Subscribe & Save Label",
+      "default": "Subscribe & Save"
     },
     {
       "type": "text",
       "id": "sub_subtext",
-      "label": "Subscription Logistics Subtext",
-      "default": "Pause, skip, cancel whenever. No drama."
+      "label": "Subscribe Subtext",
+      "default": "Save an extra 15%"
+    },
+    {
+      "type": "select",
+      "id": "sub_interval_default",
+      "label": "Default Interval",
+      "default": "30",
+      "options": [
+        { "value": "14", "label": "Every 14 days" },
+        { "value": "30", "label": "Every 30 days" },
+        { "value": "60", "label": "Every 60 days" },
+        { "value": "90", "label": "Every 90 days" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Custom Order"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_custom_order",
+      "label": "Show Custom Order Amount",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "custom_order_label",
+      "label": "Custom Order Label",
+      "default": "Custom Order Amount"
     },
     {
       "type": "header",
@@ -213,42 +357,67 @@
     {
       "type": "text",
       "id": "cta_label",
-      "label": "Primary Button Copy",
-      "default": "Add to Ritual"
+      "label": "Button Text",
+      "default": "Add to Cart"
     },
     {
       "type": "header",
-      "content": "Guarantee Terms"
+      "content": "Guarantee"
     },
     {
       "type": "checkbox",
       "id": "show_guarantee",
-      "label": "Show Trust Protection Block",
+      "label": "Show Guarantee Block",
       "default": true
     },
     {
       "type": "text",
       "id": "guarantee_icon",
-      "label": "Protection Badge Icon (Emoji)",
+      "label": "Guarantee Icon",
       "default": "🛡️"
     },
     {
       "type": "html",
       "id": "guarantee_html",
-      "label": "Guarantee Policy Copy",
-      "default": "<strong>Not feeling it?</strong> We'll refund you — no questions, no guilt, no return needed. 30 full days."
+      "label": "Guarantee Copy",
+      "default": "<strong>100% Satisfaction Guarantee or your money back.</strong>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 72
     }
   ],
   "blocks": [
     {
-      "type": "bundle_option",
-      "name": "Bundle Package Tier",
+      "type": "gallery_image",
+      "name": "Gallery Thumbnail",
       "settings": [
         {
           "type": "image_picker",
-          "id": "tier_image",
-          "label": "Package Photo"
+          "id": "image",
+          "label": "Thumbnail Image"
         },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt Text"
+        }
+      ]
+    },
+    {
+      "type": "bundle_option",
+      "name": "Bundle Package Tier",
+      "settings": [
         {
           "type": "product",
           "id": "target_product",
@@ -257,61 +426,89 @@
         {
           "type": "text",
           "id": "target_variant_id",
-          "label": "Shopify Variant ID Override",
-          "info": "Optional: Paste exact numeric Variant ID from your Shopify Admin Product URL. If left blank, it automatically targets the first available variant of the product selected above."
+          "label": "Variant ID Override",
+          "info": "Optional. Leave blank to use first available variant of the product above."
         },
         {
           "type": "text",
           "id": "fallback_id",
-          "label": "Manual Variant ID Backup Rule",
-          "info": "Hardcoded ultimate backup ID string."
-        },
-        {
-          "type": "text",
-          "id": "badge_text",
-          "label": "Floating Ribbed Tag",
-          "default": "BEST SELLER"
-        },
-        {
-          "type": "text",
-          "id": "label_text",
-          "label": "Package Quantity Category",
-          "default": "3X BOTTLE SUPPLY"
+          "label": "Fallback Variant ID"
         },
         {
           "type": "text",
           "id": "title_text",
-          "label": "Main Package Headline",
-          "default": "Ultimate Growth Treatment Plan"
+          "label": "Package Name",
+          "default": "Starter"
+        },
+        {
+          "type": "text",
+          "id": "qty_label",
+          "label": "Quantity Label",
+          "default": "1 Bottle",
+          "info": "e.g. 1 Bottle, 2 Bottles, 3 Bottles"
+        },
+        {
+          "type": "text",
+          "id": "save_badge",
+          "label": "Save Badge",
+          "info": "e.g. Save 10%. Leave blank to hide."
         },
         {
           "type": "text",
           "id": "price_one_time",
-          "label": "Standard Pricing Display String",
-          "default": "$49.95"
+          "label": "One-Time Price",
+          "default": "$9.90"
         },
         {
           "type": "text",
           "id": "price_subscription",
-          "label": "Subscription Pricing Display String",
-          "default": "$42.45"
+          "label": "Subscription Price",
+          "default": "$8.40"
+        },
+        {
+          "type": "text",
+          "id": "label_text",
+          "label": "Legacy Quantity Label",
+          "info": "Used as fallback if Quantity Label above is blank."
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Legacy Badge",
+          "info": "No longer displayed in this card layout."
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "Feature Bullet 1",
+          "info": "No longer displayed in this card layout."
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "Feature Bullet 2"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "Feature Bullet 3"
         }
       ]
     },
     {
       "type": "trust_item",
-      "name": "Micro-Trust Bullet",
+      "name": "Trust Bullet",
       "settings": [
         {
           "type": "text",
           "id": "icon",
-          "label": "Icon Badge (Emoji / Symbol)",
+          "label": "Icon (Emoji)",
           "default": "✓"
         },
         {
           "type": "text",
           "id": "text",
-          "label": "Trust Note Value",
+          "label": "Trust Note",
           "default": "Free US Shipping"
         }
       ]
@@ -329,8 +526,7 @@
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "Payment Logo",
-          "info": "Upload a PNG/SVG logo. If left blank, the method name shows as a text pill."
+          "label": "Payment Logo"
         }
       ]
     }
@@ -339,16 +535,19 @@
     {
       "name": "Castor Buy Box",
       "blocks": [
-        { "type": "bundle_option", "settings": { "badge_text": "", "label_text": "JUST TRYING IT", "title_text": "The First Timer", "price_one_time": "$19.95", "price_subscription": "$16.95" } },
-        { "type": "bundle_option", "settings": { "badge_text": "fan favourite", "label_text": "MOST POPULAR", "title_text": "The Ritual", "price_one_time": "$49.95", "price_subscription": "$42.45" } },
-        { "type": "bundle_option", "settings": { "badge_text": "best value", "label_text": "BEST VALUE", "title_text": "The Deep Dive", "price_one_time": "$79.95", "price_subscription": "$67.95" } },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "bundle_option", "settings": { "title_text": "Starter", "qty_label": "1 Bottle", "save_badge": "", "price_one_time": "$9.90", "price_subscription": "$8.40" } },
+        { "type": "bundle_option", "settings": { "title_text": "Rejuvenate", "qty_label": "2 Bottles", "save_badge": "Save 10%", "price_one_time": "$12.90", "price_subscription": "$10.95" } },
+        { "type": "bundle_option", "settings": { "title_text": "Complete", "qty_label": "3 Bottles", "save_badge": "Save 20%", "price_one_time": "$16.90", "price_subscription": "$13.50" } },
         { "type": "trust_item", "settings": { "icon": "📦", "text": "Dispatched within 24 hours" } },
         { "type": "trust_item", "settings": { "icon": "🔒", "text": "Secure Checkout" } },
+        { "type": "trust_item", "settings": { "icon": "🛡️", "text": "30-Day Money-back guarantee" } },
         { "type": "payment_method", "settings": { "name": "Visa" } },
         { "type": "payment_method", "settings": { "name": "Mastercard" } },
-        { "type": "payment_method", "settings": { "name": "Amex" } },
-        { "type": "payment_method", "settings": { "name": "Apple Pay" } },
-        { "type": "payment_method", "settings": { "name": "PayPal" } }
+        { "type": "payment_method", "settings": { "name": "Apple Pay" } }
       ]
     }
   ]

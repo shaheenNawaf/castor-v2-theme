@@ -96,11 +96,12 @@
         "cart_btn_text": "Order Now",
         "cart_url": "",
         "show_cart_icon": false,
-        "bg_color": "#1e3a1e",
-        "text_color": "#ffffff",
-        "link_color": "#99aa99",
-        "btn_bg_color": "#4a7c4a",
-        "btn_text_color": "#ffffff"
+        "bg_color": "#1A2E1A",
+        "text_color": "#FDFBF7",
+        "link_color": "#FDFBF7",
+        "btn_bg_color": "#FDFBF7",
+        "btn_text_color": "#1A2E1A",
+        "btn_style": "outlined"
       }
     },
     "castor_sale_banner_Ggbghc": {
@@ -111,64 +112,12 @@
         "announcement_text": "Free worldwide shipping on orders over $50 · 100% Satisfaction Guaranteed",
         "announcement_bg": "#2d5a2d",
         "announcement_text_color": "#ffffffe6",
-        "sale_label_text": "FLASH SALE: Save 10% off today only! Sale ends in:",
-        "countdown_hours": 4,
-        "countdown_minutes": 32,
-        "sale_bar_bg": "#ffffff",
-        "sale_bar_text_color": "#1e3a1e"
-      }
-    },
-    "castor_stats_marquee_PKhNhP": {
-      "type": "castor-stats-marquee",
-      "blocks": {
-        "stat_item_q7wYCA": {
-          "type": "stat_item",
-          "settings": {
-            "icon": "⭐",
-            "text": "Enjoyed by 12,000+ customers"
-          }
-        },
-        "stat_item_PTm7bM": {
-          "type": "stat_item",
-          "settings": {
-            "icon": "🚚",
-            "text": "Free shipping on orders above $50"
-          }
-        },
-        "stat_item_aiXgtf": {
-          "type": "stat_item",
-          "settings": {
-            "icon": "🌿",
-            "text": "Sourced from organic Jamaican farms"
-          }
-        },
-        "stat_item_AgRPi7": {
-          "type": "stat_item",
-          "settings": {
-            "icon": "🔬",
-            "text": "3rd-party lab tested"
-          }
-        },
-        "stat_item_UQXqnc": {
-          "type": "stat_item",
-          "settings": {
-            "icon": "🛡️",
-            "text": "90-day money-back guarantee"
-          }
-        }
-      },
-      "block_order": [
-        "stat_item_q7wYCA",
-        "stat_item_PTm7bM",
-        "stat_item_aiXgtf",
-        "stat_item_AgRPi7",
-        "stat_item_UQXqnc"
-      ],
-      "name": "Castor Stats Marquee",
-      "settings": {
-        "background_color": "#1e3a1e",
-        "text_color": "#ffffff",
-        "speed": 44
+        "sale_label_text": "Limited 10% discount on all orders",
+        "countdown_days": 2,
+        "countdown_hours": 2,
+        "countdown_minutes": 10,
+        "sale_bar_bg": "#FDFBF7",
+        "sale_bar_text_color": "#1A2E1A"
       }
     },
     "castor_hero_GMH3gN": {
@@ -176,11 +125,89 @@
       "name": "Castor Hero",
       "settings": {
         "badge_text": "",
-        "heading": "Elevate Your Ritual With <em>Organic Castor</em> Oil",
+        "heading": "Elevate your health with Vitelia Organic Castor Oil Roll-on",
         "rating_text": "4.9 · 12,000+ verified reviews",
-        "subtext": "90-day money-back guarantee · Free shipping over $100 · Cancel anytime",
+        "subtext": "90-day money-back guarantee · Free shipping · Cancel anytime",
         "cta_text": "Are you ready to be soothed?",
         "cta_url": ""
+      }
+    },
+    "castor_lifestyle_grid_X1": {
+      "type": "castor-lifestyle-grid",
+      "name": "Lifestyle Grid",
+      "blocks": {
+        "lifestyle_img_a1": {
+          "type": "lifestyle_image",
+          "settings": {
+            "alt_text": "Applying castor oil to scalp"
+          }
+        },
+        "lifestyle_img_b2": {
+          "type": "lifestyle_image",
+          "settings": {
+            "alt_text": "Castor oil bottle close-up"
+          }
+        },
+        "lifestyle_img_c3": {
+          "type": "lifestyle_image",
+          "settings": {
+            "alt_text": "Hair care ritual"
+          }
+        }
+      },
+      "block_order": [
+        "lifestyle_img_a1",
+        "lifestyle_img_b2",
+        "lifestyle_img_c3"
+      ],
+      "settings": {
+        "heading": "Soothing, Bottled"
+      }
+    },
+    "castor_featured_on_X2": {
+      "type": "castor-featured-on",
+      "name": "Featured On",
+      "blocks": {
+        "brand_logo_s1": {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Sephora"
+          }
+        },
+        "brand_logo_u2": {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Ulta"
+          }
+        },
+        "brand_logo_g3": {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Goop"
+          }
+        },
+        "brand_logo_c4": {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "Credo"
+          }
+        },
+        "brand_logo_t5": {
+          "type": "brand_logo",
+          "settings": {
+            "brand_name": "The Detox Market"
+          }
+        }
+      },
+      "block_order": [
+        "brand_logo_s1",
+        "brand_logo_u2",
+        "brand_logo_g3",
+        "brand_logo_c4",
+        "brand_logo_t5"
+      ],
+      "settings": {
+        "label": "Featured On"
       }
     },
     "castor_live_chat_LCwyVy": {
@@ -359,329 +386,41 @@
         "pause_between": 8
       }
     },
-    "castor_marquee_8Gh4T7": {
-      "type": "castor-marquee",
-      "blocks": {
-        "review_idnxWt": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "SM",
-            "avatar_bg_color": "#eaf3de",
-            "avatar_text_color": "#2d5a2d",
-            "name": "Sarah M.",
-            "location": "Phoenix, AZ",
-            "star_count": "5",
-            "quote": "Room settled in under a minute."
-          }
-        },
-        "review_fttcP7": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "JR",
-            "avatar_bg_color": "#e1f5ee",
-            "avatar_text_color": "#0f6e56",
-            "name": "James R.",
-            "location": "Austin, TX",
-            "star_count": "5",
-            "quote": "Nothing else worked. This did."
-          }
-        },
-        "review_HzRwfe": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "LC",
-            "avatar_bg_color": "#faeeda",
-            "avatar_text_color": "#854f0b",
-            "name": "Linda C.",
-            "location": "Denver, CO",
-            "star_count": "5",
-            "quote": "Finally flew without the spins."
-          }
-        },
-        "review_AKFMj6": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "TK",
-            "avatar_bg_color": "#faece7",
-            "avatar_text_color": "#993c1d",
-            "name": "Tanya K.",
-            "location": "Seattle, WA",
-            "star_count": "5",
-            "quote": "No more Dramamine grogginess."
-          }
-        },
-        "review_pa4HNf": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "MO",
-            "avatar_bg_color": "#eeedfe",
-            "avatar_text_color": "#534ab7",
-            "name": "Mike O.",
-            "location": "Chicago, IL",
-            "star_count": "5",
-            "quote": "Used it mid-episode. Instant calm."
-          }
-        },
-        "review_eH4bzH": {
-          "type": "review",
-          "settings": {
-            "avatar_initials": "RN",
-            "avatar_bg_color": "#fbeaf0",
-            "avatar_text_color": "#993556",
-            "name": "Rosa N.",
-            "location": "Miami, FL",
-            "star_count": "5",
-            "quote": "I keep one in every bag I own."
-          }
-        }
-      },
-      "block_order": [
-        "review_idnxWt",
-        "review_fttcP7",
-        "review_HzRwfe",
-        "review_AKFMj6",
-        "review_pa4HNf",
-        "review_eH4bzH"
-      ],
-      "name": "Castor Review Marquee",
-      "settings": {
-        "label_text": "What customers are saying"
-      }
-    },
-    "castor_comparison_gmqfnE": {
-      "type": "castor-comparison",
-      "blocks": {
-        "comparison_row_Tx8RjF": {
-          "type": "comparison_row",
-          "settings": {
-            "feature_name": "Cold-Pressed Processing",
-            "castor_status": true,
-            "castor_text": "Yes",
-            "competitor_status": false,
-            "competitor_text": "No"
-          }
-        },
-        "comparison_row_Lpcz4n": {
-          "type": "comparison_row",
-          "settings": {
-            "feature_name": "Amber Glass Shielding",
-            "castor_status": true,
-            "castor_text": "Yes",
-            "competitor_status": false,
-            "competitor_text": "No"
-          }
-        },
-        "comparison_row_LqmXTk": {
-          "type": "comparison_row",
-          "settings": {
-            "feature_name": "Zero Added Toxins/Fillers",
-            "castor_status": true,
-            "castor_text": "Yes",
-            "competitor_status": true,
-            "competitor_text": "Rarely"
-          }
-        }
-      },
-      "block_order": [
-        "comparison_row_Tx8RjF",
-        "comparison_row_Lpcz4n",
-        "comparison_row_LqmXTk"
-      ],
-      "name": "Castor Comparison Matrix",
-      "settings": {
-        "left_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
-        "right_image": "shopify://shop_images/a-hand-removes-a-sweater-from-a-clothing-rack.jpg",
-        "eyebrow": "",
-        "section_title": "How Castor Compares",
-        "col_1_title": "CRITERIA",
-        "col_2_title": "CASTOR",
-        "col_3_title": "OTHERS"
-      }
-    },
-    "castor_ingred_bq9MQc": {
-      "type": "castor-ingred",
-      "blocks": {
-        "ingredient_7LypDR": {
-          "type": "ingredient",
-          "settings": {
-            "ingredient_image": "shopify://shop_images/rack-of-womens-clothing.jpg",
-            "icon": "🌱",
-            "name": "Pure Castor Oil",
-            "function": "Deep Moisture"
-          }
-        },
-        "ingredient_U8CEkT": {
-          "type": "ingredient",
-          "settings": {
-            "ingredient_image": "shopify://shop_images/a-bridge-sitting-in-thick-pink-and-purple-fog.jpg",
-            "icon": "🧪",
-            "name": "Vitamin E",
-            "function": "Dermal Guard"
-          }
-        },
-        "ingredient_b8pVJn": {
-          "type": "ingredient",
-          "settings": {
-            "ingredient_image": "shopify://shop_images/autumn-photographer-taking-picture.jpg",
-            "icon": "🌸",
-            "name": "Rosemary Extract",
-            "function": "Circulation"
-          }
-        },
-        "ingredient_C9ifNq": {
-          "type": "ingredient",
-          "settings": {
-            "ingredient_image": "shopify://shop_images/for-you-shelf.jpg",
-            "icon": "🥑",
-            "name": "Oleic Acid",
-            "function": "Shaft Shine"
-          }
-        }
-      },
-      "block_order": [
-        "ingredient_7LypDR",
-        "ingredient_U8CEkT",
-        "ingredient_b8pVJn",
-        "ingredient_C9ifNq"
-      ],
-      "name": "Castor Ingredients Grid",
-      "settings": {
-        "eyebrow": "",
-        "section_title": "What's inside"
-      }
-    },
-    "castor_review_drawer_6YXwrQ": {
-      "type": "castor-review-drawer",
-      "blocks": {
-        "drawer_review_EEWg3U": {
-          "type": "drawer_review",
-          "settings": {
-            "reviewer_name": "Sarah M.",
-            "reviewer_location": "Phoenix, AZ",
-            "avatar_bg_color": "#eaf3de",
-            "avatar_text_color": "#2d5a2d",
-            "star_rating": "5",
-            "reviewer_quote": "Room actually settled in under a minute. I've had vertigo for three years and nothing worked this fast."
-          }
-        },
-        "drawer_review_WLHBXT": {
-          "type": "drawer_review",
-          "settings": {
-            "reviewer_name": "James R.",
-            "reviewer_location": "Austin, TX",
-            "avatar_bg_color": "#e1f5ee",
-            "avatar_text_color": "#0f6e56",
-            "star_rating": "5",
-            "reviewer_quote": "Dramamine put me to sleep. This just works."
-          }
-        },
-        "drawer_review_iKTjYU": {
-          "type": "drawer_review",
-          "settings": {
-            "reviewer_name": "Linda C.",
-            "reviewer_location": "Denver, CO",
-            "avatar_bg_color": "#faeeda",
-            "avatar_text_color": "#854f0b",
-            "star_rating": "5",
-            "reviewer_quote": "Finally flew coast-to-coast without gripping the seat."
-          }
-        },
-        "drawer_review_Gkc9Pj": {
-          "type": "drawer_review",
-          "settings": {
-            "reviewer_name": "Mike O.",
-            "reviewer_location": "Chicago, IL",
-            "avatar_bg_color": "#eeedfe",
-            "avatar_text_color": "#534ab7",
-            "star_rating": "5",
-            "reviewer_quote": "Used it mid-episode. Instant calm, no fog."
-          }
-        },
-        "drawer_review_eNUTqN": {
-          "type": "drawer_review",
-          "settings": {
-            "reviewer_name": "Rosa N.",
-            "reviewer_location": "Miami, FL",
-            "avatar_bg_color": "#fbeaf0",
-            "avatar_text_color": "#993556",
-            "star_rating": "5",
-            "reviewer_quote": "I keep one in every bag I own. My ENT even asked about it."
-          }
-        }
-      },
-      "block_order": [
-        "drawer_review_EEWg3U",
-        "drawer_review_WLHBXT",
-        "drawer_review_iKTjYU",
-        "drawer_review_Gkc9Pj",
-        "drawer_review_eNUTqN"
-      ],
-      "disabled": true,
-      "name": "Castor Review Drawer",
-      "settings": {
-        "overall_rating": "4.8",
-        "review_count": "1,247"
-      }
-    },
-    "castor_steps_fJwGBV": {
-      "type": "castor-steps",
-      "blocks": {
-        "step_AbpyRP": {
-          "type": "step",
-          "settings": {
-            "step_image": "shopify://shop_images/woman-holding-coffee-mug.jpg",
-            "icon": "",
-            "title": "Apply Root Drops",
-            "description": "Gently massage 2-3 drops into clean target hair roots.",
-            "time": "Phase 1"
-          }
-        },
-        "step_KarkFK": {
-          "type": "step",
-          "settings": {
-            "step_image": "shopify://shop_images/person-stands-on-rocks-poking-out-of-the-ocean-shoreline.jpg",
-            "icon": "",
-            "title": "Deep Penetration",
-            "description": "Leave on to naturally optimize dermal micro-circulation.",
-            "time": "30 Mins"
-          }
-        },
-        "step_QjtUCg": {
-          "type": "step",
-          "settings": {
-            "step_image": "shopify://shop_images/green-and-white-marbled-coloring.jpg",
-            "icon": "",
-            "title": "Clean Rinsing",
-            "description": "Wash clean with lukewarm clear water to complete the sequence.",
-            "time": "Morning"
-          }
-        }
-      },
-      "block_order": [
-        "step_AbpyRP",
-        "step_KarkFK",
-        "step_QjtUCg"
-      ],
-      "name": "Castor Steps Sequence",
-      "settings": {
-        "eyebrow": "",
-        "section_title": "How It Rejuvenates Your Routine"
-      }
-    },
     "castor_buy_box_LGCGnR": {
       "type": "castor-buy-box",
       "blocks": {
+        "gallery_img_1": {
+          "type": "gallery_image",
+          "settings": {}
+        },
+        "gallery_img_2": {
+          "type": "gallery_image",
+          "settings": {}
+        },
+        "gallery_img_3": {
+          "type": "gallery_image",
+          "settings": {}
+        },
+        "gallery_img_4": {
+          "type": "gallery_image",
+          "settings": {}
+        },
         "bundle_option_C9jeNW": {
           "type": "bundle_option",
           "settings": {
             "target_product": "",
             "target_variant_id": "",
             "fallback_id": "",
-            "badge_text": "BEST SELLER",
+            "badge_text": "",
             "label_text": "1X BOTTLE",
-            "title_text": "Starter Pack",
+            "qty_label": "1 Bottle",
+            "save_badge": "",
+            "title_text": "Starter",
             "price_one_time": "$19.95",
-            "price_subscription": "$16.95"
+            "price_subscription": "$16.95",
+            "feature_1": "Pure cold-pressed castor oil",
+            "feature_2": "Portable roll-on, mess-free",
+            "feature_3": "90-day money-back guarantee"
           }
         },
         "bundle_option_Ht7Xca": {
@@ -690,11 +429,16 @@
             "target_product": "",
             "target_variant_id": "",
             "fallback_id": "",
-            "badge_text": "MOST POPULAR",
+            "badge_text": "fan favourite",
             "label_text": "3X BOTTLES",
-            "title_text": "Rejuvenate Plan",
+            "qty_label": "2 Bottles",
+            "save_badge": "Save 10%",
+            "title_text": "Rejuvenate",
             "price_one_time": "$49.95",
-            "price_subscription": "$42.45"
+            "price_subscription": "$42.45",
+            "feature_1": "Pure cold-pressed castor oil",
+            "feature_2": "Zero fillers, zero compromise",
+            "feature_3": "90-day money-back guarantee"
           }
         },
         "bundle_option_aqfgnG": {
@@ -703,11 +447,16 @@
             "target_product": "",
             "target_variant_id": "",
             "fallback_id": "",
-            "badge_text": "BEST VALUE",
+            "badge_text": "best value",
             "label_text": "6X BOTTLES",
-            "title_text": "Complete Renewal",
+            "qty_label": "3 Bottles",
+            "save_badge": "Save 20%",
+            "title_text": "Complete",
             "price_one_time": "$79.95",
-            "price_subscription": "$67.95"
+            "price_subscription": "$67.95",
+            "feature_1": "Pure cold-pressed castor oil",
+            "feature_2": "Best value per bottle",
+            "feature_3": "90-day money-back guarantee"
           }
         },
         "trust_item_EAYyb9": {
@@ -727,7 +476,7 @@
         "trust_item_4VP6UA": {
           "type": "trust_item",
           "settings": {
-            "icon": "🔒",
+            "icon": "🛡️",
             "text": "30-Day Money-back guarantee"
           }
         },
@@ -739,6 +488,10 @@
         }
       },
       "block_order": [
+        "gallery_img_1",
+        "gallery_img_2",
+        "gallery_img_3",
+        "gallery_img_4",
         "bundle_option_C9jeNW",
         "bundle_option_Ht7Xca",
         "bundle_option_aqfgnG",
@@ -750,59 +503,149 @@
       "custom_css": [],
       "name": "Castor Buy Box",
       "settings": {
-        "eyebrow": "",
-        "section_title": "Choose your supply",
+        "eyebrow": "you've scrolled this far.",
+        "section_title": "Choose Your Supply",
         "enable_subscription_toggle": true,
-        "sub_heading": "Subscribe & Save an Extra 15%",
-        "sub_subtext": "Free shipping, modify options or cancel anytime effortlessly.",
-        "cta_label": "ADD TO CART",
+        "sub_heading": "Subscribe & Save",
+        "sub_subtext": "Save an extra 15%",
+        "sub_interval_default": "30",
+        "show_custom_order": true,
+        "custom_order_label": "Custom Order Amount",
+        "cta_label": "Add to Cart",
         "show_guarantee": false,
         "guarantee_icon": "🛡️",
-        "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>"
+        "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>",
+        "section_padding": 72
+      }
+    },
+    "castor_marquee_8Gh4T7": {
+      "type": "castor-marquee",
+      "blocks": {
+        "review_idnxWt": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "SM",
+            "avatar_bg_color": "#eaf3de",
+            "avatar_text_color": "#2d5a2d",
+            "name": "Sarah M.",
+            "location": "Phoenix, AZ",
+            "star_count": "5",
+            "quote": "I gave it 14 days and my edges actually came back. Nothing else worked like this."
+          }
+        },
+        "review_fttcP7": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "JR",
+            "avatar_bg_color": "#e1f5ee",
+            "avatar_text_color": "#0f6e56",
+            "name": "James R.",
+            "location": "Austin, TX",
+            "star_count": "5",
+            "quote": "Smells amazing, absorbs fast, and I've noticed real thickness coming back in the crown."
+          }
+        },
+        "review_HzRwfe": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "LC",
+            "avatar_bg_color": "#faeeda",
+            "avatar_text_color": "#854f0b",
+            "name": "Linda C.",
+            "location": "Denver, CO",
+            "star_count": "5",
+            "quote": "I keep one in every bag. It's the one product I genuinely can't live without right now."
+          }
+        },
+        "review_AKFMj6": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "TK",
+            "avatar_bg_color": "#faece7",
+            "avatar_text_color": "#993c1d",
+            "name": "Tanya K.",
+            "location": "Seattle, WA",
+            "star_count": "5",
+            "quote": "Three weeks in and my scalp hasn't felt this healthy in years. Total convert."
+          }
+        },
+        "review_pa4HNf": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "MO",
+            "avatar_bg_color": "#eeedfe",
+            "avatar_text_color": "#534ab7",
+            "name": "Mike O.",
+            "location": "Chicago, IL",
+            "star_count": "5",
+            "quote": "Zero fillers means zero guilt. I read the label once and I was sold."
+          }
+        },
+        "review_eH4bzH": {
+          "type": "review",
+          "settings": {
+            "avatar_initials": "RN",
+            "avatar_bg_color": "#fbeaf0",
+            "avatar_text_color": "#993556",
+            "name": "Rosa N.",
+            "location": "Miami, FL",
+            "star_count": "5",
+            "quote": "Parul was right — 14 days and the difference is visible. My hair thanks me every morning."
+          }
+        }
+      },
+      "block_order": [
+        "review_idnxWt",
+        "review_fttcP7",
+        "review_HzRwfe",
+        "review_AKFMj6",
+        "review_pa4HNf",
+        "review_eH4bzH"
+      ],
+      "name": "Castor Review Marquee",
+      "settings": {
+        "section_heading": "Real Results from Real Rituals",
+        "layout": "grid",
+        "label_text": "What customers are saying",
+        "section_padding": 72
       }
     },
     "castor_testimonial_tb66Yq": {
       "type": "castor-testimonial",
       "name": "Castor Testimonial",
       "settings": {
-        "type": "doctor",
-        "eyebrow": "",
-        "quote": "This product transformed my hair care routine in ways I never expected. Within two weeks I noticed significant improvement in thickness and shine.",
-        "name": "Dr. Sarah Okonkwo",
-        "title": "MD, Board-Certified Dermatologist",
-        "bg_color": "#f7f4ee"
+        "heading": "Dermatologist Approved",
+        "quote": "I gave it 14 days. My edges gave me back two years.",
+        "name": "Parul, D.",
+        "title": "Professional",
+        "bg_color": "#FDFBF7"
       }
     },
     "castor_mini_buy_gzY47t": {
       "type": "castor-mini-buy",
       "name": "Castor Mini Buy",
       "settings": {
-        "eyebrow": "Limited time offer",
-        "heading": "Still thinking about it?",
-        "price_text": "From $19.95 · Free shipping",
-        "cta_label": "Claim Your Bottle",
-        "cta_url": "",
-        "trust_line": "90-day guarantee · Ships within 24 hrs · Cancel anytime",
-        "bg_color": "#1e3a1e"
+        "heading": "Ready to find your soothe?",
+        "subtext": "Scroll back to the Choose Your Supply.",
+        "cta_label": "Shop Now",
+        "cta_url": "#buy",
+        "bg_color": "#E8EDE8"
       }
     }
   },
   "order": [
     "header_section",
-    "castor_nav_EADiQh",
     "castor_sale_banner_Ggbghc",
-    "castor_stats_marquee_PKhNhP",
+    "castor_nav_EADiQh",
     "castor_hero_GMH3gN",
+    "castor_lifestyle_grid_X1",
+    "castor_featured_on_X2",
     "castor_live_chat_LCwyVy",
     "castor_offer_tab_PNynDB",
     "castor_exit_intent_3hC7cD",
     "castor_social_proof_deYQFh",
-    "castor_marquee_8Gh4T7",
-    "castor_comparison_gmqfnE",
-    "castor_ingred_bq9MQc",
-    "castor_review_drawer_6YXwrQ",
-    "castor_steps_fJwGBV",
     "castor_buy_box_LGCGnR",
+    "castor_marquee_8Gh4T7",
     "castor_testimonial_tb66Yq",
     "castor_mini_buy_gzY47t"
   ]

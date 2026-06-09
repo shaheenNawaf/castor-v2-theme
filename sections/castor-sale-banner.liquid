@@ -5,26 +5,47 @@
     </div>
   {% endif %}
 
-  <div class="sale-bar" style="background-color: {{ section.settings.sale_bar_bg }};">
-    <span class="sale-label">
-      <em>{{ section.settings.sale_label_text | escape }}</em>
-    </span>
-    <span class="sale-bar-sep">—</span>
-    <div class="timer" aria-label="Countdown timer">
-      <div class="timer-unit" id="timer-hours-{{ section.id }}">04</div>
+  {% assign timer_font = section.settings.timer_font | default: 'playfair' %}
+  {% if timer_font == 'inter' %}
+    {% assign timer_font_css = "'Inter', sans-serif" %}
+  {% else %}
+    {% assign timer_font_css = "'Playfair Display', serif" %}
+  {% endif %}
+  {% assign timer_color = section.settings.timer_color | default: '#A67C52' %}
+
+  <div class="sale-bar" style="background-color: {{ section.settings.sale_bar_bg }}; color: {{ section.settings.sale_bar_text_color }}; padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
+    <span class="sale-label">{{ section.settings.sale_label_text | escape }}</span>
+    <div class="timer" aria-label="Countdown timer" style="font-family: {{ timer_font_css }}; --timer-color: {{ timer_color }};">
+      <div class="timer-block">
+        <div class="timer-unit" id="timer-days-{{ section.id }}">02</div>
+        <span class="timer-label">days</span>
+      </div>
       <span class="timer-sep">:</span>
-      <div class="timer-unit" id="timer-minutes-{{ section.id }}">32</div>
+      <div class="timer-block">
+        <div class="timer-unit" id="timer-hours-{{ section.id }}">10</div>
+        <span class="timer-label">hours</span>
+      </div>
       <span class="timer-sep">:</span>
-      <div class="timer-unit" id="timer-seconds-{{ section.id }}">59</div>
+      <div class="timer-block">
+        <div class="timer-unit" id="timer-minutes-{{ section.id }}">52</div>
+        <span class="timer-label">min</span>
+      </div>
+      <span class="timer-sep">:</span>
+      <div class="timer-block">
+        <div class="timer-unit" id="timer-seconds-{{ section.id }}">54</div>
+        <span class="timer-label">sec</span>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    var totalSeconds = parseInt({{ section.settings.countdown_hours | default: 4 }}) * 3600
-                     + parseInt({{ section.settings.countdown_minutes | default: 32 }}) * 60;
+    var totalSeconds = parseInt({{ section.settings.countdown_days | default: 2 }}) * 86400
+                     + parseInt({{ section.settings.countdown_hours | default: 2 }}) * 3600
+                     + parseInt({{ section.settings.countdown_minutes | default: 10 }}) * 60;
 
+    var daysEl    = document.getElementById('timer-days-{{ section.id }}');
     var hoursEl   = document.getElementById('timer-hours-{{ section.id }}');
     var minutesEl = document.getElementById('timer-minutes-{{ section.id }}');
     var secondsEl = document.getElementById('timer-seconds-{{ section.id }}');
@@ -40,14 +61,17 @@
       if (totalSeconds <= 0) { clearInterval(timerInterval); return; }
       totalSeconds--;
 
-      var h = Math.floor(totalSeconds / 3600);
+      var d = Math.floor(totalSeconds / 86400);
+      var h = Math.floor((totalSeconds % 86400) / 3600);
       var m = Math.floor((totalSeconds % 3600) / 60);
       var s = totalSeconds % 60;
 
+      var nd = d < 10 ? '0' + d : String(d);
       var nh = h < 10 ? '0' + h : String(h);
       var nm = m < 10 ? '0' + m : String(m);
       var ns = s < 10 ? '0' + s : String(s);
 
+      if (daysEl    && daysEl.textContent    !== nd) { daysEl.textContent    = nd; bumpEl(daysEl); }
       if (hoursEl   && hoursEl.textContent   !== nh) { hoursEl.textContent   = nh; bumpEl(hoursEl); }
       if (minutesEl && minutesEl.textContent !== nm) { minutesEl.textContent = nm; bumpEl(minutesEl); }
       if (secondsEl && secondsEl.textContent !== ns) { secondsEl.textContent = ns; bumpEl(secondsEl); }
@@ -102,6 +126,12 @@
     },
     {
       "type": "number",
+      "id": "countdown_days",
+      "label": "Countdown Days",
+      "default": 2
+    },
+    {
+      "type": "number",
       "id": "countdown_hours",
       "label": "Countdown Hours",
       "default": 4
@@ -114,6 +144,22 @@
     },
     {
       "type": "color",
+      "id": "timer_color",
+      "label": "Countdown Digit Color",
+      "default": "#A67C52"
+    },
+    {
+      "type": "select",
+      "id": "timer_font",
+      "label": "Countdown Font",
+      "default": "playfair",
+      "options": [
+        { "value": "playfair", "label": "Playfair Display (Serif)" },
+        { "value": "inter", "label": "Inter (Sans-serif)" }
+      ]
+    },
+    {
+      "type": "color",
       "id": "sale_bar_bg",
       "label": "Sale Bar Background",
       "default": "#f7f4ee"
@@ -123,6 +169,20 @@
       "id": "sale_bar_text_color",
       "label": "Sale Bar Text Color",
       "default": "#1e3a1e"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Bar Padding",
+      "min": 4,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 12
     }
   ],
   "presets": [

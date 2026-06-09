@@ -1,0 +1,88 @@
+<section class="lifestyle-section" style="padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
+  {% if section.settings.heading != blank %}
+    <h2 class="section-heading lifestyle-heading reveal">{{ section.settings.heading | escape }}</h2>
+  {% endif %}
+  {% if section.settings.subtext != blank %}
+    <p class="lifestyle-sub reveal" style="transition-delay:0.06s">{{ section.settings.subtext | escape }}</p>
+  {% endif %}
+
+  <div class="lifestyle-grid stagger">
+    {% for block in section.blocks %}
+      {% if block.type == 'lifestyle_image' %}
+        <div class="lifestyle-img-wrap" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 700 | image_tag:
+                class: 'lifestyle-img',
+                loading: 'lazy',
+                alt: block.settings.alt_text }}
+          {% else %}
+            <div class="lifestyle-img-placeholder"></div>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Castor Lifestyle Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Soothing, Bottled"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext (optional)",
+      "info": "Short line below the heading."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "lifestyle_image",
+      "name": "Lifestyle Photo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text",
+          "default": "Product lifestyle photo"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Castor Lifestyle Grid",
+      "blocks": [
+        { "type": "lifestyle_image", "settings": { "alt_text": "Applying castor oil to scalp" } },
+        { "type": "lifestyle_image", "settings": { "alt_text": "Castor oil bottle close-up" } },
+        { "type": "lifestyle_image", "settings": { "alt_text": "Hair care ritual" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

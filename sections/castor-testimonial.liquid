@@ -1,41 +1,61 @@
-<section class="testimonial-section" style="background-color: {{ section.settings.bg_color }};">
+<section class="testimonial-section" style="background-color: {{ section.settings.bg_color }}; padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
   <div class="testimonial-inner">
 
+    <!-- Left: heading, quote, attribution -->
     <div class="test-left reveal">
-      {% assign badge_label = 'VERIFIED BUYER' %}
-      {% if section.settings.type == 'doctor' %}
-        {% assign badge_label = 'DERMATOLOGIST APPROVED' %}
-      {% endif %}
-      <span class="test-type-badge">{{ badge_label }}</span>
-
-      {% if section.settings.eyebrow != blank %}
-        <p class="section-eyebrow" style="margin-bottom: 12px;">{{ section.settings.eyebrow | escape }}</p>
+      {% if section.settings.heading != blank %}
+        <h2 class="test-heading">{{ section.settings.heading | escape }}</h2>
       {% endif %}
 
       <blockquote class="test-quote">
-        {{ section.settings.quote | default: 'This product transformed my hair care routine in ways I never expected.' | escape }}
+        {{ section.settings.quote | default: 'This product transformed my hair care routine.' | escape }}
       </blockquote>
 
       <div class="test-attribution">
-        {% if section.settings.name != blank %}
-          <p class="test-name">{{ section.settings.name | escape }}</p>
+        {% if section.settings.avatar != blank %}
+          <div class="test-avatar-wrap">
+            {{ section.settings.avatar | image_url: width: 80 | image_tag:
+                class: 'test-avatar',
+                alt: section.settings.name,
+                loading: 'lazy' }}
+          </div>
+        {% else %}
+          <div class="test-avatar-placeholder"></div>
         {% endif %}
-        {% if section.settings.title != blank %}
-          <p class="test-title">{{ section.settings.title | escape }}</p>
-        {% endif %}
+        <div class="test-attr-text">
+          {% if section.settings.name != blank %}
+            <p class="test-name">{{ section.settings.name | escape }}</p>
+          {% endif %}
+          {% if section.settings.title != blank %}
+            <p class="test-title">{{ section.settings.title | escape }}</p>
+          {% endif %}
+        </div>
       </div>
     </div>
 
+    <!-- Right: two portrait photos -->
     <div class="test-right reveal" style="transition-delay: 0.12s;">
-      <div class="test-img-wrap">
-        {% if section.settings.image != blank %}
-          {{ section.settings.image | image_url: width: 600 | image_tag:
-              class: 'test-img',
-              alt: section.settings.name,
-              loading: 'lazy' }}
-        {% else %}
-          <div class="test-img-placeholder"></div>
-        {% endif %}
+      <div class="test-photos">
+        <div class="test-photo-wrap">
+          {% if section.settings.image_1 != blank %}
+            {{ section.settings.image_1 | image_url: width: 500 | image_tag:
+                class: 'test-photo',
+                alt: section.settings.name,
+                loading: 'lazy' }}
+          {% else %}
+            <div class="test-photo-placeholder"></div>
+          {% endif %}
+        </div>
+        <div class="test-photo-wrap">
+          {% if section.settings.image_2 != blank %}
+            {{ section.settings.image_2 | image_url: width: 500 | image_tag:
+                class: 'test-photo',
+                alt: '',
+                loading: 'lazy' }}
+          {% else %}
+            <div class="test-photo-placeholder"></div>
+          {% endif %}
+        </div>
       </div>
     </div>
 
@@ -47,20 +67,14 @@
   "name": "Castor Testimonial",
   "settings": [
     {
-      "type": "select",
-      "id": "type",
-      "label": "Testimonial Type",
-      "options": [
-        { "value": "customer", "label": "Customer" },
-        { "value": "doctor", "label": "Doctor / Professional" }
-      ],
-      "default": "customer"
+      "type": "header",
+      "content": "Section Content"
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow Label",
-      "default": "from someone who actually tried it"
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Dermatologist Approved"
     },
     {
       "type": "textarea",
@@ -69,35 +83,68 @@
       "default": "I gave it 14 days. My edges gave me back two years."
     },
     {
+      "type": "header",
+      "content": "Attribution"
+    },
+    {
+      "type": "image_picker",
+      "id": "avatar",
+      "label": "Doctor / Person Photo (avatar)"
+    },
+    {
       "type": "text",
       "id": "name",
       "label": "Name",
-      "default": "Dr. Sarah Okonkwo"
+      "default": "Parul, D."
     },
     {
       "type": "text",
       "id": "title",
-      "label": "Title / Credential",
-      "default": "MD, Board-Certified Dermatologist"
+      "label": "Title / Role",
+      "default": "Professional"
+    },
+    {
+      "type": "header",
+      "content": "Side Images"
     },
     {
       "type": "image_picker",
-      "id": "image",
-      "label": "Photo"
+      "id": "image_1",
+      "label": "Image One (left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image Two (right)"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
     },
     {
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
       "default": "#f7f4ee"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "min": 0,
+      "max": 160,
+      "step": 8,
+      "unit": "px",
+      "default": 72
     }
   ],
   "presets": [
     {
-      "name": "Castor Testimonial",
-      "settings": {
-        "type": "doctor"
-      }
+      "name": "Castor Testimonial"
     }
   ]
 }

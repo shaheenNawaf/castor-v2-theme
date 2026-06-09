@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero" style="min-height: {{ section.settings.section_height }}vh;">
 
   <!-- Full-bleed media layer (behind overlay) -->
   <div class="hero-img-wrap">
@@ -121,6 +121,20 @@
       "id": "cta_url",
       "label": "Button Destination",
       "info": "Leave blank to scroll to the buy box."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_height",
+      "label": "Section Height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "default": 65
     }
   ],
   "blocks": [
