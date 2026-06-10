@@ -650,7 +650,7 @@ h1, h2, h3,
 .buy-trust-text  { font-size: 13px; color: var(--text-mid); font-weight: 500; }
 .buy-gallery { grid-column: 1; }
 .buy-controls { grid-column: 2; }
-.qty-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 12px; padding-top: 14px; }
+.qty-list { display: flex; flex-direction: column; gap: 18px; margin-bottom: 12px; padding-top: 14px; }
 .qty-card {
   display: flex;
   align-items: center;
