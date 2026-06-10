@@ -313,6 +313,20 @@
         "section_padding": 72
       }
     },
+    "castor_hero_wXxG4V": {
+      "type": "castor-hero",
+      "name": "Castor Hero",
+      "settings": {
+        "hero_video": "shopify://files/videos/download.mp4",
+        "badge_text": "NEW FORMULA",
+        "heading": "Your skin has been asking for this.<em>You just found it.</em>",
+        "rating_text": "4.9 • 10k+ reviews",
+        "subtext": "",
+        "cta_text": "Start My Ritual",
+        "cta_url": "",
+        "section_height": 55
+      }
+    },
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
@@ -515,6 +529,7 @@
     "castor_featured_on_X2",
     "castor_marquee_8Gh4T7",
     "castor_testimonial_tb66Yq",
+    "castor_hero_wXxG4V",
     "product_list_fa6P9H"
   ]
 }

@@ -256,10 +256,25 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "castor_hero_cart": {
+      "type": "castor-hero",
+      "name": "Castor Hero",
+      "settings": {
+        "hero_video": "shopify://files/videos/download.mp4",
+        "badge_text": "NEW FORMULA",
+        "heading": "Your skin has been asking for this.<em>You just found it.</em>",
+        "rating_text": "4.9 • 10k+ reviews",
+        "subtext": "",
+        "cta_text": "Start My Ritual",
+        "cta_url": "",
+        "section_height": 55
+      }
     }
   },
   "order": [
     "cart-section",
-    "product_list_NNFgcy"
+    "product_list_NNFgcy",
+    "castor_hero_cart"
   ]
 }

@@ -2482,3 +2482,80 @@ h1, h2, h3,
 .pt-logo:hover { opacity: 1; }
 
 /* ── Footer newsletter ───────────────────────────────────────────── */
+
+/* === CART PAGE === */
+
+/* Checkout button — brand green pill */
+.cart__checkout-button {
+  background: #2F7830 !important;
+  border-radius: 100px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  transition: background 0.2s ease, transform 0.2s var(--ease-out) !important;
+}
+.cart__checkout-button:hover {
+  background: #265f27 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Cart page background */
+body.template-cart { background: var(--cream); }
+
+/* Cart heading */
+.cart-page__title h1,
+.cart-page__title h2,
+.cart-page__title h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Summary panel card */
+.cart-page__summary {
+  background: var(--cream);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 4px 24px rgba(26,46,26,0.07);
+}
+
+/* Discount input */
+.cart-discount__input {
+  background: var(--cream-mid) !important;
+  border: 1.5px solid var(--cream-dark) !important;
+  border-radius: var(--radius-md) !important;
+}
+.cart-discount__input:focus {
+  border-color: #2F7830 !important;
+  outline: none !important;
+}
+
+/* Product image corners */
+.cart-items__media-image {
+  border-radius: var(--radius-md) !important;
+}
+
+/* Trust strip */
+.cart-trust-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--cream-dark);
+}
+.cart-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.cart-trust-item svg {
+  flex-shrink: 0;
+  color: #2F7830;
+}
+
+@media (max-width: 768px) {
+  .cart-trust-strip { gap: 6px; }
+  .cart-trust-item { font-size: 11px; }
+}
