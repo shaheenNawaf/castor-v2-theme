@@ -353,6 +353,38 @@
       syncVariant();
       syncPrices();
 
+      // ── AJAX add-to-cart ──────────────────────────────────────────
+      var form = sectionEl.querySelector('[id^="cro-hero-form-"]');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var id = variantInput ? variantInput.value.trim() : '';
+          if (!id) return;
+          var btn = form.querySelector('.cro-cta');
+          if (btn) btn.disabled = true;
+          if (ctaTextEl) ctaTextEl.textContent = 'Adding...';
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: parseInt(id, 10), quantity: 1 })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.id) {
+              window.location.href = '/cart';
+            } else {
+              if (btn) btn.disabled = false;
+              if (ctaTextEl) ctaTextEl.textContent = ctaBase;
+            }
+          })
+          .catch(function() {
+            if (btn) btn.disabled = false;
+            if (ctaTextEl) ctaTextEl.textContent = ctaBase;
+          });
+        });
+      }
+
       // ── Ensure first valid-image thumb starts active ──────────────
       (function() {
         var hasActive = false;

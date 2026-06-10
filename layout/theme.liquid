@@ -41,9 +41,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    {{ 'castor-landing-page.css' | asset_url | stylesheet_tag }}
+    {% if template == 'index' %}
+      {{ 'castor-landing-page.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'castor-scripts.js' | asset_url }}" defer></script>
+    {% endif %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
-    <script src="{{ 'castor-scripts.js' | asset_url }}" defer></script>
   </head>
 
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
