@@ -1,4 +1,12 @@
-<section class="lifestyle-section" id="benefits" style="padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
+{%- assign main_img_ratio = 0.75 -%}
+{%- assign main_img_found = false -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'lifestyle_image' and block.settings.image != blank and main_img_found == false -%}
+    {%- assign main_img_ratio = block.settings.image.aspect_ratio -%}
+    {%- assign main_img_found = true -%}
+  {%- endif -%}
+{%- endfor -%}
+<section class="lifestyle-section" id="benefits" style="padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px; --main-img-ratio: {{ main_img_ratio }};">
   {% if section.settings.heading != blank %}
     <h2 class="section-heading lifestyle-heading reveal">{{ section.settings.heading | escape }}</h2>
   {% endif %}
