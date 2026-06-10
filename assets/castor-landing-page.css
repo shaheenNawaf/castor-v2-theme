@@ -2485,7 +2485,6 @@ h1, h2, h3,
     grid-template-columns: 1fr;
     max-width: 480px;
   }
-  .cro-hero { padding-left: 20px; padding-right: 20px; }
   .cro-left  { order: 1; text-align: center; align-items: center; }
   .cro-center { order: 2; }
   .cro-card  { order: 3; }
