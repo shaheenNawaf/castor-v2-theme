@@ -2324,7 +2324,7 @@ h1, h2, h3,
 .cro-card form { display: flex; flex-direction: column; gap: 14px; }
 .cro-card-heading {
   font-family: 'Playfair Display', serif;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: 700;
   color: var(--text-dark);
   line-height: 1.2;
@@ -2429,8 +2429,6 @@ h1, h2, h3,
   gap: 8px;
   justify-content: center;
   padding: 4px 0 2px;
-  border-top: 1px solid var(--cream-dark);
-  margin-top: 4px;
 }
 .cro-attr-chip {
   font-family: 'Inter', sans-serif;
