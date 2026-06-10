@@ -2338,7 +2338,7 @@ h1, h2, h3,
 .cro-card form { display: flex; flex-direction: column; gap: 14px; }
 .cro-card-heading {
   font-family: 'Playfair Display', serif;
-  font-size: 30px;
+  font-size: clamp(20px, 5vw, 30px);
   font-weight: 700;
   color: var(--text-dark);
   line-height: 1.2;
@@ -2631,4 +2631,119 @@ body.template-cart { background: var(--cream); }
   background: #265f27 !important;
   color: #fff !important;
   transform: translateY(-2px) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVENESS FIXES
+   Consolidated overrides for all sections not covered by per-section
+   breakpoints above.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+
+  /* ── C1: Steps row — stack to single column ─────────────────────── */
+  .steps-row {
+    flex-direction: column;
+    gap: 40px;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .step-img-wrap {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  /* ── C2: Drawer — cap to 85vw so it never exceeds viewport ────────── */
+  .castor-drawer {
+    width: min(300px, 85vw);
+  }
+
+  /* ── C3: Chat panel — cap to viewport minus padding ──────────────── */
+  .castor-chat-panel {
+    width: min(300px, calc(100vw - 32px));
+    right: 0;
+  }
+
+  /* ── C4: Gift FAB — move above chat bubble instead of beside it ──── */
+  .castor-gift-fab {
+    right: 16px;
+    bottom: 88px;
+  }
+
+  /* ── M3: Touch targets — 44px minimum (Apple HIG) ───────────────── */
+  .nav-cart {
+    min-height: 44px;
+    padding: 0 16px;
+  }
+  .buy-thumb-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .buy-stepper-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .castor-chat-send {
+    width: 44px;
+    height: 44px;
+  }
+  .castor-chat-chip {
+    padding: 10px 14px;
+  }
+  .cro-sub-tab {
+    padding: 12px 14px;
+  }
+  .castor-drawer-close {
+    padding: 10px;
+    font-size: 24px;
+  }
+  .toggle-track {
+    width: 40px;
+    height: 24px;
+  }
+  .toggle-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  .toggle-track.on .toggle-thumb {
+    transform: translateX(16px);
+  }
+
+  /* ── M4: Best-value badge — prevent clipping on mobile cards ────── */
+  .qty-best-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    top: -9px;
+  }
+
+  /* ── Mi1: Nav links — slightly smaller on mobile ─────────────────── */
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* ── M1: Timer — reduce font sizes to prevent horizontal overflow ── */
+  .timer-unit {
+    font-size: 22px;
+    min-width: 28px;
+  }
+  .timer-sep {
+    font-size: 18px;
+  }
+
+  /* ── M5: Social proof bubble — constrain to viewport width ───────── */
+  .sp-bubble {
+    max-width: calc(100vw - 40px);
+    left: 16px;
+  }
+
+  /* ── M6: Toast — allow wrapping on very narrow screens ───────────── */
+  .castor-toast {
+    white-space: normal;
+    text-align: center;
+    max-width: calc(100vw - 48px);
+  }
 }
