@@ -2482,12 +2482,12 @@ h1, h2, h3,
 }
 @media (max-width: 900px) {
   .cro-hero {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     max-width: 480px;
   }
-  .cro-left  { order: 1; text-align: center; align-items: center; }
-  .cro-center { order: 2; }
-  .cro-card  { order: 3; }
+  .cro-left  { order: 1; text-align: center; align-items: center; min-width: 0; }
+  .cro-center { order: 2; min-width: 0; max-width: 100%; }
+  .cro-card  { order: 3; min-width: 0; max-width: 100%; }
   .cro-badge { align-self: center; font-size: 14px; padding: 8px 18px; }
   .cro-badge-stars { font-size: 16px; }
   .cro-heading { text-align: center; }
