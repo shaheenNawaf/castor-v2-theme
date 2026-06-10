@@ -2458,9 +2458,13 @@ h1, h2, h3,
     grid-template-columns: 1fr;
     max-width: 480px;
   }
-  .cro-left  { order: 1; }
+  .cro-left  { order: 1; text-align: center; align-items: center; }
   .cro-center { order: 2; }
   .cro-card  { order: 3; }
+  .cro-badge { align-self: center; font-size: 14px; padding: 8px 18px; }
+  .cro-badge-stars { font-size: 16px; }
+  .cro-heading { text-align: center; }
+  .cro-main-img-wrap { min-height: unset; aspect-ratio: 4/3; }
 }
 
 /* ── Buy Section: CRO hero visual alignment ───────────────────────── */
@@ -2664,10 +2668,11 @@ body.template-cart { background: var(--cream); }
     right: 0;
   }
 
-  /* ── C4: Gift FAB — move above chat bubble instead of beside it ──── */
+  /* ── C4: Gift FAB — bottom left (social proof's position) ──────── */
   .castor-gift-fab {
-    right: 16px;
-    bottom: 88px;
+    right: auto;
+    left: 20px;
+    bottom: 24px;
   }
 
   /* ── M3: Touch targets — 44px minimum (Apple HIG) ───────────────── */
@@ -2721,6 +2726,27 @@ body.template-cart { background: var(--cream); }
     font-size: 11px;
     letter-spacing: 0.02em;
   }
+
+  /* ── Social proof — hide on mobile (FAB takes its place) ────────── */
+  .sp-bubble { display: none !important; }
+
+  /* ── Nav — logo flushed left, links hidden ───────────────────────── */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .nav-links { display: none; }
+  .nav-logo { text-align: left; order: 1; }
+  .nav-right { order: 2; }
+
+  /* ── Reviews section — improved spacing ─────────────────────────── */
+  .marquee-wrap { padding-left: 20px; padding-right: 20px; }
+  .marquee-card { padding: 16px 20px 20px; }
+  .marquee-card.has-photo { padding: 20px; }
+  .marquee-wrap.layout-grid .marquee-track { gap: 16px; }
+  .marquee-wrap .section-heading { margin-bottom: 24px; }
 }
 
 @media (max-width: 480px) {
@@ -2732,12 +2758,6 @@ body.template-cart { background: var(--cream); }
   }
   .timer-sep {
     font-size: 18px;
-  }
-
-  /* ── M5: Social proof bubble — constrain to viewport width ───────── */
-  .sp-bubble {
-    max-width: calc(100vw - 40px);
-    left: 16px;
   }
 
   /* ── M6: Toast — allow wrapping on very narrow screens ───────────── */
