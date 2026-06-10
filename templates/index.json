@@ -129,23 +129,26 @@
           "settings": {
             "image": "shopify://shop_images/featured-use.png",
             "alt_text": "Applying castor oil to scalp",
-            "label": "Scalp & Hair"
+            "label": "Scalp & Hair",
+            "subtext": "Massage 3–5 drops into scalp nightly. Thicker, stronger growth in 4–6 weeks."
           }
         },
         "lifestyle_img_b2": {
           "type": "lifestyle_image",
           "settings": {
             "image": "shopify://shop_images/use-1.png",
-            "alt_text": "Castor oil bottle close-up",
-            "label": "Joints & Muscles"
+            "alt_text": "Applying castor oil to joints and muscles",
+            "label": "Joints & Muscles",
+            "subtext": "Warm between palms, rub into sore areas. Fast-acting natural relief."
           }
         },
         "lifestyle_img_c3": {
           "type": "lifestyle_image",
           "settings": {
             "image": "shopify://shop_images/use-2.png",
-            "alt_text": "Hair care ritual",
-            "label": "Face & Skin"
+            "alt_text": "Applying castor oil to face and skin",
+            "label": "Face & Skin",
+            "subtext": "1–2 drops on cleansed skin before bed. Wake up to softer, more radiant skin."
           }
         }
       },
@@ -156,8 +159,8 @@
       ],
       "name": "Lifestyle Grid",
       "settings": {
-        "heading": "Soothing, Bottled",
-        "subtext": "",
+        "heading": "Your 3-Part Ritual",
+        "subtext": "One bottle. Three ways to transform your skin, hair, and body.",
         "section_padding": 72
       }
     },
