@@ -1931,6 +1931,7 @@ h1, h2, h3,
 .tst-highlight {
   position: relative;
   display: inline-block;
+  white-space: nowrap;
 }
 .tst-circle-svg {
   position: absolute;
@@ -1941,8 +1942,8 @@ h1, h2, h3,
   overflow: visible;
 }
 .tst-circle-svg ellipse {
-  stroke-dasharray: 500;
-  stroke-dashoffset: 500;
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
   transition: stroke-dashoffset 0.9s var(--ease-out) 0.5s;
 }
 .tst-hero-heading.is-visible .tst-circle-svg ellipse {
