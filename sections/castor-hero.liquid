@@ -43,7 +43,7 @@
     </div>
 
     {% if section.settings.cta_text != blank %}
-      <a href="{{ section.settings.cta_url | default: '#buy' }}" class="hero-cta reveal" style="transition-delay:0.24s">
+      <a href="{{ section.settings.cta_url | default: '#cro-hero' }}" class="hero-cta reveal" style="transition-delay:0.24s">
         <span class="shine"></span>
         {{ section.settings.cta_text | escape }}
       </a>

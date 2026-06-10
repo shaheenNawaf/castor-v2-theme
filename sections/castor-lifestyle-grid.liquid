@@ -9,14 +9,19 @@
   <div class="lifestyle-grid stagger">
     {% for block in section.blocks %}
       {% if block.type == 'lifestyle_image' %}
-        <div class="lifestyle-img-wrap" {{ block.shopify_attributes }}>
-          {% if block.settings.image != blank %}
-            {{ block.settings.image | image_url: width: 700 | image_tag:
-                class: 'lifestyle-img',
-                loading: 'lazy',
-                alt: block.settings.alt_text }}
-          {% else %}
-            <div class="lifestyle-img-placeholder"></div>
+        <div class="lifestyle-card" {{ block.shopify_attributes }}>
+          <div class="lifestyle-img-wrap">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 700 | image_tag:
+                  class: 'lifestyle-img',
+                  loading: 'lazy',
+                  alt: block.settings.alt_text }}
+            {% else %}
+              <div class="lifestyle-img-placeholder"></div>
+            {% endif %}
+          </div>
+          {% if block.settings.label != blank %}
+            <p class="lifestyle-label">{{ block.settings.label | escape }}</p>
           {% endif %}
         </div>
       {% endif %}
@@ -70,6 +75,12 @@
           "id": "alt_text",
           "label": "Alt Text",
           "default": "Product lifestyle photo"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Use Case Label",
+          "info": "E.g. 'Scalp + Hair', 'Joint Relief', 'Skin Care'. Leave blank to hide."
         }
       ]
     }

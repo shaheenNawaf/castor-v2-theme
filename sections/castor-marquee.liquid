@@ -6,16 +6,66 @@
     <div class="marquee-label">{{ section.settings.label_text | escape }}</div>
   {% endif %}
 
-  <div class="marquee-track">
-    {% for block in section.blocks %}
-      {% if block.type == 'review' %}
-        {% assign star_count = block.settings.star_count | default: 5 %}
-        <div class="marquee-card {% if block.settings.photo != blank %}has-photo{% endif %}" {{ block.shopify_attributes }}>
-          {% if block.settings.photo != blank %}
+  {% comment %} Pre-scan: detect whether featured (photo) and/or regular (no-photo) cards exist {% endcomment %}
+  {% assign has_featured = false %}
+  {% assign has_regular = false %}
+  {% for block in section.blocks %}
+    {% if block.type == 'review' %}
+      {% if block.settings.photo != blank %}
+        {% assign has_featured = true %}
+      {% else %}
+        {% assign has_regular = true %}
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+
+  {% comment %} Track 1: Featured reviews (with photo) — only rendered when ≥1 photo block exists {% endcomment %}
+  {% if has_featured %}
+    <div class="marquee-track mc-track--featured">
+      {% for block in section.blocks %}
+        {% if block.type == 'review' and block.settings.photo != blank %}
+          {% assign star_count = block.settings.star_count | default: 5 %}
+          <div class="marquee-card has-photo" {{ block.shopify_attributes }}>
             <div class="mc-photo-wrap">
               {{ block.settings.photo | image_url: width: 400 | image_tag: class: 'mc-photo', loading: 'lazy', alt: block.settings.name }}
             </div>
-          {% else %}
+            <div class="mc-stars">
+              {% for i in (1..star_count) %}★{% endfor %}
+            </div>
+            <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
+            <div class="mc-name-row" style="margin-top:8px;">{{ block.settings.name | escape }}{% if block.settings.location != blank %} · {{ block.settings.location | escape }}{% endif %}</div>
+            {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+      {% if section.settings.layout != 'grid' %}
+        {% for block in section.blocks %}
+          {% if block.type == 'review' and block.settings.photo != blank %}
+            {% assign star_count = block.settings.star_count | default: 5 %}
+            <div class="marquee-card has-photo" aria-hidden="true">
+              <div class="mc-photo-wrap">
+                {{ block.settings.photo | image_url: width: 400 | image_tag: class: 'mc-photo', loading: 'lazy', alt: '' }}
+              </div>
+              <div class="mc-stars">
+                {% for i in (1..star_count) %}★{% endfor %}
+              </div>
+              <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
+              <div class="mc-name-row" style="margin-top:8px;">{{ block.settings.name | escape }}{% if block.settings.location != blank %} · {{ block.settings.location | escape }}{% endif %}</div>
+              {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% comment %} Track 2: Regular reviews (no photo) {% endcomment %}
+  {% if has_regular %}
+    <div class="marquee-track mc-track--regular">
+      {% for block in section.blocks %}
+        {% if block.type == 'review' and block.settings.photo == blank %}
+          {% assign star_count = block.settings.star_count | default: 5 %}
+          <div class="marquee-card" {{ block.shopify_attributes }}>
             <div class="mc-top">
               <div class="mc-avatar" style="background-color: {{ block.settings.avatar_bg_color }}; color: {{ block.settings.avatar_text_color }};">
                 {{ block.settings.avatar_initials | escape }}
@@ -25,30 +75,18 @@
                 {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
               </div>
             </div>
-          {% endif %}
-          <div class="mc-stars">
-            {% for i in (1..star_count) %}★{% endfor %}
+            <div class="mc-stars">
+              {% for i in (1..star_count) %}★{% endfor %}
+            </div>
+            <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
           </div>
-          <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
-          {% if block.settings.photo != blank %}
-            <div class="mc-name-row" style="margin-top:8px;">{{ block.settings.name | escape }}{% if block.settings.location != blank %} · {{ block.settings.location | escape }}{% endif %}</div>
-            {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
-          {% endif %}
-        </div>
-      {% endif %}
-    {% endfor %}
-
-    {% comment %} Duplicate pass for seamless loop (only in scrolling mode) {% endcomment %}
-    {% if section.settings.layout != 'grid' %}
-      {% for block in section.blocks %}
-        {% if block.type == 'review' %}
-          {% assign star_count = block.settings.star_count | default: 5 %}
-          <div class="marquee-card {% if block.settings.photo != blank %}has-photo{% endif %}" aria-hidden="true">
-            {% if block.settings.photo != blank %}
-              <div class="mc-photo-wrap">
-                {{ block.settings.photo | image_url: width: 400 | image_tag: class: 'mc-photo', loading: 'lazy', alt: '' }}
-              </div>
-            {% else %}
+        {% endif %}
+      {% endfor %}
+      {% if section.settings.layout != 'grid' %}
+        {% for block in section.blocks %}
+          {% if block.type == 'review' and block.settings.photo == blank %}
+            {% assign star_count = block.settings.star_count | default: 5 %}
+            <div class="marquee-card" aria-hidden="true">
               <div class="mc-top">
                 <div class="mc-avatar" style="background-color: {{ block.settings.avatar_bg_color }}; color: {{ block.settings.avatar_text_color }};">
                   {{ block.settings.avatar_initials | escape }}
@@ -58,20 +96,17 @@
                   {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
                 </div>
               </div>
-            {% endif %}
-            <div class="mc-stars">
-              {% for i in (1..star_count) %}★{% endfor %}
+              <div class="mc-stars">
+                {% for i in (1..star_count) %}★{% endfor %}
+              </div>
+              <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
             </div>
-            <div class="mc-quote">"{{ block.settings.quote | escape }}"</div>
-            {% if block.settings.photo != blank %}
-              <div class="mc-name-row" style="margin-top:8px;">{{ block.settings.name | escape }}{% if block.settings.location != blank %} · {{ block.settings.location | escape }}{% endif %}</div>
-              {% if block.settings.product != blank %}<div class="mc-product">{{ block.settings.product | escape }}</div>{% endif %}
-            {% endif %}
-          </div>
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
+
 </div>
 
 {% schema %}

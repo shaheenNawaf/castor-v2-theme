@@ -1,0 +1,646 @@
+<section class="cro-hero" id="cro-hero" data-section-id="{{ section.id }}"
+  data-autoadvance="{{ section.settings.autoadvance_delay }}"
+  style="padding-top: {{ section.settings.section_padding }}px; padding-bottom: {{ section.settings.section_padding }}px;">
+
+  <!-- Left col: badge + heading -->
+  <div class="cro-left">
+    {% if section.settings.badge_text != blank %}
+      <div class="cro-badge">
+        <span class="cro-badge-stars">★★★★★</span>
+        <span class="cro-badge-text">{{ section.settings.badge_text | escape }}</span>
+      </div>
+    {% endif %}
+    <h1 class="cro-heading reveal">
+      {{ section.settings.heading_pre | escape }}
+      <span class="ch-highlight">
+        {{ section.settings.heading_highlight | escape }}
+        <svg class="ch-svg" viewBox="0 0 160 56" fill="none" aria-hidden="true">
+          <ellipse cx="80" cy="28" rx="76" ry="24"
+            stroke="var(--green-dark)" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      {{ section.settings.heading_mid | escape }}<br>
+      <em>{{ section.settings.heading_emphasis | escape }}</em>
+    </h1>
+  </div>
+
+  <!-- Center col: auto-advance gallery -->
+  <div class="cro-center reveal" style="transition-delay:0.1s">
+    <div class="cro-main-img-wrap">
+      {% assign cro_img_id = 'croMainImg-' | append: section.id %}
+      {% if section.settings.product_image != blank %}
+        {{ section.settings.product_image | image_url: width: 700 | image_tag:
+            class: 'cro-main-img',
+            id: cro_img_id,
+            alt: section.settings.heading_emphasis,
+            loading: 'eager' }}
+      {% else %}
+        {% comment %} Fall back to first gallery image so the element is always an <img> {% endcomment %}
+        {% assign cro_first_gallery = nil %}
+        {% for block in section.blocks %}
+          {% if block.type == 'gallery_image' and block.settings.image != blank and cro_first_gallery == nil %}
+            {% assign cro_first_gallery = block.settings.image %}
+          {% endif %}
+        {% endfor %}
+        {% if cro_first_gallery != nil %}
+          {{ cro_first_gallery | image_url: width: 700 | image_tag:
+              class: 'cro-main-img',
+              id: cro_img_id,
+              alt: section.settings.heading_emphasis,
+              loading: 'eager' }}
+        {% else %}
+          <div class="cro-main-img-placeholder" id="{{ cro_img_id }}"></div>
+        {% endif %}
+      {% endif %}
+    </div>
+    <div class="buy-thumb-scroller">
+      <button class="buy-thumb-btn buy-thumb-btn--prev" type="button" aria-label="Previous image">&#8249;</button>
+      <div class="buy-thumbs">
+        {% assign gallery_idx = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'gallery_image' %}
+            <div class="buy-thumb {% if gallery_idx == 0 %}active{% endif %}"
+                 data-full-src="{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 700 }}{% endif %}"
+                 {{ block.shopify_attributes }}>
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 120 | image_tag:
+                    alt: block.settings.alt | default: '',
+                    loading: 'lazy' }}
+              {% else %}
+                <div class="buy-thumb-placeholder"></div>
+              {% endif %}
+            </div>
+            {% assign gallery_idx = gallery_idx | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <button class="buy-thumb-btn buy-thumb-btn--next" type="button" aria-label="Next image">&#8250;</button>
+    </div>
+  </div>
+
+  <!-- Right col: floating buy card -->
+  <div class="cro-card reveal" style="transition-delay:0.18s">
+    {% if section.settings.card_heading != blank %}
+      <h2 class="cro-card-heading">{{ section.settings.card_heading | escape }}</h2>
+    {% endif %}
+
+    {% assign has_best_value = false %}
+    {% for block in section.blocks %}
+      {% if block.type == 'bundle_option' and block.settings.is_best_value %}
+        {% assign has_best_value = true %}
+      {% endif %}
+    {% endfor %}
+
+    <form method="post" action="/cart/add" id="cro-hero-form-{{ section.id }}">
+      <input type="hidden" name="id" id="cro-variant-{{ section.id }}" value="">
+      <input type="hidden" name="quantity" value="1">
+
+      <div class="qty-list cro-qty-list">
+        {% assign bundle_idx = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'bundle_option' %}
+            {% assign variant_id = block.settings.target_variant_id | strip %}
+            {% if variant_id == blank and block.settings.target_product != blank %}
+              {% assign variant_id = block.settings.target_product.first_available_variant.id %}
+            {% endif %}
+            {% if variant_id == blank %}
+              {% assign variant_id = block.settings.fallback_id %}
+            {% endif %}
+
+            {% assign is_active = false %}
+            {% if has_best_value and block.settings.is_best_value %}
+              {% assign is_active = true %}
+            {% elsif has_best_value == false and bundle_idx == 0 %}
+              {% assign is_active = true %}
+            {% endif %}
+
+            <div class="qty-card {% if is_active %}active{% endif %}"
+                 data-variant-id="{{ variant_id }}"
+                 data-one-time-price="{{ block.settings.price_one_time | escape }}"
+                 data-sub-price="{{ block.settings.price_subscription | escape }}"
+                 data-original-price="{{ block.settings.original_price | escape }}"
+                 data-block-id="{{ block.id }}"
+                 {% if block.settings.tier_image != blank %}
+                   data-tier-img="{{ block.settings.tier_image | image_url: width: 700 }}"
+                 {% elsif block.settings.target_product != blank and block.settings.target_product.featured_image != blank %}
+                   data-tier-img="{{ block.settings.target_product.featured_image | image_url: width: 700 }}"
+                 {% endif %}
+                 {{ block.shopify_attributes }}>
+              {% if block.settings.is_best_value %}
+                <span class="qty-best-badge">{{ block.settings.best_value_label | default: 'BEST VALUE' }}</span>
+              {% endif %}
+              <span class="qty-radio"></span>
+              <div class="qty-card-left">
+                <span class="qty-title">{{ block.settings.title_text | escape }}</span>
+                <span class="qty-desc">{{ block.settings.qty_label | escape }}</span>
+              </div>
+              <div class="qty-price-group">
+                <span class="qty-save-badge"
+                      data-one-time-badge="{{ block.settings.save_badge | escape }}"
+                      data-sub-badge="{{ block.settings.save_badge_subscribe | escape }}">
+                  {{ block.settings.save_badge | escape }}
+                </span>
+                <span class="qty-price" id="cro-price-{{ block.id }}">{{ block.settings.price_one_time | escape }}</span>
+                <span class="qty-original-price"></span>
+              </div>
+            </div>
+            {% assign bundle_idx = bundle_idx | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.enable_sub_toggle %}
+        <div class="cro-sub-tabs">
+          <button type="button" class="cro-sub-tab active" data-mode="one-time">One-time</button>
+          <button type="button" class="cro-sub-tab" data-mode="subscribe">Subscribe & Save</button>
+        </div>
+        <p class="cro-sub-note"></p>
+      {% endif %}
+
+      <button type="submit" class="cta-btn cro-cta" id="croCta-{{ section.id }}">
+        <span class="shine"></span>
+        <span class="cro-cta-text">{{ section.settings.cta_label | escape }}</span>
+      </button>
+
+      {% if section.settings.show_guarantee %}
+        <div class="cro-guarantee">
+          <span>🛡️</span>
+          <span>{{ section.settings.guarantee_text | escape }}</span>
+        </div>
+      {% endif %}
+    </form>
+  </div>
+
+</section>
+
+<script>
+  (function() {
+    function initCroHero(sectionEl) {
+      var mainImg      = sectionEl.querySelector('.cro-main-img, .cro-main-img-placeholder');
+      var thumbsEl     = sectionEl.querySelector('.buy-thumbs');
+      var thumbs       = sectionEl.querySelectorAll('.buy-thumb');
+      var prevBtn      = sectionEl.querySelector('.buy-thumb-btn--prev');
+      var nextBtn      = sectionEl.querySelector('.buy-thumb-btn--next');
+      var qtyCards     = sectionEl.querySelectorAll('.qty-card');
+      var variantInput = sectionEl.querySelector('[id^="cro-variant-"]');
+      var ctaTextEl    = sectionEl.querySelector('.cro-cta-text');
+      var subTabs      = sectionEl.querySelectorAll('.cro-sub-tab');
+      var subNoteEl    = sectionEl.querySelector('.cro-sub-note');
+      var isSubscribed = false;
+      var autoDelay    = parseInt(sectionEl.getAttribute('data-autoadvance') || '3', 10) * 1000;
+      var autoTimer    = null;
+      var ctaBase      = ctaTextEl ? ctaTextEl.textContent.trim() : 'Add to Cart';
+
+      // ── Image swap helper ─────────────────────────────────────────
+      function swapMainImg(src) {
+        if (!mainImg || mainImg.tagName !== 'IMG') return;
+        mainImg.removeAttribute('srcset');
+        mainImg.classList.add('fading');
+        setTimeout(function() {
+          mainImg.src = src;
+          mainImg.classList.remove('fading');
+        }, 150);
+      }
+
+      // ── Thumb nav buttons ─────────────────────────────────────────
+      function updateNavBtns() {
+        if (!thumbsEl) return;
+        if (prevBtn) prevBtn.style.visibility = thumbsEl.scrollLeft > 0 ? 'visible' : 'hidden';
+        if (nextBtn) nextBtn.style.visibility =
+          thumbsEl.scrollLeft < (thumbsEl.scrollWidth - thumbsEl.clientWidth - 2) ? 'visible' : 'hidden';
+      }
+      if (prevBtn) prevBtn.addEventListener('click', function() {
+        thumbsEl.scrollBy({ left: -100, behavior: 'smooth' });
+        resetAutoAdvance();
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function() {
+        thumbsEl.scrollBy({ left: 100, behavior: 'smooth' });
+        resetAutoAdvance();
+      });
+      if (thumbsEl) {
+        thumbsEl.addEventListener('scroll', updateNavBtns);
+        updateNavBtns();
+      }
+
+      // ── Thumb click ───────────────────────────────────────────────
+      function activateThumb(thumb) {
+        var src = thumb.getAttribute('data-full-src');
+        if (src) swapMainImg(src);
+        thumbs.forEach(function(t) { t.classList.remove('active'); });
+        thumb.classList.add('active');
+      }
+
+      thumbs.forEach(function(thumb) {
+        thumb.addEventListener('click', function() {
+          activateThumb(thumb);
+          resetAutoAdvance();
+        });
+      });
+
+      // ── Auto-advance ──────────────────────────────────────────────
+      function advanceGallery() {
+        var activeIdx = -1;
+        thumbs.forEach(function(t, i) { if (t.classList.contains('active')) activeIdx = i; });
+        if (activeIdx < 0) activeIdx = 0;
+        for (var i = 1; i <= thumbs.length; i++) {
+          var candidateIdx = (activeIdx + i) % thumbs.length;
+          if (thumbs[candidateIdx].getAttribute('data-full-src')) {
+            activateThumb(thumbs[candidateIdx]);
+            return;
+          }
+        }
+      }
+
+      function startAutoAdvance() {
+        if (thumbs.length < 2) return;
+        autoTimer = setInterval(advanceGallery, autoDelay);
+      }
+
+      function resetAutoAdvance() {
+        clearInterval(autoTimer);
+        startAutoAdvance();
+      }
+
+      startAutoAdvance();
+
+      // Preload full-size gallery images so auto-advance has them in cache
+      thumbs.forEach(function(t) {
+        var src = t.getAttribute('data-full-src');
+        if (src) { (new Image()).src = src; }
+      });
+
+      // ── Savings helpers ───────────────────────────────────────────
+      function updateSubNote() {
+        if (!subNoteEl) return;
+        subNoteEl.textContent = isSubscribed
+          ? 'Pause or cancel anytime'
+          : 'No commitment • Cancel anytime';
+      }
+
+      // ── Prices + CTA text ─────────────────────────────────────────
+      function getActiveCard() {
+        var active = null;
+        qtyCards.forEach(function(c) { if (c.classList.contains('active')) active = c; });
+        return active;
+      }
+
+      function syncPrices() {
+        qtyCards.forEach(function(card) {
+          var priceEl = card.querySelector('.qty-price');
+          if (!priceEl) return;
+          var sub  = card.getAttribute('data-sub-price');
+          var oneT = card.getAttribute('data-one-time-price');
+          priceEl.textContent = (isSubscribed && sub) ? sub : oneT;
+          var badgeEl = card.querySelector('.qty-save-badge[data-one-time-badge]');
+          if (badgeEl) {
+            var oneBadge = badgeEl.getAttribute('data-one-time-badge') || '';
+            var subBadge = badgeEl.getAttribute('data-sub-badge') || '';
+            if (!subBadge) {
+              if (oneBadge) {
+                var m = oneBadge.match(/\d+/);
+                subBadge = m ? oneBadge.replace(/\d+/, parseInt(m[0], 10) + 15) : oneBadge;
+              } else {
+                subBadge = 'Save 15%';
+              }
+            }
+            var badge = isSubscribed ? subBadge : oneBadge;
+            badgeEl.textContent = badge || '';
+            badgeEl.style.visibility = badge ? 'visible' : 'hidden';
+          }
+          var origEl = card.querySelector('.qty-original-price');
+          if (origEl) {
+            var origPrice = isSubscribed
+              ? (card.getAttribute('data-one-time-price') || '')
+              : (card.getAttribute('data-original-price') || '');
+            origEl.textContent = origPrice;
+            origEl.style.visibility = origPrice ? 'visible' : 'hidden';
+          }
+        });
+        var active = getActiveCard();
+        if (active && ctaTextEl) {
+          var price = isSubscribed ? active.getAttribute('data-sub-price') : active.getAttribute('data-one-time-price');
+          ctaTextEl.textContent = price ? ctaBase + ' — ' + price : ctaBase;
+        }
+        updateSubNote();
+      }
+
+      function syncVariant() {
+        var active = getActiveCard();
+        if (active && variantInput) {
+          variantInput.value = active.getAttribute('data-variant-id') || '';
+        }
+      }
+
+      // ── Card selection ────────────────────────────────────────────
+      qtyCards.forEach(function(card) {
+        card.addEventListener('click', function() {
+          qtyCards.forEach(function(c) { c.classList.remove('active'); });
+          card.classList.add('active');
+          var tierImg = card.getAttribute('data-tier-img');
+          if (tierImg) {
+            swapMainImg(tierImg);
+            // Clear thumb active state; gallery pauses while tier image is shown
+            thumbs.forEach(function(t) { t.classList.remove('active'); });
+            clearInterval(autoTimer);
+          } else {
+            resetAutoAdvance();
+          }
+          syncVariant();
+          syncPrices();
+        });
+      });
+
+      syncVariant();
+      syncPrices();
+
+      // ── Ensure first valid-image thumb starts active ──────────────
+      (function() {
+        var hasActive = false;
+        for (var i = 0; i < thumbs.length; i++) {
+          if (thumbs[i].classList.contains('active') && thumbs[i].getAttribute('data-full-src')) {
+            hasActive = true;
+            break;
+          }
+        }
+        if (!hasActive) {
+          thumbs.forEach(function(t) { t.classList.remove('active'); });
+          for (var j = 0; j < thumbs.length; j++) {
+            if (thumbs[j].getAttribute('data-full-src')) {
+              thumbs[j].classList.add('active');
+              break;
+            }
+          }
+        }
+      })();
+
+      // ── Subscribe tab switcher ────────────────────────────────────
+      subTabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          subTabs.forEach(function(t) { t.classList.remove('active'); });
+          tab.classList.add('active');
+          isSubscribed = tab.getAttribute('data-mode') === 'subscribe';
+          syncPrices();
+        });
+      });
+
+      // ── SVG draw-on via IntersectionObserver ──────────────────────
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function(entries, obs) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              sectionEl.classList.add('in-view');
+              obs.disconnect();
+            }
+          });
+        }, { threshold: 0.2 }).observe(sectionEl);
+      } else {
+        sectionEl.classList.add('in-view');
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.cro-hero').forEach(initCroHero);
+      });
+    } else {
+      document.querySelectorAll('.cro-hero').forEach(initCroHero);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CRO Conversion Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_pre",
+      "label": "Heading — Before Circle",
+      "default": "Join"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading — Circled Text",
+      "default": "10,000+"
+    },
+    {
+      "type": "text",
+      "id": "heading_mid",
+      "label": "Heading — After Circle",
+      "default": "Women Glowing with"
+    },
+    {
+      "type": "text",
+      "id": "heading_emphasis",
+      "label": "Heading — Italic Line",
+      "default": "Pure Castor Oil"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Pill Text",
+      "default": "Rated 4.9/5 by 10,000+ Women"
+    },
+    {
+      "type": "header",
+      "content": "Gallery"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Default Product Image"
+    },
+    {
+      "type": "range",
+      "id": "autoadvance_delay",
+      "label": "Auto-Advance Delay",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "unit": "s",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Buy Card"
+    },
+    {
+      "type": "text",
+      "id": "card_heading",
+      "label": "Card Heading",
+      "default": "Choose Your Supply"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "header",
+      "content": "Subscribe & Save"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sub_toggle",
+      "label": "Show Subscribe & Save Tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sub_note",
+      "label": "Subscribe Note",
+      "default": "Save an extra 15% on every order"
+    },
+    {
+      "type": "header",
+      "content": "Guarantee"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee",
+      "label": "Show Guarantee Line",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee Text",
+      "default": "60-Day Money-Back Guarantee"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section Padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "gallery_image",
+      "name": "Gallery Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "Alt Text"
+        }
+      ]
+    },
+    {
+      "type": "bundle_option",
+      "name": "Bundle Tier",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "tier_image",
+          "label": "Tier Image Override",
+          "info": "Optional. Falls back to linked product's featured image."
+        },
+        {
+          "type": "product",
+          "id": "target_product",
+          "label": "Linked Shopify Product"
+        },
+        {
+          "type": "text",
+          "id": "target_variant_id",
+          "label": "Variant ID Override",
+          "info": "Leave blank to use first available variant."
+        },
+        {
+          "type": "text",
+          "id": "fallback_id",
+          "label": "Fallback Variant ID"
+        },
+        {
+          "type": "text",
+          "id": "title_text",
+          "label": "Package Name",
+          "default": "Starter Supply"
+        },
+        {
+          "type": "text",
+          "id": "qty_label",
+          "label": "Quantity Label",
+          "default": "1 Bottle (1 Month)"
+        },
+        {
+          "type": "text",
+          "id": "save_badge",
+          "label": "One-Time Savings Badge",
+          "info": "e.g. Save 30%. Shown on the right side of the card."
+        },
+        {
+          "type": "text",
+          "id": "save_badge_subscribe",
+          "label": "Subscribe Savings Badge",
+          "info": "e.g. Save 45%. Replaces the badge when Subscribe & Save is active. Leave blank to reuse the one-time badge."
+        },
+        {
+          "type": "text",
+          "id": "original_price",
+          "label": "Original Price (strikethrough)",
+          "info": "e.g. $119.40. Shown below the final price. Leave blank to hide."
+        },
+        {
+          "type": "checkbox",
+          "id": "is_best_value",
+          "label": "Mark as Best Value",
+          "default": false,
+          "info": "Shows the BEST VALUE badge and pre-selects this tier on load."
+        },
+        {
+          "type": "text",
+          "id": "best_value_label",
+          "label": "Best Value Badge Text",
+          "info": "Leave blank to use 'BEST VALUE'."
+        },
+        {
+          "type": "text",
+          "id": "price_one_time",
+          "label": "One-Time Price",
+          "default": "$19.95"
+        },
+        {
+          "type": "text",
+          "id": "price_subscription",
+          "label": "Subscription Price",
+          "default": "$16.95"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CRO Conversion Hero",
+      "blocks": [
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "bundle_option", "settings": { "title_text": "Starter Supply", "qty_label": "1 Bottle (1 Month)", "save_badge_subscribe": "Save 15%", "price_one_time": "$19.95", "price_subscription": "$16.95" } },
+        { "type": "bundle_option", "settings": { "title_text": "Essential Supply", "qty_label": "3 Bottles (3 Months)", "save_badge": "Save 15%", "save_badge_subscribe": "Save 27%", "price_one_time": "$46.05", "price_subscription": "$39.15" } },
+        { "type": "bundle_option", "settings": { "title_text": "Complete Supply", "qty_label": "6 Bottles (6 Months)", "save_badge": "Save 30%", "save_badge_subscribe": "Save 45%", "is_best_value": true, "price_one_time": "$89.55", "price_subscription": "$76.10" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
