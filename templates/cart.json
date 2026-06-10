@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "cart-section": {
       "type": "main-cart",
@@ -61,6 +62,84 @@
         "color_scheme": "",
         "padding-block-start": 24,
         "padding-block-end": 0
+      }
+    },
+    "castor_cro_hero_cart2": {
+      "type": "castor-cro-hero",
+      "blocks": {
+        "bundle_starter_cart": {
+          "type": "bundle_option",
+          "settings": {
+            "target_product": "",
+            "target_variant_id": "48760672583895",
+            "fallback_id": "",
+            "title_text": "Starter Supply",
+            "qty_label": "1 Bottle (1 Month)",
+            "save_badge": "",
+            "save_badge_subscribe": "Save 15%",
+            "original_price": "",
+            "is_best_value": false,
+            "best_value_label": "",
+            "price_one_time": "$19.95",
+            "price_subscription": "$16.95"
+          }
+        },
+        "bundle_essential_cart": {
+          "type": "bundle_option",
+          "settings": {
+            "target_product": "",
+            "target_variant_id": "48760672616663",
+            "fallback_id": "",
+            "title_text": "Essential Supply",
+            "qty_label": "3 Bottles (3 Months)",
+            "save_badge": "Save 15%",
+            "save_badge_subscribe": "Save 27%",
+            "original_price": "",
+            "is_best_value": false,
+            "best_value_label": "",
+            "price_one_time": "$46.05",
+            "price_subscription": "$39.15"
+          }
+        },
+        "bundle_complete_cart": {
+          "type": "bundle_option",
+          "settings": {
+            "target_product": "",
+            "target_variant_id": "48760672649431",
+            "fallback_id": "",
+            "title_text": "Complete Supply",
+            "qty_label": "6 Bottles (6 Months)",
+            "save_badge": "Save 30%",
+            "save_badge_subscribe": "Save 45%",
+            "original_price": "",
+            "is_best_value": true,
+            "best_value_label": "",
+            "price_one_time": "$89.55",
+            "price_subscription": "$76.10"
+          }
+        }
+      },
+      "block_order": [
+        "bundle_starter_cart",
+        "bundle_essential_cart",
+        "bundle_complete_cart"
+      ],
+      "disabled": true,
+      "name": "Bundle Upsell",
+      "settings": {
+        "heading_pre": "Join",
+        "heading_highlight": "10,000+",
+        "heading_mid": "Women Glowing with",
+        "heading_emphasis": "The more you order, the more you save.",
+        "badge_text": "Rated 4.9/5 by 10,000+ Women",
+        "autoadvance_delay": 3,
+        "card_heading": "Choose Your Bundle",
+        "cta_label": "Add to Cart",
+        "enable_sub_toggle": true,
+        "sub_note": "Save an extra 15% on every order",
+        "show_guarantee": true,
+        "guarantee_text": "60-Day Money-Back Guarantee",
+        "section_padding": 64
       }
     },
     "product_list_NNFgcy": {
@@ -255,61 +334,6 @@
         "color_scheme": "scheme-1",
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "castor_cro_hero_cart2": {
-      "type": "castor-cro-hero",
-      "name": "Bundle Upsell",
-      "blocks": {
-        "bundle_starter_cart": {
-          "type": "bundle_option",
-          "settings": {
-            "title_text": "Starter Supply",
-            "qty_label": "1 Bottle (1 Month)",
-            "save_badge_subscribe": "Save 15%",
-            "price_one_time": "$19.95",
-            "price_subscription": "$16.95",
-            "target_variant_id": "48760672583895"
-          }
-        },
-        "bundle_essential_cart": {
-          "type": "bundle_option",
-          "settings": {
-            "title_text": "Essential Supply",
-            "qty_label": "3 Bottles (3 Months)",
-            "save_badge": "Save 15%",
-            "save_badge_subscribe": "Save 27%",
-            "price_one_time": "$46.05",
-            "price_subscription": "$39.15",
-            "target_variant_id": "48760672616663"
-          }
-        },
-        "bundle_complete_cart": {
-          "type": "bundle_option",
-          "settings": {
-            "title_text": "Complete Supply",
-            "qty_label": "6 Bottles (6 Months)",
-            "save_badge": "Save 30%",
-            "save_badge_subscribe": "Save 45%",
-            "is_best_value": true,
-            "price_one_time": "$89.55",
-            "price_subscription": "$76.10",
-            "target_variant_id": "48760672649431"
-          }
-        }
-      },
-      "block_order": ["bundle_starter_cart", "bundle_essential_cart", "bundle_complete_cart"],
-      "settings": {
-        "heading": "Complete Your Ritual",
-        "heading_emphasis": "The more you order, the more you save.",
-        "badge_text": "Rated 4.9/5 by 10,000+ Women",
-        "card_heading": "Choose Your Bundle",
-        "cta_label": "Add to Cart",
-        "enable_sub_toggle": true,
-        "sub_note": "Save an extra 15% on every order",
-        "show_guarantee": true,
-        "guarantee_text": "60-Day Money-Back Guarantee",
-        "section_padding": 64
       }
     },
     "castor_hero_cart": {
