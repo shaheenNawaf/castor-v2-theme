@@ -86,24 +86,6 @@
         "collection_color_scheme": "default"
       }
     },
-    "castor_nav_EADiQh": {
-      "type": "castor-nav",
-      "name": "Castor Navigation",
-      "settings": {
-        "logo_text": "CASTOR",
-        "logo_max_height": 16,
-        "menu": "",
-        "cart_btn_text": "Order Now",
-        "cart_url": "",
-        "show_cart_icon": false,
-        "bg_color": "#1A2E1A",
-        "text_color": "#FDFBF7",
-        "link_color": "#FDFBF7",
-        "btn_bg_color": "#FDFBF7",
-        "btn_text_color": "#1A2E1A",
-        "btn_style": "outlined"
-      }
-    },
     "castor_sale_banner_Ggbghc": {
       "type": "castor-sale-banner",
       "name": "Castor Sale Banner",
@@ -116,42 +98,169 @@
         "countdown_days": 2,
         "countdown_hours": 2,
         "countdown_minutes": 10,
-        "sale_bar_bg": "#FDFBF7",
-        "sale_bar_text_color": "#1A2E1A"
+        "timer_color": "#2f7830",
+        "timer_font": "inter",
+        "sale_bar_bg": "#f5f5f5",
+        "sale_bar_text_color": "#1a2e1a",
+        "section_padding": 12
       }
     },
-    "castor_hero_GMH3gN": {
-      "type": "castor-hero",
-      "name": "Castor Hero",
+    "castor_nav_EADiQh": {
+      "type": "castor-nav",
+      "name": "Castor Navigation",
       "settings": {
-        "badge_text": "",
-        "heading": "Elevate your health with Vitelia Organic Castor Oil Roll-on",
-        "rating_text": "4.9 · 12,000+ verified reviews",
-        "subtext": "90-day money-back guarantee · Free shipping · Cancel anytime",
-        "cta_text": "Are you ready to be soothed?",
-        "cta_url": ""
+        "logo_image": "shopify://shop_images/Vitela_Logo-01.png",
+        "logo_text": "CASTOR",
+        "logo_max_height": 60,
+        "menu": "",
+        "cart_btn_text": "Order Now",
+        "cart_url": "",
+        "show_cart_icon": false,
+        "bg_color": "#fafafa",
+        "text_color": "#fdfbf7",
+        "link_color": "#2f7830",
+        "btn_bg_color": "#2f7830",
+        "btn_text_color": "#ffffff",
+        "btn_style": "filled"
+      }
+    },
+    "castor_cro_hero_aDLWr3": {
+      "type": "castor-cro-hero",
+      "blocks": {
+        "gallery_image_ykhPzC": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/prod-2-bundle.png",
+            "alt": ""
+          }
+        },
+        "gallery_image_EdYqtF": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/use-1.png",
+            "alt": ""
+          }
+        },
+        "gallery_image_eQC4kn": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/use-3.png",
+            "alt": ""
+          }
+        },
+        "gallery_image_CrfRhh": {
+          "type": "gallery_image",
+          "settings": {
+            "image": "shopify://shop_images/Castor_Seeds.png",
+            "alt": ""
+          }
+        },
+        "bundle_option_dYBcMw": {
+          "type": "bundle_option",
+          "settings": {
+            "tier_image": "shopify://shop_images/prod-1-bundle.png",
+            "target_product": "vitelia-organic-castor-oil",
+            "target_variant_id": "48760672583895",
+            "fallback_id": "48760672583895",
+            "title_text": "Starter Supply",
+            "qty_label": "1 Bottle (1 Month)",
+            "save_badge": "",
+            "save_badge_subscribe": "",
+            "original_price": "",
+            "is_best_value": false,
+            "best_value_label": "",
+            "price_one_time": "$19.95",
+            "price_subscription": "$16.95"
+          }
+        },
+        "bundle_option_GdXa4N": {
+          "type": "bundle_option",
+          "settings": {
+            "tier_image": "shopify://shop_images/prod-2-bundle.png",
+            "target_product": "vitelia-organic-castor-oil",
+            "target_variant_id": "48760672616663",
+            "fallback_id": "48760672616663",
+            "title_text": "Essential Supply",
+            "qty_label": "2 Bottles (2 Months)",
+            "save_badge": "Save 15%",
+            "save_badge_subscribe": "",
+            "original_price": "$59.85",
+            "is_best_value": false,
+            "best_value_label": "",
+            "price_one_time": "$46.05",
+            "price_subscription": "$39.15"
+          }
+        },
+        "bundle_option_gdYwgy": {
+          "type": "bundle_option",
+          "settings": {
+            "tier_image": "shopify://shop_images/prod-3-bundle.png",
+            "target_product": "vitelia-organic-castor-oil",
+            "target_variant_id": "48760672649431",
+            "fallback_id": "48760672649431",
+            "title_text": "Complete Supply",
+            "qty_label": "3 Bottles (3 Months)",
+            "save_badge": "Save 30%",
+            "save_badge_subscribe": "",
+            "original_price": "$120",
+            "is_best_value": true,
+            "best_value_label": "",
+            "price_one_time": "$89.55",
+            "price_subscription": "$76.10"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_image_ykhPzC",
+        "gallery_image_EdYqtF",
+        "gallery_image_eQC4kn",
+        "gallery_image_CrfRhh",
+        "bundle_option_dYBcMw",
+        "bundle_option_GdXa4N",
+        "bundle_option_gdYwgy"
+      ],
+      "name": "CRO Conversion Hero",
+      "settings": {
+        "heading_pre": "Join",
+        "heading_highlight": "10,000+",
+        "heading_mid": "customers glowing with",
+        "heading_emphasis": "Vitelia's Castor Oil",
+        "badge_text": "4.9 • 10k+ reviews",
+        "autoadvance_delay": 3,
+        "card_heading": "Recommended For Best Results",
+        "cta_label": "Add to Cart",
+        "enable_sub_toggle": true,
+        "sub_note": "",
+        "show_guarantee": true,
+        "guarantee_text": "60-Day Money-Back Guarantee",
+        "section_padding": 64
       }
     },
     "castor_lifestyle_grid_X1": {
       "type": "castor-lifestyle-grid",
-      "name": "Lifestyle Grid",
       "blocks": {
         "lifestyle_img_a1": {
           "type": "lifestyle_image",
           "settings": {
-            "alt_text": "Applying castor oil to scalp"
+            "image": "shopify://shop_images/featured-use.png",
+            "alt_text": "Applying castor oil to scalp",
+            "label": "Scalp & Hair"
           }
         },
         "lifestyle_img_b2": {
           "type": "lifestyle_image",
           "settings": {
-            "alt_text": "Castor oil bottle close-up"
+            "image": "shopify://shop_images/use-1.png",
+            "alt_text": "Castor oil bottle close-up",
+            "label": "Joints & Muscles"
           }
         },
         "lifestyle_img_c3": {
           "type": "lifestyle_image",
           "settings": {
-            "alt_text": "Hair care ritual"
+            "image": "shopify://shop_images/use-2.png",
+            "alt_text": "Hair care ritual",
+            "label": "Face & Skin"
           }
         }
       },
@@ -160,54 +269,47 @@
         "lifestyle_img_b2",
         "lifestyle_img_c3"
       ],
+      "name": "Lifestyle Grid",
       "settings": {
-        "heading": "Soothing, Bottled"
+        "heading": "Soothing, Bottled",
+        "subtext": "",
+        "section_padding": 72
       }
     },
     "castor_featured_on_X2": {
       "type": "castor-featured-on",
-      "name": "Featured On",
       "blocks": {
         "brand_logo_s1": {
           "type": "brand_logo",
           "settings": {
+            "logo_image": "shopify://shop_images/ulta-tans.png",
             "brand_name": "Sephora"
           }
         },
         "brand_logo_u2": {
           "type": "brand_logo",
           "settings": {
+            "logo_image": "shopify://shop_images/wattsons-trans.png",
             "brand_name": "Ulta"
           }
         },
         "brand_logo_g3": {
           "type": "brand_logo",
           "settings": {
+            "logo_image": "shopify://shop_images/sephora-trans.png",
             "brand_name": "Goop"
-          }
-        },
-        "brand_logo_c4": {
-          "type": "brand_logo",
-          "settings": {
-            "brand_name": "Credo"
-          }
-        },
-        "brand_logo_t5": {
-          "type": "brand_logo",
-          "settings": {
-            "brand_name": "The Detox Market"
           }
         }
       },
       "block_order": [
         "brand_logo_s1",
         "brand_logo_u2",
-        "brand_logo_g3",
-        "brand_logo_c4",
-        "brand_logo_t5"
+        "brand_logo_g3"
       ],
+      "name": "Featured On",
       "settings": {
-        "label": "Featured On"
+        "label": "Featured On",
+        "section_padding": 72
       }
     },
     "castor_live_chat_LCwyVy": {
@@ -263,59 +365,8 @@
       "name": "Castor Offer Tab",
       "settings": {
         "enabled": true,
-        "tab_label": "Mystery Discount",
-        "tab_bg_color": "#2d5a2d",
-        "eyebrow": "Mystery discount",
-        "promo_code": "SAVE15",
-        "discount_percent": "15%",
-        "body_copy": "Tap to copy — expires when you leave.",
-        "cta_label": "Copy code"
-      }
-    },
-    "castor_exit_intent_3hC7cD": {
-      "type": "castor-exit-intent",
-      "blocks": {
-        "discount_tier_mMpLep": {
-          "type": "discount_tier",
-          "settings": {
-            "badge": "SAVE 10%",
-            "label": "10% off your first order",
-            "code": "SAVE10"
-          }
-        },
-        "discount_tier_mbyziy": {
-          "type": "discount_tier",
-          "settings": {
-            "badge": "SAVE 15%",
-            "label": "15% off — most popular",
-            "code": "SAVE15"
-          }
-        },
-        "discount_tier_83DefN": {
-          "type": "discount_tier",
-          "settings": {
-            "badge": "SAVE 20%",
-            "label": "20% off — best value",
-            "code": "SAVE20"
-          }
-        }
-      },
-      "block_order": [
-        "discount_tier_mMpLep",
-        "discount_tier_mbyziy",
-        "discount_tier_83DefN"
-      ],
-      "name": "Castor Exit Intent",
-      "settings": {
-        "enabled": true,
-        "eyebrow": "Limited Time Offer",
-        "product_name": "Organic Castor Oil",
-        "modal_heading": "Pick your discount before you go.",
-        "email_placeholder": "Enter your email address",
-        "email_cta_label": "Send me my code",
-        "cta_label": "Copy & Apply",
-        "dismiss_label": "No thanks, I'll pay full price",
-        "inactivity_delay": 35
+        "cta_text": "Claim Your Gift",
+        "promo_code": "SAVE15"
       }
     },
     "castor_social_proof_deYQFh": {
@@ -386,149 +437,19 @@
         "pause_between": 8
       }
     },
-    "castor_buy_box_LGCGnR": {
-      "type": "castor-buy-box",
-      "blocks": {
-        "gallery_img_1": {
-          "type": "gallery_image",
-          "settings": {}
-        },
-        "gallery_img_2": {
-          "type": "gallery_image",
-          "settings": {}
-        },
-        "gallery_img_3": {
-          "type": "gallery_image",
-          "settings": {}
-        },
-        "gallery_img_4": {
-          "type": "gallery_image",
-          "settings": {}
-        },
-        "bundle_option_C9jeNW": {
-          "type": "bundle_option",
-          "settings": {
-            "target_product": "",
-            "target_variant_id": "",
-            "fallback_id": "",
-            "badge_text": "",
-            "label_text": "1X BOTTLE",
-            "qty_label": "1 Bottle",
-            "save_badge": "",
-            "title_text": "Starter",
-            "price_one_time": "$19.95",
-            "price_subscription": "$16.95",
-            "feature_1": "Pure cold-pressed castor oil",
-            "feature_2": "Portable roll-on, mess-free",
-            "feature_3": "90-day money-back guarantee"
-          }
-        },
-        "bundle_option_Ht7Xca": {
-          "type": "bundle_option",
-          "settings": {
-            "target_product": "",
-            "target_variant_id": "",
-            "fallback_id": "",
-            "badge_text": "fan favourite",
-            "label_text": "3X BOTTLES",
-            "qty_label": "2 Bottles",
-            "save_badge": "Save 10%",
-            "title_text": "Rejuvenate",
-            "price_one_time": "$49.95",
-            "price_subscription": "$42.45",
-            "feature_1": "Pure cold-pressed castor oil",
-            "feature_2": "Zero fillers, zero compromise",
-            "feature_3": "90-day money-back guarantee"
-          }
-        },
-        "bundle_option_aqfgnG": {
-          "type": "bundle_option",
-          "settings": {
-            "target_product": "",
-            "target_variant_id": "",
-            "fallback_id": "",
-            "badge_text": "best value",
-            "label_text": "6X BOTTLES",
-            "qty_label": "3 Bottles",
-            "save_badge": "Save 20%",
-            "title_text": "Complete",
-            "price_one_time": "$79.95",
-            "price_subscription": "$67.95",
-            "feature_1": "Pure cold-pressed castor oil",
-            "feature_2": "Best value per bottle",
-            "feature_3": "90-day money-back guarantee"
-          }
-        },
-        "trust_item_EAYyb9": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "📦",
-            "text": "Dispatched within 24 hours"
-          }
-        },
-        "trust_item_UQcUec": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "🔒",
-            "text": "Secure Checkout"
-          }
-        },
-        "trust_item_4VP6UA": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "🛡️",
-            "text": "30-Day Money-back guarantee"
-          }
-        },
-        "payment_method_7wtQUn": {
-          "type": "payment_method",
-          "settings": {
-            "name": "Visa"
-          }
-        }
-      },
-      "block_order": [
-        "gallery_img_1",
-        "gallery_img_2",
-        "gallery_img_3",
-        "gallery_img_4",
-        "bundle_option_C9jeNW",
-        "bundle_option_Ht7Xca",
-        "bundle_option_aqfgnG",
-        "trust_item_EAYyb9",
-        "trust_item_UQcUec",
-        "trust_item_4VP6UA",
-        "payment_method_7wtQUn"
-      ],
-      "custom_css": [],
-      "name": "Castor Buy Box",
-      "settings": {
-        "eyebrow": "you've scrolled this far.",
-        "section_title": "Choose Your Supply",
-        "enable_subscription_toggle": true,
-        "sub_heading": "Subscribe & Save",
-        "sub_subtext": "Save an extra 15%",
-        "sub_interval_default": "30",
-        "show_custom_order": true,
-        "custom_order_label": "Custom Order Amount",
-        "cta_label": "Add to Cart",
-        "show_guarantee": false,
-        "guarantee_icon": "🛡️",
-        "guarantee_html": "<strong>100% Satisfaction Guarantee or your money back.</strong>",
-        "section_padding": 72
-      }
-    },
     "castor_marquee_8Gh4T7": {
       "type": "castor-marquee",
       "blocks": {
         "review_idnxWt": {
           "type": "review",
           "settings": {
+            "photo": "shopify://shop_images/cust-1.png",
             "avatar_initials": "SM",
             "avatar_bg_color": "#eaf3de",
             "avatar_text_color": "#2d5a2d",
             "name": "Sarah M.",
             "location": "Phoenix, AZ",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "I gave it 14 days and my edges actually came back. Nothing else worked like this."
           }
@@ -536,11 +457,13 @@
         "review_fttcP7": {
           "type": "review",
           "settings": {
+            "photo": "shopify://shop_images/cust-2.png",
             "avatar_initials": "JR",
             "avatar_bg_color": "#e1f5ee",
             "avatar_text_color": "#0f6e56",
             "name": "James R.",
             "location": "Austin, TX",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "Smells amazing, absorbs fast, and I've noticed real thickness coming back in the crown."
           }
@@ -548,11 +471,13 @@
         "review_HzRwfe": {
           "type": "review",
           "settings": {
+            "photo": "shopify://shop_images/cust-3.png",
             "avatar_initials": "LC",
             "avatar_bg_color": "#faeeda",
             "avatar_text_color": "#854f0b",
             "name": "Linda C.",
             "location": "Denver, CO",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "I keep one in every bag. It's the one product I genuinely can't live without right now."
           }
@@ -565,6 +490,7 @@
             "avatar_text_color": "#993c1d",
             "name": "Tanya K.",
             "location": "Seattle, WA",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "Three weeks in and my scalp hasn't felt this healthy in years. Total convert."
           }
@@ -577,6 +503,7 @@
             "avatar_text_color": "#534ab7",
             "name": "Mike O.",
             "location": "Chicago, IL",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "Zero fillers means zero guilt. I read the label once and I was sold."
           }
@@ -589,6 +516,7 @@
             "avatar_text_color": "#993556",
             "name": "Rosa N.",
             "location": "Miami, FL",
+            "product": "1 Roll-On",
             "star_count": "5",
             "quote": "Parul was right — 14 days and the difference is visible. My hair thanks me every morning."
           }
@@ -616,20 +544,13 @@
       "settings": {
         "heading": "Dermatologist Approved",
         "quote": "I gave it 14 days. My edges gave me back two years.",
+        "avatar": "shopify://shop_images/derm-1.png",
         "name": "Parul, D.",
         "title": "Professional",
-        "bg_color": "#FDFBF7"
-      }
-    },
-    "castor_mini_buy_gzY47t": {
-      "type": "castor-mini-buy",
-      "name": "Castor Mini Buy",
-      "settings": {
-        "heading": "Ready to find your soothe?",
-        "subtext": "Scroll back to the Choose Your Supply.",
-        "cta_label": "Shop Now",
-        "cta_url": "#buy",
-        "bg_color": "#E8EDE8"
+        "image_1": "shopify://shop_images/derm-1.png",
+        "image_2": "shopify://shop_images/use-3.png",
+        "bg_color": "#fdfbf7",
+        "section_padding": 72
       }
     }
   },
@@ -637,16 +558,13 @@
     "header_section",
     "castor_sale_banner_Ggbghc",
     "castor_nav_EADiQh",
-    "castor_hero_GMH3gN",
+    "castor_cro_hero_aDLWr3",
     "castor_lifestyle_grid_X1",
     "castor_featured_on_X2",
     "castor_live_chat_LCwyVy",
     "castor_offer_tab_PNynDB",
-    "castor_exit_intent_3hC7cD",
     "castor_social_proof_deYQFh",
-    "castor_buy_box_LGCGnR",
     "castor_marquee_8Gh4T7",
-    "castor_testimonial_tb66Yq",
-    "castor_mini_buy_gzY47t"
+    "castor_testimonial_tb66Yq"
   ]
 }
