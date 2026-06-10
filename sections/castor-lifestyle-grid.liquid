@@ -19,10 +19,15 @@
             {% else %}
               <div class="lifestyle-img-placeholder"></div>
             {% endif %}
+            {% if block.settings.label != blank %}
+              <div class="lifestyle-overlay">
+                <p class="lifestyle-overlay-label">{{ block.settings.label | escape }}</p>
+                {% if block.settings.subtext != blank %}
+                  <p class="lifestyle-overlay-sub">{{ block.settings.subtext | escape }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
           </div>
-          {% if block.settings.label != blank %}
-            <p class="lifestyle-label">{{ block.settings.label | escape }}</p>
-          {% endif %}
         </div>
       {% endif %}
     {% endfor %}
@@ -80,7 +85,13 @@
           "type": "text",
           "id": "label",
           "label": "Use Case Label",
-          "info": "E.g. 'Scalp + Hair', 'Joint Relief', 'Skin Care'. Leave blank to hide."
+          "info": "E.g. 'Scalp + Hair', 'Face & Skin'. Leave blank to hide overlay."
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Overlay Subtext",
+          "info": "Short line below the label. Leave blank to hide."
         }
       ]
     }
@@ -89,9 +100,9 @@
     {
       "name": "Castor Lifestyle Grid",
       "blocks": [
-        { "type": "lifestyle_image", "settings": { "alt_text": "Applying castor oil to scalp" } },
-        { "type": "lifestyle_image", "settings": { "alt_text": "Castor oil bottle close-up" } },
-        { "type": "lifestyle_image", "settings": { "alt_text": "Hair care ritual" } }
+        { "type": "lifestyle_image", "settings": { "alt_text": "Applying castor oil to scalp", "label": "Scalp & Hair", "subtext": "Discover natural wellness for your hair." } },
+        { "type": "lifestyle_image", "settings": { "alt_text": "Castor oil on skin", "label": "Face & Skin", "subtext": "Organic remedies for radiant skin." } },
+        { "type": "lifestyle_image", "settings": { "alt_text": "Body and nail care", "label": "Body & Nails", "subtext": "Coming soon — fill in your copy here." } }
       ]
     }
   ]

@@ -2087,8 +2087,33 @@ h1, h2, h3,
   aspect-ratio: 1 / 1;
 }
 .lifestyle-img-wrap {
+  position: relative;
   border-radius: 20px;
   overflow: hidden;
+}
+.lifestyle-overlay {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background: rgba(26, 46, 26, 0.88);
+  padding: 12px 16px;
+  border-radius: 10px;
+  max-width: calc(100% - 32px);
+}
+.lifestyle-overlay-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+.lifestyle-overlay-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  margin: 4px 0 0;
+  line-height: 1.4;
 }
 .lifestyle-img {
   width: 100%;
