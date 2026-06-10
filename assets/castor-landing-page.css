@@ -221,8 +221,8 @@ h1, h2, h3,
   letter-spacing: 0.01em;
 }
 .sale-bar-sep { color: var(--amber); opacity: 0.5; font-size: 16px; }
-.timer { display: flex; align-items: center; gap: 6px; }
-.timer-block { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.timer { display: flex; align-items: flex-start; gap: 6px; }
+.timer-block { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .timer-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
 .timer-unit {
   font-family: inherit;
@@ -244,7 +244,7 @@ h1, h2, h3,
   50%  { transform: scale(1.18); }
   100% { transform: scale(1); }
 }
-.timer-sep { font-family: inherit; color: var(--timer-color, var(--amber)); font-weight: 700; opacity: 0.6; font-size: 26px; }
+.timer-sep { font-family: inherit; color: var(--timer-color, var(--amber)); font-weight: 700; opacity: 0.6; font-size: 26px; padding-top: 3px; line-height: 1; }
 
 /* ── Hero: full-bleed with overlay ──────────────────────────────── */
 .nav { border-bottom: none; }
