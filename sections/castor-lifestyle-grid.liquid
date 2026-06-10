@@ -7,8 +7,13 @@
   {% endif %}
 
   <div class="lifestyle-grid stagger">
+    {%- assign ls_total = 0 -%}
+    {%- for block in section.blocks -%}{%- if block.type == 'lifestyle_image' -%}{%- assign ls_total = ls_total | plus: 1 -%}{%- endif -%}{%- endfor -%}
+    {%- assign ls_idx = 0 -%}
     {% for block in section.blocks %}
       {% if block.type == 'lifestyle_image' %}
+        {% assign ls_idx = ls_idx | plus: 1 %}
+        {% if ls_idx == 2 %}<div class="lifestyle-col-right">{% endif %}
         <div class="lifestyle-card" {{ block.shopify_attributes }}>
           <div class="lifestyle-img-wrap">
             {% if block.settings.image != blank %}
@@ -29,6 +34,7 @@
             {% endif %}
           </div>
         </div>
+        {% if ls_idx == ls_total and ls_total > 1 %}</div>{% endif %}
       {% endif %}
     {% endfor %}
   </div>
