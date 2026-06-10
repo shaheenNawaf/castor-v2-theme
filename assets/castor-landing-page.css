@@ -1921,7 +1921,32 @@ h1, h2, h3,
   font-weight: 600;
   color: var(--text-dark);
   line-height: 1.15;
-  margin-bottom: 32px;
+  margin-bottom: 0;
+}
+.tst-hero-heading {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 0 24px;
+}
+.tst-highlight {
+  position: relative;
+  display: inline-block;
+}
+.tst-circle-svg {
+  position: absolute;
+  top: -14px; left: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 28px);
+  pointer-events: none;
+  overflow: visible;
+}
+.tst-circle-svg ellipse {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset 0.9s var(--ease-out) 0.5s;
+}
+.tst-hero-heading.is-visible .tst-circle-svg ellipse {
+  stroke-dashoffset: 0;
 }
 .test-quote {
   font-family: 'Inter', sans-serif;
@@ -2458,6 +2483,7 @@ h1, h2, h3,
     grid-template-columns: 1fr;
     max-width: 480px;
   }
+  .cro-hero { padding-left: 20px; padding-right: 20px; }
   .cro-left  { order: 1; text-align: center; align-items: center; }
   .cro-center { order: 2; }
   .cro-card  { order: 3; }
@@ -2747,17 +2773,26 @@ body.template-cart { background: var(--cream); }
   .marquee-card.has-photo { padding: 20px; }
   .marquee-wrap.layout-grid .marquee-track { gap: 16px; }
   .marquee-wrap .section-heading { margin-bottom: 24px; }
+
+  /* ── Sale bar — force single line ───────────────────────────────── */
+  .sale-bar { gap: 8px; padding: 10px 16px; flex-wrap: nowrap; }
+  .sale-label { font-size: 13px; }
+
+  /* ── Section headings 25% larger ────────────────────────────────── */
+  .marquee-wrap .section-heading,
+  .lifestyle-heading { font-size: 2.375rem; }
+  .featured-on-label { font-size: 1.625rem; }
 }
 
 @media (max-width: 480px) {
 
   /* ── M1: Timer — reduce font sizes to prevent horizontal overflow ── */
   .timer-unit {
-    font-size: 22px;
-    min-width: 28px;
+    font-size: 18px;
+    min-width: 22px;
   }
   .timer-sep {
-    font-size: 18px;
+    font-size: 14px;
   }
 
   /* ── M6: Toast — allow wrapping on very narrow screens ───────────── */
